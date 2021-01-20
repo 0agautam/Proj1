@@ -1,0 +1,95 @@
+ls: to list all the directories and files
+  ~$ ls
+   Apps           Documents          Music          package-lock.json   snap
+   biz            Downloads          myarticles     Pictures            Templates
+   chat           examples.desktop  'my projects'   Practise            Training
+   crm_frontend   first-react-app    nav_projects   projects            Videos
+   Desktop        modify_crm         node_modules   Public
+cd: to change the current directory
+  beryl-systems@berylsystems:~$ cd Desktop/
+  beryl-systems@berylsystems:~/Desktop$ ls
+cd /: to move to the root directory
+  beryl-systems@berylsystems:~/Desktop/linux_commands$ cd /
+  beryl-systems@berylsystems:/$
+
+mkdir: to create a new directory
+  beryl-systems@berylsystems:~/Desktop$ mkdir linux_commands
+  beryl-systems@berylsystems:~/Desktop$ ls
+  api_docs        chatbot_frontend  devbyju  linux_commands  select2-4.0.13
+  app-in-one-app  data              Legit    LMS             work
+pwd: print the current working directory path
+  beryl-systems@berylsystems:~/Desktop/linux_commands$ pwd
+  /home/beryl-systems/Desktop/linux_commands
+whoami: tells about the user currently logged on
+  beryl-systems@berylsystems:/$ whoami
+  beryl-systems
+~: path starting from home directory
+  beryl-systems@berylsystems:/$ cd ~/Desktop/
+  beryl-systems@berylsystems:~/Desktop$
+mkdir -p: create nested directory
+  beryl-systems@berylsystems:~/Desktop/linux_commands$ mkdir -p dir1/dir2/dir3
+  beryl-systems@berylsystems:~/Desktop/linux_commands$ ls
+  dir1
+  beryl-systems@berylsystems:~/Desktop/linux_commands$ cd dir1/
+  beryl-systems@berylsystems:~/Desktop/linux_commands/dir1$ ls
+  dir2
+  beryl-systems@berylsystems:~/Desktop/linux_commands/dir1$ cd dir2/
+  beryl-systems@berylsystems:~/Desktop/linux_commands/dir1/dir2$ ls
+  dir3
+  beryl-systems@berylsystems:~/Desktop/linux_commands/dir1/dir2$ cd dir3/
+  beryl-systems@berylsystems:~/Desktop/linux_commands/dir1/dir2/dir3$
+> : printing the output of result to some files
+  beryl-systems@berylsystems:~/Desktop$ ls > output.txt
+  beryl-systems@berylsystems:~/Desktop$ ls
+  api_docs        chatbot_frontend  devbyju  linux_commands  output.txt      work
+  app-in-one-app  data              Legit    LMS             select2-4.0.13
+cat : print the information in a file as it is.
+  beryl-systems@berylsystems:~/Desktop$ cat output.txt
+  api_docs
+  app-in-one-app
+  chatbot_frontend
+  data
+  devbyju
+  Legit
+  linux_commands
+  LMS
+  output.txt
+  select2-4.0.13
+  work
+echo: printing the output
+  beryl-systems@berylsystems:~/Desktop$ echo "This is the beginning of ruby on rails" >letsruby.txt
+  beryl-systems@berylsystems:~/Desktop$ ls
+  api_docs          data     letsruby.txt    output.txt
+  app-in-one-app    devbyju  linux_commands  select2-4.0.13
+  chatbot_frontend  Legit    LMS             work
+  beryl-systems@berylsystems:~/Desktop$ cat letsruby.txt
+  This is the beginning of ruby on rails
+>>: appending to the current file
+  beryl-systems@berylsystems:~/Desktop/linux_commands$ echo "I am appending a new line to the current file" >> combined.txt
+  beryl-systems@berylsystems:~/Desktop/linux_commands$ cat combined.txt
+  This is a test
+  This is a second test
+  This is a third test
+  I am appending a new line to the current file
+mv: to move a file/ rename a file
+  beryl-systems@berylsystems:~/Desktop/linux_commands$ mv combined.txt dir1/
+  beryl-systems@berylsystems:~/Desktop/linux_commands$ ls
+  dir1  letsruby.txt  output.txt  test_1.txt  test_2.txt  test_3.txt
+  beryl-systems@berylsystems:~/Desktop/linux_commands$ cd dir1/
+  beryl-systems@berylsystems:~/Desktop/linux_commands/dir1$ ls
+  combined.txt  dir2
+wc: word/lines/character/bytes count in a file
+  beryl-systems@berylsystems:~/Desktop/linux_commands/dir1$ wc combined.txt
+  7  38 162 combined.txt
+  beryl-systems@berylsystems:~/Desktop/linux_commands/dir1$ man wc
+  beryl-systems@berylsystems:~/Desktop/linux_commands/dir1$ wc -l combined.txt
+  7 combined.txt
+  beryl-systems@berylsystems:~/Desktop/linux_commands/dir1$ wc -w combined.txt
+  38 combined.txt
+uname: tells about the software and hardware configuration of the systems
+  beryl-systems@berylsystems:~/Desktop/linux_commands/dir1$ uname
+  Linux
+  beryl-systems@berylsystems:~/Desktop/linux_commands/dir1$ uname -r
+  4.15.0-128-generic
+  beryl-systems@berylsystems:~/Desktop/linux_commands/dir1$ uname -a
+  Linux berylsystems 4.15.0-128-generic #131-Ubuntu SMP Wed Dec 9 06:57:35 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
