@@ -361,3 +361,4 @@ cd /: to move to the root directory
 	and here we are with new line 
 	Third line
 
+33. lsblk: 
