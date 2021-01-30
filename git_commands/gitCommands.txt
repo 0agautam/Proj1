@@ -1,0 +1,132 @@
+GIT
+
+1. Adding user to the local git:>
+
+  beryl-systems@berylsystems:~/Desktop$ git config --global user.name "Ankit Gautam"
+  beryl-systems@berylsystems:~/Desktop$ git config --global --list
+  user.email=sahil.jha@berylsystems.com
+  user.name=Ankit Gautam
+  core.excludesfile=~/.gitignore_global
+  credential.helper=cache
+  beryl-systems@berylsystems:~/Desktop$ git config --global user.email 0agautam@gmail.com
+  beryl-systems@berylsystems:~/Desktop$ git config --global user.email
+  0agautam@gmail.com
+
+2. Creating first Project and adding Initializing the local git repo:>
+
+  beryl-systems@berylsystems:~/Desktop$ mkdir Proj1
+  beryl-systems@berylsystems:~/Desktop$ ls
+  api_docs  app-in-one-app  chatbot_frontend  data  devbyju  Legit  linux_commands  LMS  Proj1  select2-4.0.13  work
+  beryl-systems@berylsystems:~/Desktop$ cd Proj1/
+  beryl-systems@berylsystems:~/Desktop/Proj1$ ls
+  beryl-systems@berylsystems:~/Desktop/Proj1$ git init
+  Initialized empty Git repository in /home/beryl-systems/Desktop/Proj1/.git/
+
+3. Adding the local file:>
+
+  beryl-systems@berylsystems:~/Desktop/Proj1$ git add linux_commands.txt
+
+4. Checking the status:>
+
+  beryl-systems@berylsystems:~/Desktop/Proj1$ git status
+  On branch master
+
+  No commits yet
+
+  Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+
+  new file:   linux_commands.txt
+
+5. Commiting the file:>
+
+  beryl-systems@berylsystems:~/Desktop/Proj1$ git commit -m "First file having Basic linux commands"
+  [master (root-commit) 4ab2c5a] First file having Basic linux commands
+  1 file changed, 95 insertions(+)
+  create mode 100644 linux_commands.txt
+
+6. Adding origin of the remote repo :>
+
+  beryl-systems@berylsystems:~/Desktop/Proj1$ git remote add origin https://github.com/0agautam/Proj1.git
+
+7. Pushing our update to the remote repo:>
+  
+	  beryl-systems@berylsystems:~/Desktop/Proj1$ git push -u origin main
+	  Username for 'https://github.com': 0agautam
+	  Password for 'https://0agautam@github.com': 
+	  Counting objects: 3, done.
+	  Delta compression using up to 4 threads.
+	  Compressing objects: 100% (2/2), done.
+	  Writing objects: 100% (3/3), 1.29 KiB | 660.00 KiB/s, done.
+	  Total 3 (delta 0), reused 0 (delta 0)
+	  To https://github.com/0agautam/Proj1.git
+	  * [new branch]      main -> main
+
+8. To unstage files after adding them :>
+
+	gr00t@Gr00t:~/Desktop/SoftwareDocumentation$ git status
+	On branch master
+
+	No commits yet
+
+	Changes to be committed:
+	  (use "git rm --cached <file>..." to unstage)
+		new file:   README.md
+		new file:   blog_content.txt
+		new file:   soft_docs.txt
+
+9. Stashing your work: saves your uncommited changes(staged and unstaged) for later use, and pull new changes in the remote repository :>
+
+10. Showing Information about the remote :> 
+
+	gr00t@Gr00t:~/Desktop/Training/linux_commands$ git remote show origin 
+    	* remote origin
+	  Fetch URL: https://github.com/0agautam/Training.git
+	  Push  URL: https://github.com/0agautam/Training.git
+	  HEAD branch: main
+	  Remote branch:
+	    main tracked
+	  Local branch configured for 'git pull':
+	    main merges with remote main
+	  Local ref configured for 'git push':
+	    main pushes to main (local out of date)
+
+11. Branching: Changing from one branch to new branch :>
+
+	gr00t@Gr00t:~/Desktop/Training$ git branch -vv
+	  linuxDirStruct 63f8ce0 files updated with new commands
+	* main           63f8ce0 [origin/main: behind 1] files updated with new commands
+	gr00t@Gr00t:~/Desktop/Training$ git checkout linuxDirStruct 
+	D       git_commands/git_commands.txt
+	D       linux_commands/linux_commands.txt
+	Switched to branch 'linuxDirStruct'		
+12. Creating a remote branch using local branch :>
+
+	gr00t@Gr00t:~/Desktop/Training$ git push -u origin linuxDirStruct 
+	Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
+	remote: 
+	remote: Create a pull request for 'linuxDirStruct' on GitHub by visiting:
+	remote:      https://github.com/0agautam/Training/pull/new/linuxDirStruct
+	remote: 
+	To https://github.com/0agautam/Training.git
+	 * [new branch]      linuxDirStruct -> linuxDirStruct
+	Branch 'linuxDirStruct' set up to track remote branch 'linuxDirStruct' from 'origin'.
+
+13. Deleting files and folder from the remote repo without deleting them from the local git repo :>
+
+	gr00t@Gr00t:~/Desktop/Training$ git rm -r --cached linux_commands/
+	rm 'linux_commands/linux_commands.txt'
+	gr00t@Gr00t:~/Desktop/Training$ git commit -m "removing old linux repo"
+	[linuxDirStruct a609020] removing old linux repo
+	 1 file changed, 363 deletions(-)
+	 delete mode 100644 linux_commands/linux_commands.txt
+	gr00t@Gr00t:~/Desktop/Training$ git push -u origin linuxDirStruct 
+	Enumerating objects: 3, done.
+	Counting objects: 100% (3/3), done.
+	Writing objects: 100% (2/2), 204 bytes | 204.00 KiB/s, done.
+	Total 2 (delta 0), reused 0 (delta 0), pack-reused 0
+	To https://github.com/0agautam/Training.git
+	   0891725..a609020  linuxDirStruct -> linuxDirStruct
+	Branch 'linuxDirStruct' set up to track remote branch 'linuxDirStruct' from 'origin'. 
+
+14. 
