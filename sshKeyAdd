@@ -43,33 +43,4 @@
 	To https://github.com/0agautam/Training.git
 	   c5c29d5..d7e53ef  main -> main
 
-4. Removing unnecessary files from the remote host:>
-	ubuntu@ubuntu:~/Desktop/Training$ git rm git_commands.txt linux_commands.txt 
-	rm 'git_commands.txt'
-	rm 'linux_commands.txt'
-	ubuntu@ubuntu:~/Desktop/Training$ git status
-	On branch main
-	Your branch is up to date with 'origin/main'.
 
-	Changes to be committed:
-	  (use "git restore --staged <file>..." to unstage)
-		deleted:    git_commands.txt
-		deleted:    linux_commands.txt
-
-	ubuntu@ubuntu:~/Desktop/Training$ git commit -m "Duplicate files Deleted"
-	[main c5c29d5] Duplicate files Deleted
-	 2 files changed, 200 deletions(-)
-	 delete mode 100644 git_commands.txt
-	 delete mode 100644 linux_commands.txt
-	ubuntu@ubuntu:~/Desktop/Training$ git push
-	Username for 'https://github.com': 0agautam@gmail.com
-	Password for 'https://0agautam@gmail.com@github.com': 
-	Enumerating objects: 3, done.
-	Counting objects: 100% (3/3), done.
-	Compressing objects: 100% (2/2), done.
-	Writing objects: 100% (2/2), 272 bytes | 272.00 KiB/s, done.
-	Total 2 (delta 0), reused 0 (delta 0)
-	To https://github.com/0agautam/Training.git
-	   3f20ec5..c5c29d5  main -> main
-
-5. 
