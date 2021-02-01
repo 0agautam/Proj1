@@ -63,6 +63,7 @@ GIT
 	  * [new branch]      main -> main
 
 8. To unstage files after adding them :>
+
 	gr00t@Gr00t:~/Desktop/SoftwareDocumentation$ git status
 	On branch master
 
@@ -74,9 +75,27 @@ GIT
 		new file:   blog_content.txt
 		new file:   soft_docs.txt
 
-9. Stashing your work: saves your uncommited changes(staged and unstaged) for later use, and pull new changes in the remote repository :>
+9. Stashing your work: saves your uncommited changes(staged and unstaged) for later use, and pull new changes from the remote repository and change the branch to work on something else :>
+
+	gr00t@Gr00t:~/Desktop/GitTest1$ git status -s
+	 M README.md
+	gr00t@Gr00t:~/Desktop/GitTest1$ git stash
+	Saved working directory and index state WIP on testFeature: beee029 Merge branch 'master' of https://github.com/0agautam/GitTest line c or ruby was necessary
+	gr00t@Gr00t:~/Desktop/GitTest1$ git status -s
+	gr00t@Gr00t:~/Desktop/GitTest1$ git status 
+	On branch testFeature
+	Your branch is up to date with 'origin/testFeature'.
+
+	nothing to commit, working tree clean
+	gr00t@Gr00t:~/Desktop/GitTest1$ git checkout master 
+	Switched to branch 'master'
+	Your branch is up to date with 'origin/master'.
+	gr00t@Gr00t:~/Desktop/GitTest1$ git stash list
+	stash@{0}: WIP on testFeature: beee029 Merge branch 'master' of https://github.com/0agautam/GitTest line c or ruby was necessary
+		
 
 10. Showing Information about the remote :> 
+
 	gr00t@Gr00t:~/Desktop/Training/linux_commands$ git remote show origin 
     	* remote origin
 	  Fetch URL: https://github.com/0agautam/Training.git
@@ -90,14 +109,17 @@ GIT
 	    main pushes to main (local out of date)
 
 11. Branching: Changing from one branch to new branch :>
+
 	gr00t@Gr00t:~/Desktop/Training$ git branch -vv
 	  linuxDirStruct 63f8ce0 files updated with new commands
 	* main           63f8ce0 [origin/main: behind 1] files updated with new commands
 	gr00t@Gr00t:~/Desktop/Training$ git checkout linuxDirStruct 
 	D       git_commands/git_commands.txt
 	D       linux_commands/linux_commands.txt
-	Switched to branch 'linuxDirStruct'		
+	Switched to branch 'linuxDirStruct'
+		
 12. Creating a remote branch using local branch :>
+
 	gr00t@Gr00t:~/Desktop/Training$ git push -u origin linuxDirStruct 
 	Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
 	remote: 
@@ -108,5 +130,118 @@ GIT
 	 * [new branch]      linuxDirStruct -> linuxDirStruct
 	Branch 'linuxDirStruct' set up to track remote branch 'linuxDirStruct' from 'origin'.
 
-13. 
+13. Deleting files and folder from the remote repo(index area) without deleting them from the local git repo :>
 
+	gr00t@Gr00t:~/Desktop/Training$ git rm -r --cached linux_commands/
+	rm 'linux_commands/linux_commands.txt'
+	gr00t@Gr00t:~/Desktop/Training$ git commit -m "removing old linux repo"
+	[linuxDirStruct a609020] removing old linux repo
+	 1 file changed, 363 deletions(-)
+	 delete mode 100644 linux_commands/linux_commands.txt
+	gr00t@Gr00t:~/Desktop/Training$ git push -u origin linuxDirStruct 
+	Enumerating objects: 3, done.
+	Counting objects: 100% (3/3), done.
+	Writing objects: 100% (2/2), 204 bytes | 204.00 KiB/s, done.
+	Total 2 (delta 0), reused 0 (delta 0), pack-reused 0
+	To https://github.com/0agautam/Training.git
+	   0891725..a609020  linuxDirStruct -> linuxDirStruct
+	Branch 'linuxDirStruct' set up to track remote branch 'linuxDirStruct' from 'origin'. 
+
+14.Restoring a file Deleted using the 'git rm' command :>
+
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ ls
+	1newFile  makefile
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git rm 1newFile 
+	rm 'src/1newFile'
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git status -s
+	D  1newFile
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git checkout 1newFile
+	error: pathspec '1newFile' did not match any file(s) known to git
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git status
+	On branch testFeature
+	Your branch is up to date with 'origin/testFeature'.
+
+	Changes to be committed:
+	  (use "git restore --staged <file>..." to unstage)
+		deleted:    1newFile
+
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git status -s
+	D  1newFile
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git restore --staged 1newFile
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ ls
+	makefile
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git status -s
+	 D 1newFile
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git restore --staged src/1newFile
+	error: pathspec 'src/1newFile' did not match any file(s) known to git
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git checkout 1newFile
+	Updated 1 path from the index
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ ls
+	1newFile  makefile
+	
+15. Restoring files and restoring changes made in working tree :>
+
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ rm 1newFile 
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ ls
+	makefile
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git status -s
+	 D 1newFile
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git checkout 1newFile
+	Updated 1 path from the index
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ ls
+	1newFile  makefile
+	 
+16. Remove changes from Staging Area using the git checkout commmand :>
+	
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ ls
+	1newFile  makefile
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ vim 1newFile 
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git status -s
+	 M 1newFile
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git add 1newFile 
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git status -s
+	M  1newFile
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ ls
+	1newFile  makefile
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git status
+	On branch testFeature
+	Your branch is up to date with 'origin/testFeature'.
+
+	Changes to be committed:
+	  (use "git restore --staged <file>..." to unstage)
+		modified:   1newFile
+
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git checkout HEAD -- 1newFile
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git status
+	On branch testFeature
+	Your branch is up to date with 'origin/testFeature'.
+
+	nothing to commit, working tree clean
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ ls
+	1newFile  makefile
+	
+17.  Git Tag: For giving Version Names to particular commit to remember about the progress in the project :>
+
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git tag -a "Release_0.1" -m "Starting of design method" e09f3ee
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git tag -l
+	Release_0.1
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git push origin tag Release_0.1
+	Enumerating objects: 1, done.
+	Counting objects: 100% (1/1), done.
+	Writing objects: 100% (1/1), 177 bytes | 177.00 KiB/s, done.
+	Total 1 (delta 0), reused 0 (delta 0), pack-reused 0
+	To https://github.com/0agautam/GitTest.git
+	 * [new tag]         Release_0.1 -> Release_0.1
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git tag -l
+	Release_0.1
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git tag --help
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git tag -d Release_0.1 
+	Deleted tag 'Release_0.1' (was 85bd799)
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git push origin Release_0.1
+	error: src refspec Release_0.1 does not match any
+	error: failed to push some refs to 'https://github.com/0agautam/GitTest.git'
+	gr00t@Gr00t:~/Desktop/GitTest1/src$ git push origin :Release_0.1                                                                                                      
+	To https://github.com/0agautam/GitTest.git
+	 - [deleted]         Release_0.1
+
+  
