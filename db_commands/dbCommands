@@ -1,0 +1,710 @@
+PostgreSQL Database(psql) is open source, reliable, fast, object-relational database System.
+
+1. Installing PostgreSQL on your linux machine, as linux distributions have already a version of it installed but to upgrade of if it is not present in your linux machine you can install it using any package manager like apt-get or yum(if you are using redhat distro) :>
+
+	gr00t@Gr00t:~$ sudo apt-get install postgresql
+	Reading package lists... Done
+	Building dependency tree       
+	Reading state information... Done
+	postgresql is already the newest version (13+224).
+	postgresql set to manually installed.
+	0 upgraded, 0 newly installed, 0 to remove and 404 not upgraded.
+
+2. Post-Installation along the postgreSQL server, a postgres user is also added. so to switch to the user(Otherwise you won't be able to run the psql server) :>
+
+	gr00t@Gr00t:~$ psql
+	psql: error: could not connect to server: No such file or directory
+		Is the server running locally and accepting
+		connections on Unix domain socket "/var/run/postgresql/.s.PGSQL.5432"?
+	gr00t@Gr00t:~$ ls /etc/postgresql/13/main/
+	conf.d/          environment      pg_ctl.conf      pg_hba.conf      pg_ident.conf    postgresql.conf  start.conf       
+	
+	gr00t@Gr00t:~$ service postgresql start 
+	
+	gr00t@Gr00t:~$ psql
+	psql: error: FATAL:  role "gr00t" does not exist
+	gr00t@Gr00t:~$ pg
+	pg_archivecleanup  pg_buildext        pg_createcluster   pg_dump            pg_lsclusters      pg_recvlogical     pg_restore         pg_virtualenv
+	pg_basebackup      pg_config          pg_ctlcluster      pg_dumpall         pg_receivewal      pg_renamecluster   pg_updatedicts     
+	pgbench            pg_conftool        pg_dropcluster     pg_isready         pg_receivexlog     pgrep              pg_upgradecluster  
+	gr00t@Gr00t:~$ pg_lsclusters 
+	Ver Cluster Port Status Owner    Data directory              Log file
+	12  main    5432 online postgres /var/lib/postgresql/12/main /var/log/postgresql/postgresql-12-main.log
+	13  main    5433 online postgres /var/lib/postgresql/13/main /var/log/postgresql/postgresql-13-main.log
+	
+	gr00t@Gr00t:~$ pg_ctlcluster 13 main start
+	Warning: the cluster will not be running as a systemd service. Consider using systemctl:
+	  sudo systemctl start postgresql@13-main
+	Error: You must run this program as the cluster owner (postgres) or root
+	gr00t@Gr00t:~$ psql
+	psql: error: FATAL:  role "gr00t" does not exist
+	
+	gr00t@Gr00t:~$ sudo su - postgres 
+	[sudo] password for gr00t: 
+	┏━(Message from Kali developers)
+	┃
+	┃ This is a minimal installation of Kali Linux, you likely
+	┃ want to install supplementary tools. Learn how:
+	┃ ⇒ https://www.kali.org/docs/troubleshooting/common-minimum-setup/
+	┃
+	┗━(Run “touch ~/.hushlogin” to hide this message)
+	
+	postgres@Gr00t:~$ psql
+	psql (13.1 (Debian 13.1-1+b1), server 12.3 (Debian 12.3-1))
+	Type "help" for help.
+
+	postgres=# 
+
+3. How to find on which port my psql server is running on linux machine :>
+
+	testdb-# psql \conninfo
+	You are connected to database "testdb" as user "postgres" via socket in "/var/run/postgresql" at port "5432".
+
+4. Show the list of created databases :>
+	
+	testdb-# \l
+				     List of databases
+	   Name    |  Owner   | Encoding | Collate | Ctype |   Access privileges   
+	-----------+----------+----------+---------+-------+-----------------------
+	 postgres  | postgres | UTF8     | en_IN   | en_IN | 
+	 template0 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+		   |          |          |         |       | postgres=CTc/postgres
+	 template1 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+		   |          |          |         |       | postgres=CTc/postgres
+	 testdb    | postgres | UTF8     | en_IN   | en_IN | 
+	(4 rows)
+	 
+5.Create Database: Use semicolon(;) at the end of the command to complete the SQL command :>
+	postgres-# create database testdb3;
+	ERROR:  syntax error at or near "create"
+	LINE 2: create database testdb3;
+		^
+	postgres=# CREATE DATABASE testdb3;
+	CREATE DATABASE
+	postgres=# \l
+				     List of databases
+	   Name    |  Owner   | Encoding | Collate | Ctype |   Access privileges   
+	-----------+----------+----------+---------+-------+-----------------------
+	 postgres  | postgres | UTF8     | en_IN   | en_IN | 
+	 template0 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+		   |          |          |         |       | postgres=CTc/postgres
+	 template1 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+		   |          |          |         |       | postgres=CTc/postgres
+	 testdb    | postgres | UTF8     | en_IN   | en_IN | 
+	 testdb1   | postgres | UTF8     | en_IN   | en_IN | 
+	 testdb2   | postgres | UTF8     | en_IN   | en_IN | 
+	 testdb3   | postgres | UTF8     | en_IN   | en_IN | 
+	(7 rows)
+	
+6. Use the psql command on the user terminal instead of psql terminal :>
+	postgres=# \q
+	postgres@Gr00t:~$ createdb testdb4;
+	postgres@Gr00t:~$ psql
+	psql (13.1 (Debian 13.1-1+b1), server 12.3 (Debian 12.3-1))
+	Type "help" for help.
+
+	postgres=# \l
+				     List of databases
+	   Name    |  Owner   | Encoding | Collate | Ctype |   Access privileges   
+	-----------+----------+----------+---------+-------+-----------------------
+	 postgres  | postgres | UTF8     | en_IN   | en_IN | 
+	 template0 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+		   |          |          |         |       | postgres=CTc/postgres
+	 template1 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+		   |          |          |         |       | postgres=CTc/postgres
+	 testdb    | postgres | UTF8     | en_IN   | en_IN | 
+	 testdb1   | postgres | UTF8     | en_IN   | en_IN | 
+	 testdb2   | postgres | UTF8     | en_IN   | en_IN | 
+	 testdb3   | postgres | UTF8     | en_IN   | en_IN | 
+	 testdb4   | postgres | UTF8     | en_IN   | en_IN | 
+
+7. Issue: Password Authentication Failed :>
+
+	postgres@Gr00t:~$ createdb -h localhost -p 5432 -U postgres [testdbProtected ]
+	Password: 
+	Password: 
+	createdb: error: could not connect to database template1: FATAL:  password authentication failed for user "postgres"
+	FATAL:  password authentication failed for user "postgres"
+	postgres@Gr00t:~$ createdb -h localhost -p 5432 -U postgres testdbProtected 
+	Password: 
+	Password: 
+	createdb: error: could not connect to database template1: FATAL:  password authentication failed for user "postgres"
+	FATAL:  password authentication failed for user "postgres"
+	postgres@Gr00t:~$ 
+
+8. Connnect to Database :>
+
+	postgres=# \c testdb;
+	psql (13.1 (Debian 13.1-1+b1), server 12.3 (Debian 12.3-1))
+	You are now connected to database "testdb" as user "postgres".
+	testdb=# 
+
+9. Delete Database :>
+
+	 postgres@Gr00t:~$ dropdb -e --if-exists testdb5;
+	SELECT pg_catalog.set_config('search_path', '', false);
+	DROP DATABASE IF EXISTS testdb5;
+	postgres@Gr00t:~$ psql
+	psql (13.1 (Debian 13.1-1+b1), server 12.3 (Debian 12.3-1))
+	Type "help" for help.
+
+	postgres=# \l
+				     List of databases
+	   Name    |  Owner   | Encoding | Collate | Ctype |   Access privileges   
+	-----------+----------+----------+---------+-------+-----------------------
+	 postgres  | postgres | UTF8     | en_IN   | en_IN | 
+	 template0 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+		   |          |          |         |       | postgres=CTc/postgres
+	 template1 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+		   |          |          |         |       | postgres=CTc/postgres
+	 testdb    | postgres | UTF8     | en_IN   | en_IN | 
+	 testdb1   | postgres | UTF8     | en_IN   | en_IN | 
+	 testdb2   | postgres | UTF8     | en_IN   | en_IN | 
+	 testdb3   | postgres | UTF8     | en_IN   | en_IN | 
+	 testdb4   | postgres | UTF8     | en_IN   | en_IN | 
+	(8 rows)
+
+10. Create Table :>
+
+	postgres=# \c testdb;
+	psql (13.1 (Debian 13.1-1+b1), server 12.3 (Debian 12.3-1))
+	You are now connected to database "testdb" as user "postgres".
+	testdb=# CREATE TABLE COMPANY(
+	ID INT PRIMARY KEY NOT NULL,
+	NAME TEXT NOT NULL,
+	AGE INT NOT NULL,
+	SALARY REAL NOT NULL,
+	ADDRESS CHAR(50)
+	);
+	CREATE TABLE
+	testdb=# \d
+		  List of relations
+	 Schema |  Name   | Type  |  Owner   
+	--------+---------+-------+----------
+	 public | company | table | postgres
+	(1 row)
+
+11. Drop Table :> 
+
+	postgres=# drop table company;
+	DROP TABLE
+	postgres=# \d
+	Did not find any relations.
+
+12. Schema: is a named collection of tables. A schema can contain views, indexes, sequences, data types, operators, and functions. These are analogus to directories at the OS level, except these can't be nested. :>
+
+	testdb=# create schema testschema;
+	CREATE SCHEMA
+
+	testdb=# create table testschema.company(
+	testdb(# id int not null,
+	testdb(# name varchar(20) not null,
+	testdb(# age int not null,
+	testdb(# address char(25),
+	testdb(# salary decimal (18,2),
+	testdb(# primary key (id) );
+	CREATE TABLE
+
+	testdb=# select * from testschema.company ;
+	 id | name | age | address | salary 
+	----+------+-----+---------+--------
+	(0 rows)
+
+13. Droping a Schema :>
+	testdb=# drop schema testschema;
+	ERROR:  cannot drop schema testschema because other objects depend on it
+	DETAIL:  table testschema.company depends on schema testschema
+	HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+	testdb=# drop schema testschema cascade ;
+	NOTICE:  drop cascades to table testschema.company
+	DROP SCHEMA
+	testdb=# 
+
+15. Inserting into Tables :>
+	testdb=# insert into company (id, name, age, address, salary, join_date) values (1, 'Paul', 32, 'Orissa', 20000.000000008, '2007-01-01');
+	INSERT 0 1
+
+	testdb=# select * from company 
+	testdb-# ;
+	 id | name | age |                      address                       | salary | join_date  
+	----+------+-----+----------------------------------------------------+--------+------------
+	  1 | Paul |  32 | Orissa                                             |  20000 | 2007-01-01
+	(1 row)
+
+	testdb=# insert into company (id, name, age, address, salary, join_date) values (4, 'VanRam',33, 'Orissa', 19000.00045,'25-06-20'), (5, 'Ramun', 39, 'Hary	  ana', 40000.00,'2001-11-23');
+	INSERT 0 2
+	testdb=# select * from company;
+	 id |  name  | age |                      address                       |  salary  | join_date  
+	----+--------+-----+----------------------------------------------------+----------+------------
+	  1 | Paul   |  32 | Orissa                                             |    20000 | 2007-01-01
+	  2 | Sara   |  33 | Punjab                                             |          | 2003-12-24
+	  3 | Van    |  39 | Delhi                                              | 25000.45 | 
+	  4 | VanRam |  33 | Orissa                                             |    19000 | 2020-06-25
+	  5 | Ramun  |  39 | Haryana                                            |    40000 | 2001-11-23
+	(5 rows)
+
+16. Where Clause with different keywords and operators :> 
+	
+	testdb=# select * from company ;
+	 id |  name  | age |                      address                       |  salary  | join_date  
+	----+--------+-----+----------------------------------------------------+----------+------------
+	  1 | Paul   |  32 | Orissa                                             |    20000 | 2007-01-01
+	  2 | Sara   |  33 | Punjab                                             |          | 2003-12-24
+	  3 | Van    |  39 | Delhi                                              | 25000.45 | 
+	  4 | VanRam |  33 | Orissa                                             |    19000 | 2020-06-25
+	  5 | Ramun  |  39 | Haryana                                            |    40000 | 2001-11-23
+	(5 rows)
+
+	testdb=# select current_timestamp;
+		current_timestamp         
+	----------------------------------
+	 2021-02-03 16:13:22.376441+05:30
+	(1 row)
+
+	testdb=# select (current_timestamp - join_date) as "yearinjob" from company;
+		 yearinjob         
+	---------------------------
+	 5147 days 16:14:21.355063
+	 6251 days 16:14:21.355063
+	 
+	 223 days 16:14:21.355063
+	 7012 days 16:14:21.355063
+	(5 rows)
+
+	testdb=# select (current_timestamp - join_date),name as "yearinjob" from company;
+		 ?column?          | yearinjob 
+	---------------------------+-----------
+	 5147 days 16:14:53.335975 | Paul
+	 6251 days 16:14:53.335975 | Sara
+				   | Van
+	 223 days 16:14:53.335975  | VanRam
+	 7012 days 16:14:53.335975 | Ramun
+	(5 rows)
+
+	testdb=# select id,name,(current_timestamp - join_date) as "yearinjob" from company;
+	 id |  name  |        yearinjob         
+	----+--------+--------------------------
+	  1 | Paul   | 5147 days 16:15:16.26547
+	  2 | Sara   | 6251 days 16:15:16.26547
+	  3 | Van    | 
+	  4 | VanRam | 223 days 16:15:16.26547
+	  5 | Ramun  | 7012 days 16:15:16.26547
+	(5 rows)
+
+	testdb=# select * from company ;
+	 id |  name  | age |                      address                       |  salary  | join_date  
+	----+--------+-----+----------------------------------------------------+----------+------------
+	  1 | Paul   |  32 | Orissa                                             |    20000 | 2007-01-01
+	  2 | Sara   |  33 | Punjab                                             |          | 2003-12-24
+	  3 | Van    |  39 | Delhi                                              | 25000.45 | 
+	  4 | VanRam |  33 | Orissa                                             |    19000 | 2020-06-25
+	  5 | Ramun  |  39 | Haryana                                            |    40000 | 2001-11-23
+	(5 rows)
+
+	testdb=# select * from company where age>=33 and salary>=20000;
+	 id | name  | age |                      address                       |  salary  | join_date  
+	----+-------+-----+----------------------------------------------------+----------+------------
+	  3 | Van   |  39 | Delhi                                              | 25000.45 | 
+	  5 | Ramun |  39 | Haryana                                            |    40000 | 2001-11-23
+	(2 rows)
+
+	testdb=# select * from company where age>=33 and salary>=19000;
+	 id |  name  | age |                      address                       |  salary  | join_date  
+	----+--------+-----+----------------------------------------------------+----------+------------
+	  3 | Van    |  39 | Delhi                                              | 25000.45 | 
+	  4 | VanRam |  33 | Orissa                                             |    19000 | 2020-06-25
+	  5 | Ramun  |  39 | Haryana                                            |    40000 | 2001-11-23
+	(3 rows)
+
+	testdb=# select * from company where age>=33 or salary>=19000;
+	 id |  name  | age |                      address                       |  salary  | join_date  
+	----+--------+-----+----------------------------------------------------+----------+------------
+	  1 | Paul   |  32 | Orissa                                             |    20000 | 2007-01-01
+	  2 | Sara   |  33 | Punjab                                             |          | 2003-12-24
+	  3 | Van    |  39 | Delhi                                              | 25000.45 | 
+	  4 | VanRam |  33 | Orissa                                             |    19000 | 2020-06-25
+	  5 | Ramun  |  39 | Haryana                                            |    40000 | 2001-11-23
+	(5 rows)
+
+	testdb=# select * from company where salary is not null;
+	 id |  name  | age |                      address                       |  salary  | join_date  
+	----+--------+-----+----------------------------------------------------+----------+------------
+	  1 | Paul   |  32 | Orissa                                             |    20000 | 2007-01-01
+	  3 | Van    |  39 | Delhi                                              | 25000.45 | 
+	  4 | VanRam |  33 | Orissa                                             |    19000 | 2020-06-25
+	  5 | Ramun  |  39 | Haryana                                            |    40000 | 2001-11-23
+	(4 rows)
+
+	testdb=# select * from company where salary is null;
+	 id | name | age |                      address                       | salary | join_date  
+	----+------+-----+----------------------------------------------------+--------+------------
+	  2 | Sara |  33 | Punjab                                             |        | 2003-12-24
+	(1 row)
+
+	testdb=# select * from company ;
+	 id |  name  | age |                      address                       |  salary  | join_date  
+	----+--------+-----+----------------------------------------------------+----------+------------
+	  1 | Paul   |  32 | Orissa                                             |    20000 | 2007-01-01
+	  2 | Sara   |  33 | Punjab                                             |          | 2003-12-24
+	  3 | Van    |  39 | Delhi                                              | 25000.45 | 
+	  4 | VanRam |  33 | Orissa                                             |    19000 | 2020-06-25
+	  5 | Ramun  |  39 | Haryana                                            |    40000 | 2001-11-23
+	(5 rows)
+
+	testdb=# select * from company where name like "van";
+	ERROR:  column "van" does not exist
+	LINE 1: select * from company where name like "van";
+						      ^
+	testdb=# select * from company where name like 'van';
+	 id | name | age | address | salary | join_date 
+	----+------+-----+---------+--------+-----------
+	(0 rows)
+
+	testdb=# select * from company where name like 'Van';
+	 id | name | age |                      address                       |  salary  | join_date 
+	----+------+-----+----------------------------------------------------+----------+-----------
+	  3 | Van  |  39 | Delhi                                              | 25000.45 | 
+	(1 row)
+
+	testdb=# select * from company where name like '%Van%';
+	 id |  name  | age |                      address                       |  salary  | join_date  
+	----+--------+-----+----------------------------------------------------+----------+------------
+	  3 | Van    |  39 | Delhi                                              | 25000.45 | 
+	  4 | VanRam |  33 | Orissa                                             |    19000 | 2020-06-25
+	(2 rows)
+
+	testdb=# select * from company where name like 'Va_';
+	 id | name | age |                      address                       |  salary  | join_date 
+	----+------+-----+----------------------------------------------------+----------+-----------
+	  3 | Van  |  39 | Delhi                                              | 25000.45 | 
+	(1 row)
+
+	testdb=# select * from company where name like 'Va%';
+	 id |  name  | age |                      address                       |  salary  | join_date  
+	----+--------+-----+----------------------------------------------------+----------+------------
+	  3 | Van    |  39 | Delhi                                              | 25000.45 | 
+	  4 | VanRam |  33 | Orissa                                             |    19000 | 2020-06-25
+	(2 rows)
+
+	testdb=# select * from company where name like '%Ram%';
+	 id |  name  | age |                      address                       | salary | join_date  
+	----+--------+-----+----------------------------------------------------+--------+------------
+	  4 | VanRam |  33 | Orissa                                             |  19000 | 2020-06-25
+	  5 | Ramun  |  39 | Haryana                                            |  40000 | 2001-11-23
+	(2 rows)
+
+	testdb=# select * from company where age in (32,33);
+	 id |  name  | age |                      address                       | salary | join_date  
+	----+--------+-----+----------------------------------------------------+--------+------------
+	  1 | Paul   |  32 | Orissa                                             |  20000 | 2007-01-01
+	  2 | Sara   |  33 | Punjab                                             |        | 2003-12-24
+	  4 | VanRam |  33 | Orissa                                             |  19000 | 2020-06-25
+	(3 rows)
+
+	testdb=# select * from company where age in (32,39);
+	 id | name  | age |                      address                       |  salary  | join_date  
+	----+-------+-----+----------------------------------------------------+----------+------------
+	  1 | Paul  |  32 | Orissa                                             |    20000 | 2007-01-01
+	  3 | Van   |  39 | Delhi                                              | 25000.45 | 
+	  5 | Ramun |  39 | Haryana                                            |    40000 | 2001-11-23
+	(3 rows)
+
+	testdb=# select * from company where age not in (32,39);
+	 id |  name  | age |                      address                       | salary | join_date  
+	----+--------+-----+----------------------------------------------------+--------+------------
+	  2 | Sara   |  33 | Punjab                                             |        | 2003-12-24
+	  4 | VanRam |  33 | Orissa                                             |  19000 | 2020-06-25
+	(2 rows)
+
+	testdb=# select * from company where age between 32 and 33;
+	 id |  name  | age |                      address                       | salary | join_date  
+	----+--------+-----+----------------------------------------------------+--------+------------
+	  1 | Paul   |  32 | Orissa                                             |  20000 | 2007-01-01
+	  2 | Sara   |  33 | Punjab                                             |        | 2003-12-24
+	  4 | VanRam |  33 | Orissa                                             |  19000 | 2020-06-25
+	(3 rows)
+
+	testdb=# select * from company where salary between 19000 and 25000;
+	 id |  name  | age |                      address                       | salary | join_date  
+	----+--------+-----+----------------------------------------------------+--------+------------
+	  1 | Paul   |  32 | Orissa                                             |  20000 | 2007-01-01
+	  4 | VanRam |  33 | Orissa                                             |  19000 | 2020-06-25
+	(2 rows)
+
+	testdb=# select * from company where salary between 19000 and 265000;
+	 id |  name  | age |                      address                       |  salary  | join_date  
+	----+--------+-----+----------------------------------------------------+----------+------------
+	  1 | Paul   |  32 | Orissa                                             |    20000 | 2007-01-01
+	  3 | Van    |  39 | Delhi                                              | 25000.45 | 
+	  4 | VanRam |  33 | Orissa                                             |    19000 | 2020-06-25
+	  5 | Ramun  |  39 | Haryana                                            |    40000 | 2001-11-23
+	(4 rows)
+
+	testdb=# select * from company where salary between 19000 and 26000;
+	 id |  name  | age |                      address                       |  salary  | join_date  
+	----+--------+-----+----------------------------------------------------+----------+------------
+	  1 | Paul   |  32 | Orissa                                             |    20000 | 2007-01-01
+	  3 | Van    |  39 | Delhi                                              | 25000.45 | 
+	  4 | VanRam |  33 | Orissa                                             |    19000 | 2020-06-25
+	(3 rows)
+
+	testdb=# select * from company ;
+	 id |  name  | age |                      address                       |  salary  | join_date  
+	----+--------+-----+----------------------------------------------------+----------+------------
+	  1 | Paul   |  32 | Orissa                                             |    20000 | 2007-01-01
+	  2 | Sara   |  33 | Punjab                                             |          | 2003-12-24
+	  3 | Van    |  39 | Delhi                                              | 25000.45 | 
+	  4 | VanRam |  33 | Orissa                                             |    19000 | 2020-06-25
+	  5 | Ramun  |  39 | Haryana                                            |    40000 | 2001-11-23
+	(5 rows)
+
+	testdb=# select age from company where exists (select age from company where salary > 40000);
+	 age 
+	-----
+	(0 rows)
+
+	testdb=# select age from company where exists (select age from company where salary > 20000);
+	 age 
+	-----
+	  32
+	  33
+	  39
+	  33
+	  39
+	(5 rows)
+
+17. Calculating experience of employee using join_date from the table :>
+
+	testdb=# select *, (date_part('year',(current_timestamp)) - date_part('year',(join_date))) as "Experience(in years)" from company; 
+	 id |  name  | age |                      address                       |  salary  | join_date  | Experience(in years) 
+	----+--------+-----+----------------------------------------------------+----------+------------+----------------------
+	  1 | Paul   |  32 | Orissa                                             |    20000 | 2007-01-01 |                   14
+	  2 | Sara   |  33 | Punjab                                             |          | 2003-12-24 |                   18
+	  3 | Van    |  39 | Delhi                                              | 25000.45 |            |                     
+	  4 | VanRam |  33 | Orissa                                             |    19000 | 2020-06-25 |                    1
+	  5 | Ramun  |  39 | Haryana                                            |    40000 | 2001-11-23 |                   20
+	(5 rows)
+
+18. The HAVING clause allows us to pick out particular rows based on some condition, WHERE clause shows record based on condition on column but former one uses GROUP BY clause :>
+	 
+	testdb=# select * from company1;
+	 id | name  | age |                      address                       |  salary  | join_date  
+	----+-------+-----+----------------------------------------------------+----------+------------
+	  3 | Van   |  39 | Delhi                                              | 25000.45 | 
+	  5 | Ramun |  39 | Haryana                                            |    40000 | 2001-11-23
+	  2 | Sara  |  33 | Goa                                                |    30000 | 2003-12-24
+	  7 | Sara  |  20 | Sikkim                                             |    30000 | 2019-03-22
+	  8 | Van   |  33 | Kerala                                             | 28000.34 | 2010-11-22
+	  9 | sara  |  20 | Kerala                                             |    30000 | 2020-11-22
+	 10 | Sara  |  20 | Kerala                                             |    30000 | 2020-11-22
+	(7 rows)
+
+	testdb=# select name,age from company1 group by age,name having count(age)<2;
+	 name  | age 
+	-------+-----
+	 Ramun |  39
+	 Van   |  39
+	 Sara  |  33
+	 sara  |  20
+	 Van   |  33
+	(5 rows)
+
+	testdb=# 
+
+19. DISTINCT clause is used with the Select clause to eliminate the duplicate records :>
+	
+	testdb=# select * from company1;
+	 id | name  | age |                      address                       |  salary  | join_date  
+	----+-------+-----+----------------------------------------------------+----------+------------
+	  3 | Van   |  39 | Delhi                                              | 25000.45 | 
+	  5 | Ramun |  39 | Haryana                                            |    40000 | 2001-11-23
+	  2 | Sara  |  33 | Goa                                                |    30000 | 2003-12-24
+	  7 | Sara  |  20 | Sikkim                                             |    30000 | 2019-03-22
+	  8 | Van   |  33 | Kerala                                             | 28000.34 | 2010-11-22
+	  9 | sara  |  20 | Kerala                                             |    30000 | 2020-11-22
+	 10 | Sara  |  20 | Kerala                                             |    30000 | 2020-11-22
+	(7 rows)
+
+	testdb=# select distinct name from company1;
+	 name  
+	-------
+	 Sara
+	 Ramun
+	 sara
+	 Van
+	(4 rows)
+
+20. Check CONSTRAINT : check for specific condition on a column if it matches validates the data to be entered in the table :> 
+
+	testdb=# insert into newcompany values (3,'Aish',30,'UP',0);
+	ERROR:  new row for relation "newcompany" violates check constraint "newcompany_salary_check"
+	DETAIL:  Failing row contains (3, Aish, 30, UP  
+	
+21. Exclude Constraint:  
+
+	testdb=# create table newcompany1(
+	testdb(# id int primary key not null,
+	testdb(# name text,
+	testdb(# age int,
+	testdb(# address char(50),
+	testdb(# salary real,
+	testdb(# exclude using gist(name with =, age with <>));
+	ERROR:  data type text has no default operator class for access method "gist"
+	HINT:  You must specify an operator class for the index or define a default operator class for the data type.
+
+	testdb=# create extension btree_gist ;
+	CREATE EXTENSION
+
+	testdb=# \d newcompany1;
+			Table "public.newcompany1"
+	 Column  |     Type      | Collation | Nullable | Default 
+	---------+---------------+-----------+----------+---------
+	 id      | integer       |           | not null | 
+	 name    | text          |           |          | 
+	 age     | integer       |           |          | 
+	 address | character(50) |           |          | 
+	 salary  | real          |           |          | 
+	Indexes:
+	    "newcompany1_pkey" PRIMARY KEY, btree (id)
+	    "newcompany1_name_age_excl" EXCLUDE USING gist (name WITH =, age WITH <>)
+
+	testdb=# select * from newcompany1;
+	 id | na	me  | age |                      address                       | salary 
+	----+-------+-----+----------------------------------------------------+--------
+	  1 | Aish  |  30 | UP                                                 |  20000
+	  2 | Ram   |  30 | UP                                                 |  20000
+	  3 | Aish  |  30 | UP                                                 |  20000
+	  4 | Aisha |  20 | UP                                                 |  20000
+	(4 rows)
+
+	testdb=# insert into newcompany1 values (5,'Ram',20,'UP',20000);
+	ERROR:  conflicting key value violates exclusion constraint "newcompany1_name_age_excl"
+	DETAIL:  Key (name, age)=(Ram, 20) conflicts with existing key (name, age)=(Ram, 30).
+	
+	testdb=# insert into newcompany1 values (5,'Ram',30,'UP',20000);
+	INSERT 0 1
+	testdb=# 
+
+22. Joins clause: is used to combine records from two or more tables, its a mean to combining fields from two or more fields by using commmon values :>
+
+	testdb=# select * from company;
+	 id |  name  | age |                      address                       | salary | join_date  
+	----+--------+-----+----------------------------------------------------+--------+------------
+	  4 | VanRam |  33 | Orissa                                             |  19000 | 2020-06-25
+	  6 | Ramun  |  23 | Delhi                                              |  10000 | 2019-03-22
+	  8 | Arjlb  |  23 | U.P                                                |  20000 | 2019-03-22
+	(3 rows)
+
+	testdb=# select * from department ;
+	 id |                        dept                        | emp_id 
+	----+----------------------------------------------------+--------
+	  1 | IT Billing                                         |      4
+	  2 | Engineering                                        |      6
+	  3 | Finance                                            |      7
+	(3 rows)
+
+	testdb=# select emp_id,name,dept from company cross join department ;
+	 emp_id |  name  |                        dept                        
+	--------+--------+----------------------------------------------------
+	      4 | VanRam | IT Billing                                        
+	      4 | Ramun  | IT Billing                                        
+	      4 | Arjlb  | IT Billing                                        
+	      6 | VanRam | Engineering                                       
+	      6 | Ramun  | Engineering                                       
+	      6 | Arjlb  | Engineering                                       
+	      7 | VanRam | Finance                                           
+	      7 | Ramun  | Finance                                           
+	      7 | Arjlb  | Finance                                           
+	(9 rows)
+
+	testdb=# select emp_id,name,dept from company inner join department on company.id = department.emp_id;
+	 emp_id |  name  |                        dept                        
+	--------+--------+----------------------------------------------------
+	      4 | VanRam | IT Billing                                        
+	      6 | Ramun  | Engineering                                       
+	(2 rows)
+
+
+	testdb=# select emp_id,name,dept from company left outer join department on department.emp_id = company.id;
+	 emp_id |  name  |                        dept                        
+	--------+--------+----------------------------------------------------
+	      4 | VanRam | IT Billing                                        
+	      6 | Ramun  | Engineering                                       
+		| Arjlb  | 
+	(3 rows)
+
+	testdb=# select emp_id,name,dept from department left outer join company on department.emp_id = company.id;
+	 emp_id |  name  |                        dept                        
+	--------+--------+----------------------------------------------------
+	      4 | VanRam | IT Billing                                        
+	      6 | Ramun  | Engineering                                       
+	      7 |        | Finance                                           
+	(3 rows)
+
+	testdb=# select emp_id,name,dept from company right outer join department on company.id=department.emp_id;
+	 emp_id |  name  |                        dept                        
+	--------+--------+----------------------------------------------------
+	      4 | VanRam | IT Billing                                        
+	      6 | Ramun  | Engineering                                       
+	      7 |        | Finance                                           
+	(3 rows)
+
+	testdb=# select emp_id,name,dept from company full outer join department on company.id=department.emp_id;
+	 emp_id |  name  |                        dept                        
+	--------+--------+----------------------------------------------------
+	      4 | VanRam | IT Billing                                        
+	      6 | Ramun  | Engineering                                       
+	      7 |        | Finance                                           
+		| Arjlb  | 
+	(4 rows)
+	
+23. Count number of employee in each department :>
+
+	testdb=# select dept,count(dept) from department group by dept;
+				dept                        | count 
+	----------------------------------------------------+-------
+	 Finance                                            |     3
+	 IT Billing                                         |     3
+	 Engineering                                        |     3
+	(3 rows)
+
+24. Union: Clause/Operator used  with two or more select statements combining the result without any duplicate rows :>
+
+	testdb=# select emp_id,name,dept from company1 inner join department on company1.id=department.emp_id 
+	union
+	select emp_id,name,dept from company1 left outer join department on company1.id=department.emp_id;
+	 emp_id | name  |                        dept                        
+	--------+-------+----------------------------------------------------
+	     10 | Sara  | Finance                                           
+	      5 | Ramun | Finance                                           
+	      9 | sara  | Engineering                                       
+	      3 | Van   | IT Billing                                        
+	      7 | Sara  | Finance                                           
+	      8 | Van   | IT Billing                                        
+	      2 | Sara  | Engineering                                       
+	(7 rows)
+
+	testdb=# select emp_id,name,dept from company1 inner join department on company1.id=department.emp_id 
+	union all
+	select emp_id,name,dept from company1 left outer join department on company1.id=department.emp_id;
+	 emp_id | name  |                        dept                        
+	--------+-------+----------------------------------------------------
+	      7 | Sara  | Finance                                           
+	      3 | Van   | IT Billing                                        
+	      2 | Sara  | Engineering                                       
+	      5 | Ramun | Finance                                           
+	      8 | Van   | IT Billing                                        
+	      9 | sara  | Engineering                                       
+	     10 | Sara  | Finance                                           
+	      7 | Sara  | Finance                                           
+	      3 | Van   | IT Billing                                        
+	      2 | Sara  | Engineering                                       
+	      5 | Ramun | Finance                                           
+	      8 | Van   | IT Billing                                        
+	      9 | sara  | Engineering                                       
+	     10 | Sara  | Finance                                           
+	(14 rows)
+	 
+25. Auto Increment : Psql has data types samllserial, serial, bigserial these are not actual datatypes but are used for uniquely identify the columns, these are same as Auto_Increment functions in other databases :>
+
+
