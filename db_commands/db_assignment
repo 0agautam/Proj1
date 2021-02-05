@@ -1,0 +1,281 @@
+==================Assignment=====================
+Tracking of Airline Flight information
+
+Database Assignment:
+Questions
+1. The following relations keep track of airline flight information:
+Flights(flno: integer, from: string, to: string, distance: integer, departs:
+time,
+arrives: time, price: integer)
+Aircraft(aid: integer, aname: string, cruisingrange: integer)
+Certified(eid: integer, aid: integer)
+Employees(eid: integer, ename: string, salary: integer)
+
+Note that the Employees relation describes pilots and other kinds of employees
+aswell; every pilot is certified for some aircraft, and only pilots are certified to
+fly.Write each of the following queries in SQL.
+
+
+
+
+
+1.Insertion of data in tables :>
+
+	airline=# select * from airline.flights;
+	 id | fno  | fromlocation | tolocation | distance | departs  | arrives  | price  
+	----+------+--------------+------------+----------+----------+----------+--------
+	  1 | 9001 | Los Angles   | Honolulu   |      600 | 07:00:00 | 11:00:00 |  60000
+	  2 | 9002 | Los Angles   | Chicago    |     1000 | 05:00:00 | 11:00:00 | 300000
+	  3 | 9003 | Madison      | New York   |     1500 | 10:00:00 | 19:00:00 | 500000
+	  4 | 9004 | Seatle       | New York   |     1000 | 09:00:00 | 16:00:00 | 200000
+	  5 | 9005 | Madison      | Seatle     |      450 | 05:00:00 | 08:00:00 |  55000
+	  6 | 9006 | Madison      | Honolulu   |      600 | 07:00:00 | 11:00:00 |  50000
+	  7 | 9007 | Honolulu     | New York   |     1200 | 11:00:00 | 20:00:00 | 250000
+	  8 | 9008 | Los Angles   | Madison    |      900 | 14:00:00 | 20:00:00 |  90000
+	  9 | 9009 | New York     | Madison    |     1200 | 09:00:00 | 18:00:00 | 150000
+	 10 | 9010 | Illinois     | California |      500 | 12:00:00 | 15:00:00 |  40000
+
+	airline=# select * from airline.aircraft;
+	 id | aid  |     aname     | cr_range 
+	----+------+---------------+----------
+	  1 | 1001 | Boeing        |      600
+	  2 | 1002 | Spice         |      700
+	  3 | 1003 | BoeingAlpha   |     1500
+	  4 | 1004 | ShuttleShip   |      900
+	  5 | 1005 | BoeingHX      |     1000
+	  6 | 1006 | SmartEngine   |     2000
+	  7 | 1007 | XingPlane     |      600
+	  8 | 1008 | ShuttleShipLQ |      800
+	  9 | 1009 | BoeingHQ      |     1200
+	 10 | 1010 | Vistara       |     3000
+	(10 rows)
+
+	airline=# select * from airline.employees;
+	 id | eid |   ename   | salary | ispilot 
+	----+-----+-----------+--------+---------
+	  1 | 101 | Sam       | 100000 | t
+	  2 | 102 | Reno Baks |  30000 | f
+	  3 | 103 | VimJe     |  25000 | f
+	  4 | 104 | Shelly    |  60000 | t
+	  5 | 105 | Mona      | 150000 | t
+	  6 | 106 | Xim       |  40000 | f
+	  7 | 107 | Haong     |  90000 | t
+	  8 | 108 | Ranim     |  77000 | f
+	  9 | 109 | Bashi     |  41000 | f
+	 10 | 110 | Amika     |  95000 | t
+	(10 rows)
+	
+	airline=# select * from airline.certified;
+	 id | eid | aid  
+	----+-----+------
+	  1 | 101 | 1001
+	  2 | 101 | 1002
+	  3 | 104 | 1003
+	  4 | 104 | 1004
+	  5 | 101 | 1004
+	  6 | 101 | 1005
+	  7 | 105 | 1006
+	  8 | 105 | 1008
+	  9 | 105 | 1009
+	 10 | 105 | 1010
+	 11 | 107 | 1005
+	 12 | 107 | 1007
+	 13 | 110 | 1001
+	 14 | 110 | 1009
+	(14 rows)
+
+Question a. Find the names of aircraft such that all pilots certified to operate them earn
+more than $80,000.
+
+
+airline=# select aname from airline.aircraft where aid in (select aid from airline.certified where eid in (select eid from airline.employees where salary > 100000 and ispilot is true));
+     aname     
+---------------
+ SmartEngine
+ ShuttleShipLQ
+ BoeingHQ
+ Vistara
+(4 rows)
+
+Question b. For each pilot who is certified for more than three aircraft, find the eid and the
+maximum cruisingrange of the aircraft for which she or he is certified.
+
+ISSUE
+
+airline=# select aid,eid from airline.certified where eid in (select eid from airline.certified group by eid having count(eid)>3);
+ aid  | eid 
+------+-----
+ 1001 | 101
+ 1002 | 101
+ 1004 | 101
+ 1005 | 101
+ 1006 | 105
+ 1008 | 105
+ 1009 | 105
+ 1010 | 105
+(8 rows)
+
+airline=# select aid,cr_range from airline.aircraft where aid in (select aid from airline.certified where eid in (select eid from airline.certified group by eid having count(eid)>3));
+ aid  | cr_range 
+------+----------
+ 1001 |      600
+ 1002 |      700
+ 1004 |      900
+ 1005 |     1000
+ 1006 |     2000
+ 1008 |      800
+ 1009 |     1200
+ 1010 |     3000
+(8 rows)
+
+Question c. Find the names of pilots whose salary is less than the price of the cheapest
+route from Los Angeles to Honolulu.
+
+
+airline=# select ename from airline.employees where salary < (select price from airline.flights where fromlocation like ('Los Angles') and tolocation like ('Chicago')) and ispilot is true;
+ ename  
+--------
+ Sam
+ Shelly
+ Mona
+ Haong
+ Amika
+(5 rows)
+
+airline=# select ename from airline.employees where salary < (select price from airline.flights where fromlocation like ('Los Angles') and tolocation like ('Honolulu')) and ispilot is true;
+ ename 
+-------
+(0 rows)
+
+Question d. For all aircraft with cruisingrange over 1000 miles, find the name of the
+aircraft and the average salary of all pilots certified for this aircraft.
+
+ISSUE
+
+airline=# select aid,aname,cr_range from airline.aircraft where cr_range > 1000;
+ aid  |    aname    | cr_range 
+------+-------------+----------
+ 1003 | BoeingAlpha |     1500
+ 1006 | SmartEngine |     2000
+ 1009 | BoeingHQ    |     1200
+ 1010 | Vistara     |     3000
+(4 rows)
+
+airline=# select eid,aid from airline.certified where aid in (select aid from airline.aircraft where cr_range > 1000);
+ eid | aid  
+-----+------
+ 104 | 1003
+ 105 | 1006
+ 105 | 1009
+ 105 | 1010
+ 110 | 1009
+(5 rows)
+
+Question e. Find the names of pilots certified for some Boeing aircraft.
+
+airline=# select ename from airline.employees where eid in (select eid from airline.certified where aid in (select aid from airline.aircraft where aname like 'Boeing%'));
+ ename  
+--------
+ Mona
+ Sam
+ Shelly
+ Amika
+ Haong
+(5 rows)
+
+Question f. Find the aids of all aircraft that can be used on routes from Los Angeles to Chicago.
+
+airline=# select aid from airline.aircraft where cr_range > (select distance from airline.flights where fromlocation like 'Los Angles' and tolocation like 'Chicago');
+ aid  
+------
+ 1003
+ 1006
+ 1009
+ 1010
+(4 rows)
+
+
+Question g. Identify the routes that can be piloted by every pilot who makes more than
+$100,000.
+
+ISSUE
+
+
+Question h. Print the enames of pilots who can operate planes with cruisingrange greater
+than 3000 miles but are not certified on any Boeing aircraft.
+
+airline=# select ename from airline.employees where eid in (select eid from airline.certified where aid in (select aid from airline.aircraft where cr_range>=3000 and aname not like 'Boeing%'));
+ ename 
+-------
+ Mona
+(1 row)
+
+Question i. A customer wants to travel from Madison to New York with no more than two
+changes of flight. List the choice of departure times from Madison if the
+customer wants to arrive in New York by 6 p.m.
+
+ISSUE
+
+Question j. Compute the difference between the average salary of a pilot and the average
+salary of all employees (including pilots).
+
+airline=# select avg(salary) as "Average of Pilots" from airline.employees where ispilot is true;
+ Average of Pilots  
+--------------------
+ 99000.000000000000
+(1 row)
+
+airline=# select avg(salary) as "Average of All" from airline.employees;
+   Average of All   
+--------------------
+ 70800.000000000000
+(1 row)
+
+
+airline=# select ((select avg(salary) as "Average of Pilots" from airline.employees where ispilot is true)-(select avg(salary) as "Average of All" from airline.employees)) as "Difference in Average of Pilots and Total Employees in Airlines" ;
+ Difference in Average of Pilots and Total Employees in Airlines 
+-----------------------------------------------------------------
+                                              28200.000000000000
+
+
+Question k. Print the name and salary of every nonpilot whose salary is more than the
+average salary for pilots.
+
+airline=# select ename,salary from airline.employees where salary > (select avg(salary) as "Average of Pilots" from airline.employees where ispilot is true) and ispilot is false;
+ ename | salary 
+-------+--------
+(0 rows)
+
+
+Question l. Print the names of employees who are certified only on aircrafts with cruising
+range longer than 1000 miles.
+
+airline=# select ename from airline.employees where eid in (select eid from airline.certified where aid in (select aid from airline.aircraft where cr_range>1000));
+ ename  
+--------
+ Shelly
+ Mona
+ Amika
+(3 rows)
+
+
+Question m. Print the names of employees who are certified only on aircrafts with cruising
+range longer than 1000 miles, but on at least two such aircrafts.
+
+ISSUE
+
+airline=# select eid from airline.certified group by (eid) having count(select eid from airline.certified where aid in (select aid from airline.aircraft where cr_range>1000))>2;
+ERROR:  syntax error at or near "select"
+LINE 1: ...rom airline.certified group by (eid) having count(select eid...
+
+
+Question n. Print the names of employees who are certified only on aircrafts with cruising
+range longer than 1000 miles and who are certified on some Boeing aircraft.
+
+airline=# select distinct ename from airline.employees where eid in (select eid from airline.certified where aid in (select aid from airline.aircraft where cr_range>1000 and aname not like 'Boeing%'));
+ ename 
+-------
+ Mona
+(1 row)
+
+
