@@ -16,7 +16,6 @@ aswell; every pilot is certified for some aircraft, and only pilots are certifie
 fly.Write each of the following queries in SQL.
 
 
-xyz_airlines=# select y.eid, max(x.cruising_range) max_cruising_range from (select eid,aid from certified where eid in (select eid from certified group by eid having count(aid)>3))as y inner join aircrafts x using(aid)group by y.eid;
 
 
 1.Insertion of data in tables :>
