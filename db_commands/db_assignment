@@ -16,7 +16,7 @@ aswell; every pilot is certified for some aircraft, and only pilots are certifie
 fly.Write each of the following queries in SQL.
 
 
-
+xyz_airlines=# select y.eid, max(x.cruising_range) max_cruising_range from (select eid,aid from certified where eid in (select eid from certified group by eid having count(aid)>3))as y inner join aircrafts x using(aid)group by y.eid;
 
 
 1.Insertion of data in tables :>
@@ -84,6 +84,39 @@ fly.Write each of the following queries in SQL.
 	 14 | 110 | 1009
 	(14 rows)
 
+
+Addition of Foreign key constraint on the table Certified :>
+
+	airline=# alter table airline.certified add constraint fk_aid foreign key (aid) references airline.aircraft(aid);
+	ALTER TABLE
+	airline=# \d airline.certified
+					Table "airline.certified"
+	 Column |  Type   | Collation | Nullable |                    Default                    
+	--------+---------+-----------+----------+-----------------------------------------------
+	 id     | integer |           | not null | nextval('airline.certified_id_seq'::regclass)
+	 eid    | integer |           | not null | 
+	 aid    | integer |           | not null | 
+	Indexes:
+	    "certified_pkey" PRIMARY KEY, btree (id)
+	Foreign-key constraints:
+	    "fk_aid" FOREIGN KEY (aid) REFERENCES airline.aircraft(aid)
+
+	airline=# alter table airline.certified add constraint fk_eid foreign key (eid) references airline.employees(eid);
+	ALTER TABLE
+	airline=# \d airline.certified
+					Table "airline.certified"
+	 Column |  Type   | Collation | Nullable |                    Default                    
+	--------+---------+-----------+----------+-----------------------------------------------
+	 id     | integer |           | not null | nextval('airline.certified_id_seq'::regclass)
+	 eid    | integer |           | not null | 
+	 aid    | integer |           | not null | 
+	Indexes:
+	    "certified_pkey" PRIMARY KEY, btree (id)
+	Foreign-key constraints:
+	    "fk_aid" FOREIGN KEY (aid) REFERENCES airline.aircraft(aid)
+	    "fk_eid" FOREIGN KEY (eid) REFERENCES airline.employees(eid)
+
+
 Question a. Find the names of aircraft such that all pilots certified to operate them earn
 more than $80,000.
 
@@ -100,33 +133,13 @@ airline=# select aname from airline.aircraft where aid in (select aid from airli
 Question b. For each pilot who is certified for more than three aircraft, find the eid and the
 maximum cruisingrange of the aircraft for which she or he is certified.
 
-ISSUE
+airline=#  select y.eid, max(x.cr_range) max_cruising_range from (select eid,aid from airline.certified where eid in (select eid from airline.certified group by eid having count(aid)>3))as y inner join airline.aircraft x using(aid)group by y.eid;
+ eid | max_cruising_range 
+-----+--------------------
+ 101 |               1000
+ 105 |               3000
+(2 rows)
 
-airline=# select aid,eid from airline.certified where eid in (select eid from airline.certified group by eid having count(eid)>3);
- aid  | eid 
-------+-----
- 1001 | 101
- 1002 | 101
- 1004 | 101
- 1005 | 101
- 1006 | 105
- 1008 | 105
- 1009 | 105
- 1010 | 105
-(8 rows)
-
-airline=# select aid,cr_range from airline.aircraft where aid in (select aid from airline.certified where eid in (select eid from airline.certified group by eid having count(eid)>3));
- aid  | cr_range 
-------+----------
- 1001 |      600
- 1002 |      700
- 1004 |      900
- 1005 |     1000
- 1006 |     2000
- 1008 |      800
- 1009 |     1200
- 1010 |     3000
-(8 rows)
 
 Question c. Find the names of pilots whose salary is less than the price of the cheapest
 route from Los Angeles to Honolulu.
@@ -150,26 +163,14 @@ airline=# select ename from airline.employees where salary < (select price from 
 Question d. For all aircraft with cruisingrange over 1000 miles, find the name of the
 aircraft and the average salary of all pilots certified for this aircraft.
 
-ISSUE
-
-airline=# select aid,aname,cr_range from airline.aircraft where cr_range > 1000;
- aid  |    aname    | cr_range 
-------+-------------+----------
- 1003 | BoeingAlpha |     1500
- 1006 | SmartEngine |     2000
- 1009 | BoeingHQ    |     1200
- 1010 | Vistara     |     3000
+airline=# select x.aname, round(avg(y.salary)) as avg_salary from (select aname,aid from airline.aircraft where cr_range>1000) as x inner join pilot as y using (aid) group by x.aname;
+    aname    | avg_salary 
+-------------+------------
+ Vistara     |     150000
+ BoeingHQ    |     122500
+ SmartEngine |     150000
+ BoeingAlpha |      60000
 (4 rows)
-
-airline=# select eid,aid from airline.certified where aid in (select aid from airline.aircraft where cr_range > 1000);
- eid | aid  
------+------
- 104 | 1003
- 105 | 1006
- 105 | 1009
- 105 | 1010
- 110 | 1009
-(5 rows)
 
 Question e. Find the names of pilots certified for some Boeing aircraft.
 
@@ -198,7 +199,19 @@ airline=# select aid from airline.aircraft where cr_range > (select distance fro
 Question g. Identify the routes that can be piloted by every pilot who makes more than
 $100,000.
 
-ISSUE
+airline=# select fromlocation,tolocation from airline.flights as x inner join (select cr_range from airline.aircraft where aid in (select aid from pilot where salary > 100000) ) as y on (x.distance*2<y.cr_range) group by fromlocation,tolocation;
+ fromlocation | tolocation 
+--------------+------------
+ Madison      | Seatle
+ Los Angles   | Madison
+ Illinois     | California
+ Seatle       | New York
+ Los Angles   | Honolulu
+ New York     | Madison
+ Madison      | Honolulu
+ Los Angles   | Chicago
+ Honolulu     | New York
+(9 rows)
 
 
 Question h. Print the enames of pilots who can operate planes with cruisingrange greater
@@ -214,7 +227,15 @@ Question i. A customer wants to travel from Madison to New York with no more tha
 changes of flight. List the choice of departure times from Madison if the
 customer wants to arrive in New York by 6 p.m.
 
-ISSUE
+airline=# create view flight_NY as select fromlocation,departs from airline.flights where tolocation = 'New York' and arrives < '18:00';
+CREATE VIEW
+
+airline=# select departs from flight_NY where fromlocation = 'Madison' or fromlocation in (select x.fromlocation from flight_NY x inner join airline.flights y on (x.fromlocation = y.tolocation and y.fromlocation ='Madison')) or fromlocation in (select a.tolocation from (select x.fromlocation,x.tolocation from airline.flights x inner join flight_NY y on (y.fromlocation = x.tolocation)) a inner join airline.flights b on (a.fromlocation = b.tolocation and b.fromlocation = 'Madison'));
+ departs  
+----------
+ 09:00:00
+(1 row)
+
 
 Question j. Compute the difference between the average salary of a pilot and the average
 salary of all employees (including pilots).
@@ -262,11 +283,11 @@ airline=# select ename from airline.employees where eid in (select eid from airl
 Question m. Print the names of employees who are certified only on aircrafts with cruising
 range longer than 1000 miles, but on at least two such aircrafts.
 
-ISSUE
-
-airline=# select eid from airline.certified group by (eid) having count(select eid from airline.certified where aid in (select aid from airline.aircraft where cr_range>1000))>2;
-ERROR:  syntax error at or near "select"
-LINE 1: ...rom airline.certified group by (eid) having count(select eid...
+airline=# select ename from (select ename from pilot where aid in (select aid from airline.aircraft where cr_range > 1000) ) as x group by ename having count(ename)>=2;
+ ename 
+-------
+ Mona
+(1 row)
 
 
 Question n. Print the names of employees who are certified only on aircrafts with cruising
