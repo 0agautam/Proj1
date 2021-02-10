@@ -144,7 +144,7 @@ Question c. Find the names of pilots whose salary is less than the price of the 
 route from Los Angeles to Honolulu.
 
 
-airline=# select ename from airline.employees where salary < (select price from airline.flights where fromlocation like ('Los Angles') and tolocation like ('Chicago')) and ispilot is true;
+airline=# select ename from airline.employees where salary < (select min(price) from airline.flights where fromlocation like ('Los Angles') and tolocation like ('Chicago')) and ispilot is true;
  ename  
 --------
  Sam
@@ -173,6 +173,16 @@ airline=# select x.aname, round(avg(y.salary)) as avg_salary from (select aname,
  BoeingHQ    |     122500
  SmartEngine |     150000
  BoeingAlpha |      60000
+(4 rows)
+
+And another way of doing this command is :>
+
+airline=# select z.aname,pilot.Average_Salary from (select x.aid,round(avg(y.salary)) Average_Salary from ( select eid,aid from airline.certified where aid in (select aid from airline.aircraft where cr_range>1000)) as x inner join airline.employees as y using (eid) group by aid) as pilot inner join airline.aircraft z using (aid);    aname    | average_salary 
+-------------+----------------
+ BoeingHQ    |         122500
+ BoeingAlpha |          60000
+ SmartEngine |         150000
+ Vistara     |         150000
 (4 rows)
 
 Question e. Find the names of pilots certified for some Boeing aircraft.
@@ -215,6 +225,23 @@ airline=# select fromlocation,tolocation from airline.flights as x inner join (s
  Los Angles   | Chicago
  Honolulu     | New York
 (9 rows)
+
+Another way of doing this is :>
+
+airline=# select tolocation,fromlocation from airline.flights as x inner join (select cr_range from airline.aircraft where aid in (select aid from airline.certified where eid in (select eid from airline.employees where salary>=100000))) as y on (x.distance*2<y.cr_range) group by tolocation,fromlocation ;
+ tolocation | fromlocation 
+------------+--------------
+ Honolulu   | Los Angles
+ Madison    | Los Angles
+ Chicago    | Los Angles
+ Madison    | New York
+ New York   | Honolulu
+ California | Illinois
+ Honolulu   | Madison
+ Seatle     | Madison
+ New York   | Seatle
+(9 rows)
+
 
 
 Question h. Print the enames of pilots who can operate planes with cruisingrange greater
