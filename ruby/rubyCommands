@@ -1,0 +1,655 @@
+								Ruby
+
+Ruby is a purely object oriented programming(scripting) language like perl, smalltalk, python. It has very easy to understand code design language which helps programmers to develop software effeciently and in a short span of time because the code is much short and easy than other languages.
+
+1. Installation of RVM (Ruby Version Manager) :> https://rvm.io/rvm/install (Installation Guide)
+	Install GPG keys: 
+	gr00t@Gr00t:~$ gpg2 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+	bash: gpg2: command not found
+			
+	gpg2
+	GNU privacy guard - a free PGP replacement (dummy transitional package)
+
+	gr00t@Gr00t:~$ sudo apt-get install gnupg2
+
+	gr00t@Gr00t:~$ sudo gpg2 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+	gpg: /root/.gnupg/trustdb.gpg: trustdb created
+	gpg: key 105BD0E739499BDB: public key "Piotr Kuczynski <piotr.kuczynski@gmail.com>" imported
+	gpg: key 3804BB82D39DC0E3: new key but contains no user ID - skipped
+	gpg: Total number processed: 2
+	gpg:           w/o user IDs: 1
+	gpg:               imported: 1
+	gr00t@Gr00t:~$ 
+
+	gr00t@Gr00t:~$ \curl -sSL https://get.rvm.io | bash -s stable
+	Downloading https://github.com/rvm/rvm/archive/1.29.12.tar.gz
+	Downloading https://github.com/rvm/rvm/releases/download/1.29.12/1.29.12.tar.gz.asc
+	gpg: Signature made Saturday 16 January 2021 12:16:22 AM IST
+	gpg:                using RSA key 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+	gpg: Can't check signature: No public key
+	GPG signature verification failed for '/home/gr00t/.rvm/archives/rvm-1.29.12.tgz' - 'https://github.com/rvm/rvm/releases/download/1.29.12/1.29.12.tar.gz.asc'! Try to install GPG v2 and then fetch the public key:
+
+	    gpg2 --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+
+	or if it fails:
+
+	    command curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
+	    command curl -sSL https://rvm.io/pkuczynski.asc | gpg2 --import -
+
+	In case of further problems with validation please refer to https://rvm.io/rvm/security
+
+	Run this command to get the GPG key :>
+
+	gr00t@Gr00t:~$ gpg2 --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+	gpg: /home/gr00t/.gnupg/trustdb.gpg: trustdb created
+	gpg: key 105BD0E739499BDB: public key "Piotr Kuczynski <piotr.kuczynski@gmail.com>" imported
+	gpg: key 3804BB82D39DC0E3: public key "Michal Papis (RVM signing) <mpapis@gmail.com>" imported
+	gpg: Total number processed: 2
+	gpg:               imported: 2
+
+	Installing RVM :>
+	1. Download and run the RVM installation script
+	gr00t@Gr00t:~$ \curl -sSL https://get.rvm.io | bash -s stable
+
+	To get the latest development state:
+
+	$ \curl -sSL https://get.rvm.io | bash
+
+	Instruct RVM to not change the shell initializations files 'rc' / 'profile':
+
+	$ \curl -sSL https://get.rvm.io | bash -s -- --ignore-dotfiles
+
+	Debugging installation process:
+
+	$ \curl -sSL https://get.rvm.io | bash -s -- --trace
+
+	Thing to remember:
+	Single-User Install Location: ~/.rvm/
+
+	If the install script is run as a standard, non-root user, RVM will install into the current users's home directory.
+
+	Modification of user configuration files (*rc / *profile) - RVM by default will modify user startup files, although it is not recommended you can disable automated process and do this manually:
+
+	$ \curl -sSL https://get.rvm.io | bash -s -- --ignore-dotfiles
+	$ echo "source $HOME/.rvm/scripts/rvm" >> ~/.bash_profile
+
+	2. Load RVM into your shell sessions as a function
+	Single-User:
+
+	The rvm function will be automatically configured for every user on the system if you install as single user. Read the output of installer to check which files were modified.
+
+	3. Reload shell configuration & test
+
+	Close out your current shell or terminal session and open a new one (preferred). You may load RVM with the following command:
+
+	gr00t@Gr00t:~$ source ~/.rvm/scripts/rvm 
+	gr00t@Gr00t:~$ type rvm | head -n 1
+	rvm is a function
+
+	Confirm if RVM is installed on your system or not by using this command :>
+
+	gr00t@Gr00t:~$ rvm --version
+	rvm 1.29.12-next (master) by Michal Papis, Piotr Kuczynski, Wayne E. Seguin [https://rvm.io]
+
+2.Display a list of all known rubies. NOTE: RVM can install many more Rubies not listed.
+
+	gr00t@Gr00t:~$ rvm list known
+	# MRI Rubies
+	[ruby-]1.8.6[-p420]
+	[ruby-]1.8.7[-head] # security released on head
+	[ruby-]1.9.1[-p431]
+	[ruby-]1.9.2[-p330]
+	[ruby-]1.9.3[-p551]
+	[ruby-]2.0.0[-p648]
+	[ruby-]2.1[.10]
+	[ruby-]2.2[.10]
+	[ruby-]2.3[.8]
+	[ruby-]2.4[.10]
+	[ruby-]2.5[.8]
+	[ruby-]2.6[.6]
+	[ruby-]2.7[.2]
+	[ruby-]3[.0.0]
+	ruby-head
+
+	# for forks use: rvm install ruby-head-<name> --url https://github.com/github/ruby.git --branch 2.2
+
+	# JRuby
+	jruby-1.6[.8]
+	jruby-1.7[.27]
+	jruby-9.1[.17.0]
+	jruby[-9.2.14.0]
+	jruby-head
+
+	# Rubinius
+	rbx-1[.4.3]
+	rbx-2.3[.0]
+	rbx-2.4[.1]
+	rbx-2[.5.8]
+	rbx-3[.107]
+	rbx-4[.20]
+	rbx-5[.0]
+	rbx-head
+
+	# TruffleRuby
+	truffleruby[-21.0.0]
+
+	# Opal
+	opal
+
+	# Minimalistic ruby implementation - ISO 30170:2012
+	mruby-1.0.0
+	mruby-1.1.0
+	mruby-1.2.0
+	mruby-1.3.0
+	mruby-1[.4.1]
+	mruby-2.0.1
+	mruby-2[.1.1]
+	mruby[-head]
+
+	# Ruby Enterprise Edition
+	ree-1.8.6
+	ree[-1.8.7][-2012.02]
+
+	# Topaz
+	topaz
+
+	# MagLev
+	maglev-1.0.0
+	maglev-1.1[RC1]
+	maglev[-1.2Alpha4]
+	maglev-head
+
+	# Mac OS X Snow Leopard Or Newer
+	macruby-0.10
+	macruby-0.11
+	macruby[-0.12]
+	macruby-nightly
+	macruby-head
+
+	# IronRuby
+	ironruby[-1.1.3]
+	ironruby-head
+	gr00t@Gr00t:~$ 
+	 
+	3. Using RVM to install ruby :>
+	gr00t@Gr00t:~$ rvm list
+
+	# No rvm rubies installed yet. Try 'rvm help install'.
+
+	Ruby RVM apt-get update error:
+
+	gr00t@Gr00t:~$ rvm install ruby
+	Searching for binary rubies, this might take some time.
+	No binary rubies available for: debian/kali-rolling/x86_64/ruby-3.0.0.
+	Continuing with compilation. Please read 'rvm help mount' to get more information on binary rubies.                                                                   
+	Checking requirements for debian.
+	Installing requirements for debian.
+	Updating systemgr00t password required for 'apt-get --quiet --yes update': ../
+	Sorry, try again.
+	gr00t password required for 'apt-get --quiet --yes update': 
+	...There has been an error while updating your system using `apt-get`.
+	It seems that there are some 404 Not Found errors for repositories listed in:
+
+	    /etc/apt/sources.list
+	    /etc/apt/sources.list.d/*.list
+
+	Make sure that all repositories are available from your system and verify your setup by running manually:
+
+	    sudo apt-get update
+
+	Make sure that it works correctly before proceeding with RVM.
+
+	If you are working from the GUI instead of the terminal, you might want to verify and fix broken
+	repositories using "Software & Updates" application.
+
+	...
+	Error running 'requirements_debian_update_system ruby-3.0.0',
+	please read /home/gr00t/.rvm/log/1612936586_ruby-3.0.0/update_system.log
+	Requirements installation failed with status: 100.
+
+	Visit this site to Understand the Error :>
+	I just went to this site to find the help for source of my error and i didn't installed from this site.
+	https://gorails.com/setup/ubuntu/15.04
+	And The Source of Help for the Error I was facing is :> Always StackOverflow
+	https://stackoverflow.com/questions/23650992/ruby-rvm-apt-get-update-error
+
+	removed from /etc/apt/sources.list.d/
+	gr00t@Gr00t:/etc/apt/sources.list.d$ sudo rm nilarimogard-ubuntu-webupd8-groovy.list nilarimogard-ubuntu-webupd8-groovy.list.save 
+	gr00t@Gr00t:/etc/apt/sources.list.d$ ls
+	skype-stable.list  skype-stable.list.save  sublime-text.list  sublime-text.list.save
+
+	Finally listing the rubies installed in the system :)
+
+	gr00t@Gr00t:~$ rvm list
+	=* ruby-3.0.0 [ x86_64 ]
+
+	# => - current
+	# =* - current && default
+	#  * - default
+
+	Confirming Ruby version Installed on your system :
+
+	gr00t@Gr00t:~$ ruby -v
+	ruby 3.0.0p0 (2020-12-25 revision 95aff21468) [x86_64-linux]
+	gr00t@Gr00t:~$ which ruby
+	/home/gr00t/.rvm/rubies/ruby-3.0.0/bin/ruby
+
+	Making latest version as default version and be aware that it will override sytem default ruby :>
+	gr00t@Gr00t:~$ rvm use 3.0.0 --default
+
+	RVM is not a function, selecting rubies with 'rvm use ...' will not work.
+
+	You need to change your terminal emulator preferences to allow login shell.
+	Sometimes it is required to use `/bin/bash --login` as the command.
+	Please visit https://rvm.io/integration/gnome-terminal/ for an example.
+
+	gr00t@Gr00t:~$ /bin/bash --login
+	┏━(Message from Kali developers)
+	┃
+	┃ This is a minimal installation of Kali Linux, you likely
+	┃ want to install supplementary tools. Learn how:
+	┃ ⇒ https://www.kali.org/docs/troubleshooting/common-minimum-setup/
+	┃
+	┗━(Run “touch ~/.hushlogin” to hide this message)
+	gr00t@Gr00t:~$ rvm use 3.0.0 --default
+	Using /home/gr00t/.rvm/gems/ruby-3.0.0
+	gr00t@Gr00t:~$ ruby --version
+	ruby 3.0.0p0 (2020-12-25 revision 95aff21468) [x86_64-linux]
+	gr00t@Gr00t:~$ 
+
+3.Programs :>
+
+1. Here Document in Ruby :
+
+	#!/usr/bin/ruby -w 
+
+	print <<EOF
+	   This is the first way of creating
+	   here document ie. multiple line string.
+	EOF
+
+	print <<"EOF";                # same as above
+	   This is the second way of creating
+	   here document ie. multiple line string.
+	EOF
+
+	print <<`EOC`                 # execute commands
+		echo hi there
+		echo lo there
+	EOC
+
+	print <<"foo", <<"bar"  # you can stack them
+		I said foo.
+	foo
+		I said bar.
+	bar
+
+	#Comments in Ruby
+
+	#Multiple line comments
+
+	=begin
+	This is a comment.
+	This is a comment, too.
+	This is a comment, too.
+	I said that already.
+	=end
+
+  
+4. Variables :>
+	local variables are limited to a particular block or method.
+	Begin with an _ or lowercase letter.
+	
+	object variable are limited to particular object and accessible by methods for which they are defined and consist the object data.
+	Begin with @ sign.
+
+	class variable are accessbile by class all objects of that class. Begin with @@ sign.
+	
+	global variables are available across multiple classes. Begin with $ sign.
+
+5. Some Commands :>
+
+gr00t@Gr00t:~$ irb
+irb(main):001:0> 123
+=> 123
+irb(main):002:0> 1_234
+=> 1234
+irb(main):003:0> -5_0
+=> -50
+irb(main):004:0> 0377
+=> 255
+irb(main):005:0> 0x33
+=> 51
+irb(main):006:0> 0xf
+=> 15
+irb(main):007:0> 0xff
+=> 255
+irb(main):008:0> 0b1011
+=> 11
+irb(main):009:0> ?a
+=> "a"
+irb(main):010:0> ?ab
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):10: syntax error, unexpected '?')
+irb(main):011:0> ?b
+=> "b"
+irb(main):012:0* ?
+irb(main):013:0> ?\n
+(irb):12: warning: invalid character syntax; use ?\n
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):12: syntax error, unexpected '?')
+irb(main):014:0> ?\
+=> "\n"
+irb(main):015:0> 123232313123123131322313131321312
+=> 123232313123123131322313131321312
+irb(main):016:0> 123.2
+=> 123.2
+irb(main):017:0> 123.3423223
+=> 123.3423223
+irb(main):018:0> 1.2e3
+=> 1200.0
+irb(main):019:0> 1.22e3
+=> 1220.0
+irb(main):020:0> 1.2E3
+=> 1200.0
+irb(main):021:0> 4E+20
+=> 4.0e+20
+irb(main):022:0> 4E20
+=> 4.0e+20
+irb(main):023:0> puts "abcd\cd"
+abcd
+=> nil
+irb(main):024:0> puts "abcd\ef"
+abcd
+=> nil
+irb(main):025:0> puts "abcd\\ef"
+abcd\ef
+=> nil
+irb(main):026:0> puts 'abcd\\e'
+abcd\e
+=> nil
+irb(main):027:0> puts 'abcd'\e'
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):27: syntax error, unexpected backslash, expecting end-of-input)
+puts 'abcd'\e'
+           ^
+irb(main):028:0> puts 'abcd"\ e"\e'
+abcd"\ e"\e
+=> nil
+irb(main):029:0> puts 'abcd'\ e'\e'
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):29: syntax error, unexpected escaped space, expecting end-of-input)
+puts 'abcd'\ e'\e'
+           ^~
+irb(main):030:0> puts "abcd"\"\e"
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):30: syntax error, unexpected backslash, expecting `end')
+puts "abcd"\"\e"
+           ^
+irb(main):031:0> puts "abcd '\ '\ e"
+abcd ' ' e
+=> nil
+irb(main):032:0> puts 'abcd "\ "\ e'
+abcd "\ "\ e
+=> nil
+irb(main):033:0> puts 'abcd \' "\ e'
+abcd ' "\ e
+=> nil
+irb(main):034:0> puts 'that\'s right'
+that's right
+=> nil
+irb(main):035:0> puts "that\'s right"
+that's right
+=> nil
+irb(main):036:0> puts "that\"s right"
+that"s right
+=> nil
+irb(main):037:0> puts "that'\s right"
+that'  right
+=> nil
+irb(main):038:0> puts "that'\n right"
+that'
+ right
+=> nil
+irb(main):039:0> puts "that'\t right"
+that'    right
+=> nil
+irb(main):040:0> puts "that'\r right"
+ right
+=> nil
+irb(main):041:0> puts "that'\b right"
+that right
+=> nil
+irb(main):042:0> puts "that'\x right"
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):42: invalid hex escape)
+puts "that'\x right"
+           ^~
+irb(main):043:0> puts "that'\d right"
+that'd right
+=> nil
+irb(main):044:0> puts "that' right"
+that' right
+=> nil
+irb(main):045:0> puts 'that\t right'
+that\t right
+=> nil
+irb(main):046:0> puts 'that\n right'
+that\n right
+=> nil
+irb(main):047:0> puts 'that\\n right'
+that\n right
+=> nil
+irb(main):048:0> puts "Multiplication Value : #{24*60*60}";
+Multiplication Value : 86400
+=> nil
+irb(main):049:0> puts "Multiplication Value : {24*60*60}";
+Multiplication Value : {24*60*60}
+=> nil
+irb(main):050:0> puts 'that0x0a right'
+that0x0a right
+=> nil
+irb(main):051:0> puts "that0x0a right"
+that0x0a right
+=> nil
+irb(main):052:0> puts "that 0x0a right"
+that 0x0a right
+=> nil
+irb(main):053:0> puts "that \n right"
+that 
+ right
+=> nil
+irb(main):054:0> puts "that /n right"
+that /n right
+=> nil
+irb(main):055:0> puts "that \\n right"
+that \n right
+=> nil
+irb(main):056:0> puts "that \a right"
+that  right
+=> nil
+irb(main):057:0> puts "that \e right"
+that right
+=> nil
+irb(main):058:0> puts "that's \e right"
+that's right
+=> nil
+irb(main):059:0> puts "that's \b right"
+that's right
+=> nil
+irb(main):060:0> puts "that's \r right"
+ right 
+=> nil
+irb(main):061:0> puts "that's \f right"
+that's 
+        right
+=> nil
+irb(main):062:0> puts "that's \x right"
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):62: invalid hex escape)
+puts "that's \x right"
+             ^~
+irb(main):063:0> puts "that's \x right"
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):63: invalid hex escape)
+puts "that's \x right"
+             ^~
+irb(main):064:0> ary = ["lisp",23,23.2,23.3e3,'aa', 'hey las ', 'a',[1,2,3]]
+=> ["lisp", 23, 23.2, 23300.0, "aa", "hey las ", "a", [1, 2, 3]]
+irb(main):065:0> puts ary
+lisp
+23
+23.2
+23300.0
+aa
+hey las 
+a
+1
+2
+3
+=> nil
+irb(main):066:0> puts #ary
+
+=> nil
+irb(main):067:0> puts #{ary}
+
+=> nil
+irb(main):068:0> print #{ary}
+=> nil
+irb(main):069:0> print {ary}
+=> nil
+irb(main):070:0> print ary
+["lisp", 23, 23.2, 23300.0, "aa", "hey las ", "a", [1, 2, 3]]=> nil
+irb(main):071:1* ary.each do[i]
+irb(main):072:1*   puts i
+irb(main):073:0> end
+Traceback (most recent call last):
+        6: from /usr/bin/irb:23:in `<main>'
+        5: from /usr/bin/irb:23:in `load'
+        4: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+        3: from (irb):71
+        2: from (irb):71:in `each'
+        1: from (irb):71:in `block in irb_binding'
+NameError (undefined local variable or method `i' for main:Object)
+irb(main):074:1* ary.each do |i|
+irb(main):075:1*   puts i
+irb(main):076:0> end
+lisp
+23
+23.2
+23300.0
+aa
+hey las 
+a
+1
+2
+3
+=> ["lisp", 23, 23.2, 23300.0, "aa", "hey las ", "a", [1, 2, 3]]
+irb(main):077:0> ary
+=> ["lisp", 23, 23.2, 23300.0, "aa", "hey las ", "a", [1, 2, 3]]
+irb(main):078:0> ary[1].class
+irb(main):079:0> ary[2].class
+=> Float
+irb(main):080:0> ary[3].class
+irb(main):081:0> ary[0].class
+=> String
+irb(main):082:0> ary[4].class
+irb(main):083:0> ary[5].class
+=> String
+irb(main):084:0> ary[6].class
+=> String
+irb(main):085:0> ary[7].class
+=> Array
+irb(main):086:0> ary[8].class
+=> NilClass
+irb(main):087:0> ary[9].class
+=> NilClass
+irb(main):088:0> ary[100000].class
+=> NilClass
+irb(main):089:0> hsh = colors = {"red" => 123, "blue"=> 33};
+=> {"red"=>123, "blue"=>33}
+irb(main):090:1* hsh.each do|key,value|
+irb(main):091:1*   print key," is ",value, "\n"
+irb(main):092:0> end
+red is 123
+blue is 33
+=> {"red"=>123, "blue"=>33}
+irb(main):093:1* {10..15}.each do|i|
+irb(main):094:1*   print i
+irb(main):095:0> end
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):93: syntax error, unexpected '}', expecting =>)
+{10..15}.each do|i|
+       ^
+irb(main):096:1* (10..15).each do|i|
+irb(main):097:1*   print i
+irb(main):098:0> end
+101112131415=> 10..15
+irb(main):099:1* (10..15).each do|i|
+irb(main):100:1*   print i," "
+irb(main):101:0> end
+10 11 12 13 14 15 => 10..15
+irb(main):102:1* (10...15).each do|i|
+irb(main):103:1*   print i," "
+irb(main):104:0> end
+10 11 12 13 14 => 10...15
+irb(main):105:0> defined? i
+=> nil
+irb(main):106:0> defined? $_
+=> "global-variable"
+irb(main):107:0> abc=2
+=> 2
+irb(main):108:0> defined?abc
+=> "local-variable"
+irb(main):109:0> defined? abc
+=> "local-variable"
+irb(main):110:0> @abc=3
+=> 3
+irb(main):111:0> defined? @abc
+=> "instance-variable"
+irb(main):112:0> defined?puts
+=> "method"
+irb(main):113:0> defined?print
+=> "method"
+irb(main):114:0> defined?print(bar)
+=> nil
+irb(main):115:0> defined?print(abc)
+=> "method"
+irb(main):116:0> defined?print(@abc)
+=> "method"
+irb(main):117:0> defined?puts(@abc)
+=> "method"
+irb(main):118:0> defined? super
+=> nil
+irb(main):119:0> defined? yield
+=> nil
+irb(main):120:0> 
+
+ 
