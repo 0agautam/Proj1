@@ -1,0 +1,84 @@
+								Arrays
+1. Creating Arrays
+irb(main):040:0> ary = [1,"23",23,'23',23.332,true,'2']
+=> [1, "23", 23, "23", 23.332, true, "2"]
+
+irb(main):048:0> ary = Array.new
+=> []
+irb(main):049:0> ary
+=> []
+irb(main):050:0> ary.class
+=> Array
+irb(main):051:0> ary = Array.new(5)
+=> [nil, nil, nil, nil, nil]
+irb(main):052:0> ary
+=> [nil, nil, nil, nil, nil]
+irb(main):053:0> ary = Array.new(4,23)
+=> [23, 23, 23, 23]
+
+2. Creating Array objects referencing to different object
+
+irb(main):057:0> ary = Array.new(3) {Hash.new}
+=> [{}, {}, {}]
+irb(main):058:0> ary[0].class
+=> Hash
+irb(main):059:0> ary = Array.new(3) {|i| i.to_s }
+=> ["0", "1", "2"]
+
+irb(main):062:0> ary = Array.new(3) {|i| i}
+=> [0, 1, 2]
+irb(main):063:0> ary[0].class
+=> Integer
+irb(main):064:0> ary = Array.new(3) {|i| i.to_s }
+=> ["0", "1", "2"]
+irb(main):065:0> ary[0].class
+=> String
+
+3. Creating multidimentional array
+irb(main):066:0> ary_table = Array.new(3) {Array.new(3) {|i| i}}
+=> [[0, 1, 2], [0, 1, 2], [0, 1, 2]]
+
+4. Creating Array using kernal module Array Function
+irb(main):070:0> ary = Array({:a => 1, :b=>"string", :c=>true})
+=> [[:a, 1], [:b, "string"], [:c, true]]
+irb(main):071:0> ary.class
+=> Array
+irb(main):072:0> ary[0].class
+=> Array
+irb(main):073:0> ary[0][0].class
+=> Symbol
+irb(main):074:0> ary[0]
+=> [:a, 1]
+irb(main):075:0> ary[0][0]
+=> :a
+
+5. Accessing Array Elements :>
+irb(main):098:0> ary = Array([2,3,2,9,1,023,0322,282])
+=> [2, 3, 2, 9, 1, 19, 210, 282]
+irb(main):099:0> ary
+=> [2, 3, 2, 9, 1, 19, 210, 282]
+irb(main):100:0> ary[1]
+=> 3
+irb(main):101:0> ary[0,2]
+=> [2, 3]
+irb(main):102:0> ary[0,4]
+=> [2, 3, 2, 9]
+irb(main):103:0> ary[0,-1]
+=> nil
+irb(main):104:0> ary[-1]
+=> 282
+irb(main):105:0> ary[4,-1]
+=> nil
+irb(main):106:0> ary[-1,3]
+=> [282]
+irb(main):107:0> ary[-2,3]
+=> [210, 282]
+irb(main):108:0> ary[-3,2]
+=> [19, 210]
+irb(main):109:0> ary[1..-3]
+=> [3, 2, 9, 1, 19]
+irb(main):110:0> ary[1..3]
+=> [3, 2, 9]
+irb(main):111:0> 
+
+6.
