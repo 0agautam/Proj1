@@ -1,0 +1,51 @@
+								String
+
+1. Creating a string
+irb(main):089:0> s= String.new("hello world!!",encoding:'UTF-8',capacity:10)
+=> "hello world!!"
+
+2. Format Strings
+irb(main):095:0> "%0f"% 1234
+=> "1234.000000"
+irb(main):096:0> "%0s"% 1234
+=> "1234"
+irb(main):097:0> "%0c"% 1234
+=> "Ӓ"
+irb(main):098:0> "%0c"% 97
+=> "a"
+irb(main):099:0> "%0x"% 97
+=> "61"
+irb(main):100:0> "%0"% 97
+Traceback (most recent call last):
+        5: from /usr/bin/irb:23:in `<main>'
+        4: from /usr/bin/irb:23:in `load'
+        3: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+        2: from (irb):100
+        1: from (irb):100:in `%'
+ArgumentError (invalid format character - %)
+irb(main):101:0> "%0o"% 97
+=> "141"
+irb(main):102:0> "%o"% 97
+=> "141"
+irb(main):103:0> "%b"% 97
+=> "1100001"
+irb(main):104:0> 
+
+string % object
+irb(main):115:0> "%-5s : %016x" % ["ID", self.object_id]
+=> "ID    : 0000000000003444"
+irb(main):116:0> "foo = %{foo}" % {foo: 'bar'}
+=> "foo = bar"
+irb(main):117:0> "foo = %{foo}, baz = %{baz}" % {foo: 'bar',baz:'bat'}
+=> "foo = bar, baz = bat"
+
+string * integer
+irb(main):120:0> "Ruby!!!" * 3
+=> "Ruby!!!Ruby!!!Ruby!!!"
+irb(main):121:0> "Ruby!!!" * 0
+=> ""
+
+irb(main):127:0> "Hello Ruby " + self.to_s
+=> "Hello Ruby main"
+
+
