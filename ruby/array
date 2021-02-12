@@ -264,4 +264,137 @@ irb(main):240:0> arr.keep_if {|i| i < -1 }
 irb(main):241:0> arr
 => [-9, -8]
 
+11. Creation methods
+
+irb(main):002:0> arr = Array.[](1,234.2342,234,33,90,9)
+=> [1, 234.2342, 234, 33, 90, 9]
+irb(main):003:0> arr = Array[1,939,302,393]
+=> [1, 939, 302, 393]
+irb(main):004:0> arr = [9,302,202,845]
+=> [9, 302, 202, 845]
+
+irb(main):006:0> arr = Array.new(3,"one")
+=> ["one", "one", "one"]
+irb(main):007:0> arr[0].equal? arr[1]
+=> true
+irb(main):008:0> arr1 = ['a','b']
+=> ["a", "b"]
+
+irb(main):011:0> arr2 = Array.new(arr1)
+=> ["a", "b"]
+irb(main):012:0> arr1.equal? arr2
+=> false
+irb(main):013:0> arr = Array.new(5){|i| i*2 }
+=> [0, 2, 4, 6, 8]
+
+12. Common gotchas
+
+irb(main):014:0> arr = Array.new(2, Hash.new)
+=> [{}, {}]
+
+Use this instead for multi objects in array
+irb(main):028:0> arr = Array.new(2) {Hash.new}
+=> [{}, {}]
+irb(main):029:0> arr[0]['cat']='Billie'
+=> "Billie"
+irb(main):030:0> arr
+=> [{"cat"=>"Billie"}, {}]
+irb(main):031:0> arr[1]['cat']='Ellish'
+=> "Ellish"
+irb(main):032:0> arr
+=> [{"cat"=>"Billie"}, {"cat"=>"Ellish"}]
+irb(main):033:0> arr.push("cat"=>'Nbilly')
+=> [{"cat"=>"Billie"}, {"cat"=>"Ellish"}, {"cat"=>"Nbilly"}]
+
+Using &, set intersection
+irb(main):051:0> arr1 = Array.[](1,2,393,233,33,3,92)
+=> [1, 2, 393, 233, 33, 3, 92]
+irb(main):052:0> arr
+=> [1, 2, 33, 4, 2, 3]
+irb(main):053:0> arr1
+=> [1, 2, 393, 233, 33, 3, 92]
+irb(main):054:0> arr & arr1
+=> [1, 2, 33, 3]
+
+Repetition,Multiplying with a string and an integer 
+
+irb(main):055:0> arr
+=> [1, 2, 33, 4, 2, 3]
+irb(main):056:0> arr * 2
+=> [1, 2, 33, 4, 2, 3, 1, 2, 33, 4, 2, 3]
+irb(main):057:0> arr
+=> [1, 2, 33, 4, 2, 3]
+irb(main):058:0> arr *=2
+=> [1, 2, 33, 4, 2, 3, 1, 2, 33, 4, 2, 3]
+irb(main):059:0> arr
+=> [1, 2, 33, 4, 2, 3, 1, 2, 33, 4, 2, 3]
+irb(main):060:0> arr *="str"
+=> "1str2str33str4str2str3str1str2str33str4str2str3"
+irb(main):061:0> arr
+=> "1str2str33str4str2str3str1str2str33str4str2str3"
+
+try_convert()
+irb(main):043:0> a = Array.try_convert(1)
+=> nil
+irb(main):044:0> a
+=> nil
+irb(main):045:0> a = Array.try_convert("a")
+=> nil
+irb(main):046:0> a = Array.try_convert(["a"])
+=> ["a"]
+irb(main):047:0> a
+=> ["a"]
+
+Array Difference
+irb(main):074:0> arr1.push("a","b","c","d")
+=> [1, 2, 393, 233, 33, 3, 92, "a", "b", "c", "d"]
+irb(main):075:0> arr2.push(1,2,4,55)
+=> ["a", "b", 1, 2, 4, 55]
+irb(main):076:0> diff = arr1 - arr2
+=> [393, 233, 33, 3, 92, "c", "d"]
+irb(main):077:0> diff = arr2 - arr1
+=> [4, 55]
+
+13. Functions
+
+assoc(obj)=el_ary or nil : searches for first element of array contanined in an array with the obj
+irb(main):112:0> s1 = ["colors","red","green","blue"]
+=> ["colors", "red", "green", "blue"]
+irb(main):113:0> s2 = ["letters","a","b","c"]
+=> ["letters", "a", "b", "c"]
+irb(main):114:0> s3 = "foo"
+=> "foo"
+irb(main):115:0> a=[s1,s2,s3]
+=> [["colors", "red", "green", "blue"], ["letters", "a", "b", "c"], "foo"]
+irb(main):116:0> a
+=> [["colors", "red", "green", "blue"], ["letters", "a", "b", "c"], "foo"]
+irb(main):117:0> a.assoc("colors")
+=> ["colors", "red", "green", "blue"]
+irb(main):118:0> a.assoc("letters")
+=> ["letters", "a", "b", "c"]
+irb(main):119:0> a.assoc("foo")
+=> nil
+
+bsearch {|x| block}
+issue
+
+collect and map 
+irb(main):201:0> arr2 = %w[a b c d]
+=> ["a", "b", "c", "d"]
+irb(main):202:0> arr2.map! {|x| x+"xyz"}
+=> ["axyz", "bxyz", "cxyz", "dxyz"]
+irb(main):203:0> arr2.collect.with_index {|x,i| x[1]}
+=> ["x", "x", "x", "x"]
+irb(main):204:0> arr2.collect.with_index {|x,i| x[0]}
+=> ["a", "b", "c", "d"]
+irb(main):205:0> arr2.collect.with_index {|x,i| x[0..1]}
+=> ["ax", "bx", "cx", "dx"]
+irb(main):206:0> arr2.collect.with_index {|x,i| x[0...1]}
+=> ["a", "b", "c", "d"]
+irb(main):207:0> arr2.collect.with_index {|x,i| x[0...2]}
+=> ["ax", "bx", "cx", "dx"]
+irb(main):208:0> arr2.collect.with_index {|x,i| x[0...i]}
+=> ["", "b", "cx", "dxy"]
+irb(main):209:0> arr2.map.with_index {|x,i| x[0...i]}
+=> ["", "b", "cx", "dxy"]
 
