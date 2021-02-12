@@ -81,4 +81,187 @@ irb(main):110:0> ary[1..3]
 => [3, 2, 9]
 irb(main):111:0> 
 
-6.
+At method 
+irb(main):111:0> ary.at(1)
+=> 3
+irb(main):112:0> ary.at(-3)
+=> 19
+irb(main):113:0> 
+
+Slice method same as #[]
+irb(main):114:0> ary.slice(0)
+=> 2
+irb(main):115:0> ary.slice(0,4)
+=> [2, 3, 2, 9]
+irb(main):116:0> ary.slice(0..4)
+=> [2, 3, 2, 9, 1]
+
+Fetch for out of bound errors warning 
+irb(main):124:0> ary.fetch(9,"OOPS!!! OUT OF BOUND")
+=> "OOPS!!! OUT OF BOUND"
+irb(main):125:0> ary.fetch(7,"OOPS!!! OUT OF BOUND")
+=> 282
+
+First and last element of array
+irb(main):127:0> ary.first
+=> 2
+irb(main):128:0> ary.last
+=> 282
+irb(main):129:0>
+
+Take and drop for returning and droping first n elements
+irb(main):129:0> ary.take(3)
+=> [2, 3, 2]
+irb(main):131:0> ary.drop(3)
+=> [9, 1, 19, 210, 282]
+
+6.Obtaining info about Array
+
+Getting the length of array
+irb(main):133:0> ary.length
+=> 8
+irb(main):134:0> ary.size
+=> 8
+irb(main):135:0> ary.count
+=> 8
+
+querying the array
+irb(main):139:0> ary.empty?
+=> false
+irb(main):140:0> ary.include?(22)
+=> false
+irb(main):141:0> ary.include?(210)
+=> true
+
+7. Adding items to array
+
+Using push and <<(apend operator)
+irb(main):144:0> ary.push("string")
+=> [2, 3, 2, 9, 1, 19, 210, 282, "string"]
+irb(main):145:0> ary << "two"
+=> [2, 3, 2, 9, 1, 19, 210, 282, "string", "two"]
+
+unshift(at beginning insertion) and insert 
+irb(main):151:0> ary.unshift(0)
+=> [0, 2, 3, 2, 9, 1, 19, 210, 282, "string", "two"]
+irb(main):152:0> ary.insert(8,"let's")
+=> [0, 2, 3, 2, 9, 1, 19, 210, "let's", 282, "string", "two"]
+irb(main):153:0> ary.length
+=> 12
+irb(main):154:0> ary.insert(10,"one","three")
+=> [0, 2, 3, 2, 9, 1, 19, 210, "let's", 282, "one", "three", "string", "two"]
+
+8. Removing items from array
+
+irb(main):159:0> ary.pop
+=> "two"
+irb(main):160:0> ary
+=> [1, -1, 0, 2, 3, 2, 9, 1, 19, 210, "let's", 282, "one", "three", "string"]
+
+irb(main):161:0> ary.shift
+=> 1
+irb(main):162:0> ary
+=> [-1, 0, 2, 3, 2, 9, 1, 19, 210, "let's", 282, "one", "three", "string"]
+
+irb(main):163:0> ary.delete
+ary.delete
+ary.delete_at
+ary.delete_if
+
+irb(main):163:0> ary.delete_at(10)
+=> 282
+irb(main):164:0> ary
+=> [-1, 0, 2, 3, 2, 9, 1, 19, 210, "let's", "one", "three", "string"]
+
+irb(main):165:0> ary.delete(2)
+=> 2
+irb(main):166:0> ary
+=> [-1, 0, 3, 9, 1, 19, 210, "let's", "one", "three", "string"]
+
+irb(main):173:0> ary.compact
+=> [-1, 0, 3, 9, 1, 19, 210, "let's", "one", "three", "string"]
+irb(main):174:0> ary
+=> [-1, 0, 3, nil, 9, 1, 19, 210, "let's", "one", nil, "three", "string"]
+irb(main):175:0> ary.compact
+ary.compact
+ary.compact!
+irb(main):175:0> ary.compact!
+=> [-1, 0, 3, 9, 1, 19, 210, "let's", "one", "three", "string"]
+irb(main):176:0> ary
+=> [-1, 0, 3, 9, 1, 19, 210, "let's", "one", "three", "string"]
+
+Removing duplicate items from array
+
+=> [2, -1, 0, 2, 3, 9, 1, 19, 210, "let's", "one", "three", "string", 2, 2]
+irb(main):182:0> ary.uniq
+=> [2, -1, 0, 3, 9, 1, 19, 210, "let's", "one", "three", "string"]
+irb(main):183:0> ary
+=> [2, -1, 0, 2, 3, 9, 1, 19, 210, "let's", "one", "three", "string", 2, 2]
+irb(main):184:0> ary.uniq!
+=> [2, -1, 0, 3, 9, 1, 19, 210, "let's", "one", "three", "string"]
+irb(main):185:0> ary
+=> [2, -1, 0, 3, 9, 1, 19, 210, "let's", "one", "three", "string"]
+
+9. Iterating over Arrays 
+Using each, reverse_each and map(gives a new array)
+irb(main):194:0> ary[0..7].each {|i| print i -=5," "}
+-3 -6 -5 -2 4 -4 14 205 => [2, -1, 0, 3, 9, 1, 19, 210]
+
+irb(main):209:0> a.reverse_each {|words| str += "#{words} "}
+=> ["ab", "12", "sdf", ";", "df", "lkdf"]
+irb(main):210:0> str
+=> "lkdf df ; sdf 12 ab "
+
+map
+irb(main):217:0> arr
+=> [1, 2, 3, 4, 5, 6]
+irb(main):218:0> newarr = arr.map {|a| a-10}
+=> [-9, -8, -7, -6, -5, -4]
+irb(main):219:0> newarr
+=> [-9, -8, -7, -6, -5, -4]
+irb(main):220:0> arr
+=> [1, 2, 3, 4, 5, 6]
+irb(main):221:0> arr.map!{|a| a-10}
+=> [-9, -8, -7, -6, -5, -4]
+irb(main):222:0> arr
+=> [-9, -8, -7, -6, -5, -4]
+irb(main):223:0> newarr
+=> [-9, -8, -7, -6, -5, -4]
+
+10. Selecting Items from Array
+
+Non-destructive selection
+irb(main):225:0> arr.select{|i| i < -7}
+=> [-9, -8]
+irb(main):226:0> arr.reject{|i| i < -7}
+=> [-7, -6, -5, -4]
+irb(main):227:0> arr.drop_while {|i| i < -7}
+=> [-7, -6, -5, -4]
+
+irb(main):229:0> arr
+=> [-9, -8, -7, -6, -5, -4]
+
+Destructive selection
+irb(main):233:0> arr
+=> [-9, -8, -7, -6, -5, -4]
+
+irb(main):234:0> arr.select! {|i| i < -7}
+=> [-9, -8]
+irb(main):235:0> arr
+=> [-9, -8]
+irb(main):236:0> arr.push(3,2,0,-1,23)
+=> [-9, -8, 3, 2, 0, -1, 23]
+
+irb(main):237:0> arr.reject! {|i| i > 0}
+=> [-9, -8, 0, -1]
+irb(main):238:0> arr
+=> [-9, -8, 0, -1]
+
+irb(main):239:0> arr.delete_if {|i| i> -1}
+=> [-9, -8, -1]
+irb(main):240:0> arr.keep_if {|i| i < -1 }
+=> [-9, -8]
+irb(main):241:0> arr
+=> [-9, -8]
+
+
