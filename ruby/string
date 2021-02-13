@@ -98,4 +98,108 @@ irb(main):351:0> str.byteslice(1..1)
 irb(main):352:0> str.byteslice(1..2)
 => "\xE3\x81"
 
+Capatalize
+irb(main):363:0> s = "abcd234Anb"
+=> "abcd234Anb"
+irb(main):364:0> s.capitalize
+=> "Abcd234anb"
+irb(main):365:0> s
+=> "abcd234Anb"
+irb(main):366:0> s.capitalize!
+=> "Abcd234anb"
+irb(main):367:0> s
+=> "Abcd234anb"
+irb(main):368:0> s.downcase
+=> "abcd234anb"
+irb(main):369:0> s
+=> "Abcd234anb"
+irb(main):370:0> s.downcase!
+=> "abcd234anb"
+
+casecmp with ignorinig case 
+irb(main):373:0> 'foo'.casecmp('Foo')
+=> 0
+irb(main):374:0> 'foo'.casecmp('Food')
+=> -1
+irb(main):375:0> 'foode'.casecmp('Food')
+=> 1
+irb(main):376:0> 'fooe'.casecmp('Food')
+=> 1
+irb(main):377:0> 'fooa'.casecmp('Food')
+=> -1
+
+irb(main):378:0> 'fooa'.casecmp?('Food')
+=> false
+irb(main):379:0> 'food'.casecmp?('Food')
+=> true
+
+center a string 
+irb(main):393:0> s= 'good'.center(9,">")
+=> ">>good>>>"
+
+irb(main):384:0> s= 'good'.center(8)
+=> "  good  "
+irb(main):385:0> s
+=> "  good  "
+irb(main):386:0> s.length
+=> 8
+irb(main):387:0> s= 'good'.center(4)
+=> "good"
+irb(main):388:0> s.length
+=> 4
+
+chars to convert str to array
+irb(main):396:0> s
+=> ">>good>>>"
+irb(main):397:0> sary = s.chars
+=> [">", ">", "g", "o", "o", "d", ">", ">", ">"]
+irb(main):399:0> sary.count
+=> 9
+irb(main):400:0> s.each_char.to_a
+=> [">", ">", "g", "o", "o", "d", ">", ">", ">"]
+
+chomp removes /r,/n and /r/n or given record seperator if present from the end of string
+
+irb(main):440:0> s= "hello\r\r\n".chomp
+=> "hello\r"
+irb(main):441:0> s= "hello\r\n".chomp
+=> "hello"
+irb(main):442:0> s= "hello\r\n\rn".chomp
+=> "hello\r\n\rn"
+irb(main):443:0> s= "hello\r\n\r".chomp
+=> "hello\r\n"
+
+chop 
+irb(main):484:0> s= "hello x abcd".chop
+=> "hello x abc"
+irb(main):485:0> s= "hello x abcd".chop.chop.chop
+=> "hello x a"
+irb(main):486:0> s= "hello x abcd\n\r".chop.chop.chop
+=> "hello x abc"
+irb(main):487:0> s= "hello x abcd\n\r\n".chop.chop.chop
+=> "hello x abc"
+irb(main):488:0> s= "hello x abcd\n\r\n\r\n\n\r".chop.chop.chop
+=> "hello x abcd\n\r\n"
+
+irb(main):491:0> s = "ab3.kd993,9.2.ab1"
+=> "ab3.kd993,9.2.ab1"
+irb(main):492:0> s.codepoints
+=> [97, 98, 51, 46, 107, 100, 57, 57, 51, 44, 57, 46, 50, 46, 97, 98, 49]
+irb(main):493:0> s.each_codepoint.to_a
+=> [97, 98, 51, 46, 107, 100, 57, 57, 51, 44, 57, 46, 50, 46, 97, 98, 49]
+
+count function return integer according to set of characters found
+irb(main):534:0> s = "hello^worl*d"
+=> "hello^worl*d"
+irb(main):535:0> s.count "*"
+=> 1
+irb(main):536:0> s.count "\*"
+=> 1
+irb(main):537:0> s.count "^*"
+=> 11
+irb(main):538:0> s.count "\^*"
+=> 11
+irb(main):539:0> s.count "\\^*"
+=> 2
+
 
