@@ -448,4 +448,7 @@ irb(main):837:0> "hello".sub(/([aeiou])/,'<\1>')
 irb(main):838:0> "hello".sub(/([aeiou])/,'*')
 => "h*llo"
 
+tr
+irb(main):841:0> a.tr('ub',")(")
+=> "r)(y with greood lksdld"
 
