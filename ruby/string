@@ -202,4 +202,250 @@ irb(main):538:0> s.count "\^*"
 irb(main):539:0> s.count "\\^*"
 => 2
 
+crypt
+irb(main):554:0> 'foo'.crypt("$1$rounds=1000$salt$")
+=> "$1$rounds=1$xJbi25cV0f9/pxUx9OIzI0"
+irb(main):555:0> 'foo'.crypt("$2$rounds=1000$salt$")
+=> "*0"
+irb(main):556:0> 'foo'.crypt("$3$rounds=1000$salt$")
+=> "$3$$ac8e657f83df82beea5d43bdaf7800cc"
+irb(main):557:0> 'foo'.crypt("$5$rounds=1000$salt$")
+=> "$5$rounds=1000$salt$sOwBWdzaQ/gPXFtLc24VstV7ZQk3/x7k0cDfKUxXsn8"
+irb(main):558:0> s='foo'.crypt("$5$rounds=1000$salt$")
+=> "$5$rounds=1000$salt$sOwBWdzaQ/gPXFtLc24VstV7ZQk3/x7k0cDfKUxXsn8"
+irb(main):559:0> s
+=> "$5$rounds=1000$salt$sOwBWdzaQ/gPXFtLc24VstV7ZQk3/x7k0cDfKUxXsn8"
+irb(main):560:0> j='foo'.crypt("$5$rounds=1000$salt$")
+=> "$5$rounds=1000$salt$sOwBWdzaQ/gPXFtLc24VstV7ZQk3/x7k0cDfKUxXsn8"
+irb(main):561:0> s ==j
+=> true
+irb(main):562:0> s ==s
+=> true
+irb(main):563:0> s == a
+=> false
+irb(main):564:0> j='foo'.crypt("$3$rounds=1000$salt$")
+=> "$3$$ac8e657f83df82beea5d43bdaf7800cc"
+irb(main):565:0> s ==j
+=> false
+irb(main):566:0> j='foo'.crypt("$5$rounds=1000$salt$")
+=> "$5$rounds=1000$salt$sOwBWdzaQ/gPXFtLc24VstV7ZQk3/x7k0cDfKUxXsn8"
+irb(main):567:0> s ==j
+=> true
+
+delete uses the same set of rules as of count gives a new string
+irb(main):571:0> s.delete "lo", "^l"
+=> "hell wrl*d"
+irb(main):572:0> s ="hello wo-rl*d"
+=> "hello wo-rl*d"
+irb(main):573:0> s.delete "^-"
+=> "-"
+irb(main):574:0> s.delete "^\-"
+=> "-"
+irb(main):575:0> s.delete "^\\-"
+=> "-"
+irb(main):576:0> s
+=> "hello wo-rl*d"
+irb(main):577:0> s.delete "^*"
+=> "*"
+irb(main):578:0> s.delete "^-*"
+=> "-*"
+irb(main):581:0> s.delete "^hello\\-*"
+=> "helloo-l*"
+
+irb(main):585:0> s.delete_prefix "he"
+=> "llo wo-rl*d"
+irb(main):586:0> s.delete_prefix "l"
+=> "hello wo-rl*d"
+irb(main):587:0> s.delete_prefix "hell"
+=> "o wo-rl*d"
+irb(main):588:0> s.delete_suffix "*"
+=> "hello wo-rl*d"
+irb(main):589:0> s.delete_suffix "*d"
+=> "hello wo-rl"
+
+dump replacing non printable chara with \ and escaping special character
+irb(main):590:0> "hello \n ''".dump
+=> "\"hello \\n ''\""
+irb(main):591:0> "\f\x00\xff\\\"".dump
+=> "\"\\f\\x00\\xFF\\\\\\\"\""
+irb(main):592:0> "\f\x00\xff\"".dump
+=> "\"\\f\\x00\\xFF\\\"\""
+
+each_line
+irb(main):640:0> "hello \n world".each_line() {|line| p line}
+"hello \n"
+" world"
+=> "hello \n world"
+irb(main):641:0> "hello \n world".each_line($/) {|line| p line}
+"hello \n"
+" world"
+=> "hello \n world"
+irb(main):642:0> "hello $/ world".each_line($/) {|line| p line}
+"hello $/ world"
+=> "hello $/ world"
+irb(main):643:0> "hello \n wo\nrld".each_line($/) {|line| p line}
+"hello \n"
+" wo\n"
+"rld"
+=> "hello \n wo\nrld"
+irb(main):644:0> "hello \n wo\nrld".each_line("l") {|line| p line}
+"hel"
+"l"
+"o \n wo\nrl"
+"d"
+=> "hello \n wo\nrld"
+irb(main):645:0> "hello \n wo\nrld".each_line("") {|line| p line}
+"hello \n wo\nrld"
+=> "hello \n wo\nrld"
+irb(main):646:0> "hello \n wo\nrld".each_line($/,chomp: true) {|line| p line}
+"hello "
+" wo"
+"rld"
+=> "hello \n wo\nrld"
+
+gsub
+irb(main):732:0> str.gsub(/([aeiou])/,"\1")
+=> "h\u0001ll\u0001-w\u0001r3l*d"
+irb(main):733:0> str.gsub(/(?<foo>[aeiou])/,'{\k<foo>}')
+=> "h{e}ll{o}-w{o}r3l*d"
+irb(main):734:0> str.gsub(/([eo])/,'e'=>3,'o'=>*)
+irb(main):735:0> str.gsub(/([eo])/,'e'=>3,'o'=>'*')
+=> "h3ll*-w*r3l*d"
+
+intern
+irb(main):736:0> "koala".intern
+=> :koala
+irb(main):737:0> s = 'cat'.to_sym
+=> :cat
+irb(main):738:0> s.class
+=> Symbol
+irb(main):739:0> s == :cat
+=> true
+irb(main):740:0> s = '@cat'.to_sym
+=> :@cat
+irb(main):741:0> 'cat and dog'.to_sym
+=> :"cat and dog"
+
+ljust for left justifying the string
+irb(main):744:0> "helloworld".ljust(5)
+=> "helloworld"
+irb(main):745:0> "helloworld".ljust(20," ")
+=> "helloworld          "
+irb(main):746:0> "helloworld".ljust(20,"")
+Traceback (most recent call last):
+        5: from /usr/bin/irb:23:in `<main>'
+        4: from /usr/bin/irb:23:in `load'
+        3: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+        2: from (irb):746
+        1: from (irb):746:in `ljust'
+ArgumentError (zero width padding)
+irb(main):747:0> "helloworld".ljust(20,"<>")
+=> "helloworld<><><><><>"
+
+strip
+irb(main):749:0> "   h   elloworld     ".lstrip
+=> "h   elloworld     "
+irb(main):750:0> "   h   elloworld     ".rstrip
+=> "   h   elloworld"
+irb(main):751:0> "   h   elloworld     ".strip
+=> "h   elloworld"
+
+match for a pattern
+irb(main):752:0> 'foo'.match('o')
+=> #<MatchData "o">
+irb(main):753:0> 'foo'.match('f',1)
+=> nil
+irb(main):754:0> 'Hello world'.match(/([aeiou])/) {|data| data}
+=> #<MatchData "e" 1:"e">
+irb(main):755:0> 'Hello world'.match(/([aeiou])/) {|matchdata| matchdata}
+=> #<MatchData "e" 1:"e">
+irb(main):756:0> 'Hello world'.match(/[aeiou]/) {|matchdata| matchdata}
+=> #<MatchData "e">
+irb(main):757:0> 'Hello world'.match(/([aeiou])/) {|matchdata| matchdata}
+=> #<MatchData "e" 1:"e">
+
+succ
+irb(main):758:0> ''.succ
+=> ""
+irb(main):759:0> 'zz'.succ
+=> "aaa"
+
+partition
+irb(main):760:0> str
+=> "hello-wor3l*d"
+irb(main):761:0> str.partition(/([aeiou])/)
+=> ["h", "e", "llo-wor3l*d"]
+irb(main):762:0> str.partition("-")
+=> ["hello", "-", "wor3l*d"]
+
+reverse
+irb(main):763:0> a = "1234"
+=> "1234"
+irb(main):764:0> a = a.reverse
+=> "4321"
+irb(main):765:0> a
+=> "4321"
+irb(main):766:0> a= a.to_i
+=> 4321
+irb(main):767:0> a.class
+=> Integer
+
+scan return an array of matched string/ pattern
+
+irb(main):771:0> a = "welcome to the constructive world of ruby"
+=> "welcome to the constructive world of ruby"
+irb(main):772:0> a.scan("to")
+=> ["to"]
+irb(main):773:0> a.scan("t")
+=> ["t", "t", "t", "t"]
+irb(main):774:0> a.scan(/\w/)
+=> ["w", "e", "l", "c", "o", "m", "e", "t", "o", "t", "h", "e", "c", "o", "n", "s", "t", "r", "u", "c", "t", "i", "v", "e", "w", "o", "r", "l", "d", "o", "f", "r", "u", "b", "y"]                                                                                                                                                          
+irb(main):775:0> a.scan(/\w+/)
+=> ["welcome", "to", "the", "constructive", "world", "of", "ruby"]
+
+split
+
+irb(main):815:0> "1, 2.34,56, 7".split(%r{,\s})
+=> ["1", "2.34,56", "7"]
+irb(main):816:0> "1, 2.34,56, 7".split(%r{,\s*})
+=> ["1", "2.34", "56", "7"]
+irb(main):817:0> "1, 2.34,56, 7".split(%r{,\s*},5)
+=> ["1", "2.34", "56", "7"]
+irb(main):818:0> "1, 2.34,56, 7".split(%r{,\s*},6)
+=> ["1", "2.34", "56", "7"]
+irb(main):819:0> "1, 2.34,56, 7".split(%r{,\s*},-1)
+=> ["1", "2.34", "56", "7"]
+irb(main):820:0> "1, 2.34,56, 7".split(%r{,\s*},1)
+=> ["1, 2.34,56, 7"]
+irb(main):821:0> "1, 2.34,56, 7".split(%r{,\s*},0)
+=> ["1", "2.34", "56", "7"]
+irb(main):822:0> "1, 2.34,56, 7".split(%r{\s})
+=> ["1,", "2.34,56,", "7"]
+
+irb(main):807:0> a.split(" ")
+=> ["welcome", "to", "the", "constructive", "world", "of", "ruby"]
+irb(main):808:0> a.split(/[aeiou]/)
+=> ["w", "lc", "m", " t", " th", " c", "nstr", "ct", "v", " w", "rld ", "f r", "by"]
+
+squeeze 
+irb(main):829:0> "yellow moon".squeeze
+=> "yelow mon"
+irb(main):830:0> "now\s the holly sskdkk monn".squeeze("")
+=> "now  the holly sskdkk monn"
+irb(main):831:0> "now\s the holly sskdkk monn".squeeze(" ")
+=> "now the holly sskdkk monn"
+irb(main):832:0> "now\s the hol    ly   sskdkk   monn".squeeze(" ")
+=> "now the hol ly sskdkk monn"
+irb(main):833:0> "now\s the hol    ly   sskdkk   monn".squeeze("")
+=> "now  the hol    ly   sskdkk   monn"
+irb(main):834:0> "putters shoot balls".squeeze("m-z")
+=> "puters shot balls"
+
+sub only replaces the first occurance of matched pattern
+
+irb(main):837:0> "hello".sub(/([aeiou])/,'<\1>')
+=> "h<e>llo"
+irb(main):838:0> "hello".sub(/([aeiou])/,'*')
+=> "h*llo"
+
 
