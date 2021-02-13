@@ -48,4 +48,54 @@ irb(main):121:0> "Ruby!!!" * 0
 irb(main):127:0> "Hello Ruby " + self.to_s
 => "Hello Ruby main"
 
+3. Regex with strings
+
+irb(main):195:0> 'hello there'[/[aeiou](.)\l/,0]
+=> "ell"
+irb(main):196:0> 'hello there'[/[aeiou](.)\l/,1]
+=> "l"
+irb(main):197:0> 'hello there'[/[aeiou](.)\l/,2]
+=> nil
+irb(main):198:0> 'hello there'[/[aeiou](.)\l/,0]
+=> "ell"
+
+irb(main):203:0> 'hello there'[/(?<vowel>[aeiou])(?<non_vowel>[^aeiou])/,"non_vowel"]
+=> "l"
+irb(main):204:0> 'hello there'[/(?<vowel>[aeiou])(?<non_vowel>[^aeiou])/,:vowel]
+=> "e"
+irb(main):205:0> 'hello there'[/(?<vowel>[aeiou](.))(?<non_vowel>[^aeiou])/,:vowel]
+=> "el"
+irb(main):206:0> 'hello there'[/(?<vowel>[aeiou](..))(?<non_vowel>[^aeiou])/,:vowel]
+=> "o t"
+
+Slice
+irb(main):210:0> 'hello there'.slice(0)
+=> "h"
+irb(main):211:0> 'hello there'.slice(0,3)
+=> "hel"
+irb(main):212:0> 'hello there'.slice(0..3)
+=> "hell"
+
+4. Bytes,b,bytesize,byteslice
+
+irb(main):313:0> s= "\x80\u3042"
+=> "\x80あ"
+irb(main):314:0> s.slice(1)
+=> "あ"
+irb(main):315:0> s.size
+=> 2
+irb(main):316:0> s.bytesize
+=> 4
+
+irb(main):348:0> s.byteslice(1..1)
+=> "\xE3"
+irb(main):349:0> s
+=> "\x80\xE3\x81\x82"
+irb(main):350:0> str
+=> "\x80あ"
+irb(main):351:0> str.byteslice(1..1)
+=> "\xE3"
+irb(main):352:0> str.byteslice(1..2)
+=> "\xE3\x81"
+
 
