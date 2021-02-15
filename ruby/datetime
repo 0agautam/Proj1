@@ -71,3 +71,47 @@ irb(main):688:0> DateTime.new(2020,2,2,3,40,50)
 => #<DateTime: 2020-02-02T03:40:50+00:00 ((2458882j,13250s,0n),+0s,2299161j)>
 irb(main):689:0> DateTime.new(2020,20,2,3,40,50)
 
+irb(main):705:0> d = DateTime.parse('3rd Feb 2001 04:05:06+03:30')
+=> #<DateTime: 2001-02-03T04:05:06+03:30 ((2451944j,2106s,0n),+12600s,2299161j)>
+irb(main):706:0> d.hour
+=> 4
+irb(main):707:0> d.time
+Traceback (most recent call last):
+        4: from /usr/bin/irb:23:in `<main>'
+        3: from /usr/bin/irb:23:in `load'
+        2: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+        1: from (irb):707
+NoMethodError (undefined method `time' for #<DateTime:0x0000564a39341b90>)
+Did you mean?  ctime
+irb(main):708:0> d.min
+=> 5
+irb(main):709:0> d.sec
+=> 6
+irb(main):710:0> d.offset
+=> (7/48)
+irb(main):711:0> d.zone
+=> "+03:30"
+irb(main):712:0> d
+=> #<DateTime: 2001-02-03T04:05:06+03:30 ((2451944j,2106s,0n),+12600s,2299161j)>
+irb(main):713:0> d >DateTime.new(1999)
+=> true
+irb(main):714:0> d.strftime('%i:%m:%s %p')
+=> "%i:02:981160506 AM"
+irb(main):715:0> d.strftime('%I:%m:%s %p')
+=> "04:02:981160506 AM"
+irb(main):716:0> d.strftime('%I:%M:%S %p')
+=> "04:05:06 AM"
+irb(main):717:0> d.strftime('%I:%M:%S %P')
+=> "04:05:06 am"
+irb(main):718:0> d.strftime('%I:%M:%S %p')
+=> "04:05:06 AM"
+irb(main):719:0> 
+
+httpdate, now, xmlschema
+irb(main):719:0> DateTime.httpdate('Sat, 03 Feb 2001 04:05:06 GMT')
+=> #<DateTime: 2001-02-03T04:05:06+00:00 ((2451944j,14706s,0n),+0s,2299161j)>
+irb(main):720:0> DateTime.now
+=> #<DateTime: 2021-02-15T14:07:18+05:30 ((2459261j,31038s,199383692n),+19800s,2299161j)>
+irb(main):721:0> DateTime.now.xmlschema
+=> "2021-02-15T14:08:40+05:30"
+
