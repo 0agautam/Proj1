@@ -1,0 +1,544 @@
+							Files
+irb#1(main):007:0> val = gets
+Mark Twain
+=> "Mark Twain\n"
+irb#1(main):008:0> val
+=> "Mark Twain\n"
+irb#1(main):009:0> val = gets.chomp
+Mark Twain
+=> "Mark Twain"
+irb#1(main):010:0> val = gets.chop
+Mark Twain
+=> "Mark Twain"
+irb#1(main):011:0> val
+=> "Mark Twain"
+irb#1(main):012:0> val1 = gets.chomp
+Mark Twain
+=> "Mark Twain"
+irb#1(main):013:0> val1.eql?(val)
+=> true
+irb#1(main):014:0> ^C
+irb#1(main):014:0> 
+Traceback (most recent call last):
+        5: from /usr/bin/irb:23:in `<main>'
+        4: from /usr/bin/irb:23:in `load'
+        3: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+        2: from (irb):22
+        1: from /usr/lib/ruby/2.7.0/reline/line_editor.rb:111:in `block in reset'
+Interrupt (Interrupt)
+irb(main):025:0> 
+gr00t@Gr00t:~$ cd Desktop/Training/ruby/
+gr00t@Gr00t:~/Desktop/Training/ruby$ irb
+irb(main):001:0> `ls`
+=> "array\nclassAddition.rb\nclassDecade.rb\nclass_sample.rb\ndatetime\nfactorial.rb\nfibonacci.rb\nfirstprogram.rb\nfnPower.rb\nfunvarArg.rb\ngetuserinput.rb\ngrtnum.rb\nhash\nmath_.rb\npattern1.rb\npattern2.rb\npattern3.rb\nrange.rb\nrubyCommands\nstring\nweek_.rb\n"                                                               
+irb(main):002:0> %x!ls!
+=> "array\nclassAddition.rb\nclassDecade.rb\nclass_sample.rb\ndatetime\nfactorial.rb\nfibonacci.rb\nfirstprogram.rb\nfnPower.rb\nfunvarArg.rb\ngetuserinput.rb\ngrtnum.rb\nhash\nmath_.rb\npattern1.rb\npattern2.rb\npattern3.rb\nrange.rb\nrubyCommands\nstring\nweek_.rb\n"                                                               
+irb(main):003:0> aFile = File.new("Sample")
+Traceback (most recent call last):
+        6: from /usr/bin/irb:23:in `<main>'
+        5: from /usr/bin/irb:23:in `load'
+        4: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+        3: from (irb):3
+        2: from (irb):3:in `new'
+        1: from (irb):3:in `initialize'
+Errno::ENOENT (No such file or directory @ rb_sysopen - Sample)
+irb(main):004:0> aFile = File.new("Sample","w")
+=> #<File:Sample>
+irb(main):005:0> puts "Hello Ruby File!!!"
+Hello Ruby File!!!
+=> nil
+irb(main):006:0> aFile.close
+=> nil
+irb(main):007:0> str = "hello world"
+=> "hello world"
+irb(main):008:0> 
+irb(main):009:0> putc str
+h=> "hello world"
+irb(main):010:0> putc ?.
+.=> "."
+irb(main):011:0> ?.
+=> "."
+irb(main):012:0> .
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):12: syntax error, unexpected '.')
+irb(main):013:0* ?<>
+irb(main):014:0> lsf
+Traceback (most recent call last):
+        5: from /usr/bin/irb:23:in `<main>'
+        4: from /usr/bin/irb:23:in `load'
+        3: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+        2: from (irb):12
+        1: from (irb):14:in `rescue in irb_binding'
+NameError (undefined local variable or method `lsf' for main:Object)
+irb(main):015:0> ?!
+=> "!"
+irb(main):016:0> arr = IO.readlines("sample")
+=> ["ABCDEFGHw file her\n", "i am a ruby file\n", "and 2020 was worst\n"]
+irb(main):017:0> ar
+Traceback (most recent call last):
+        4: from /usr/bin/irb:23:in `<main>'
+        3: from /usr/bin/irb:23:in `load'
+        2: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+        1: from (irb):17
+NameError (undefined local variable or method `ar' for main:Object)
+Did you mean?  arr
+irb(main):018:0> arr
+=> ["ABCDEFGHw file her\n", "i am a ruby file\n", "and 2020 was worst\n"]
+irb(main):019:0> arr[0]
+=> "ABCDEFGHw file her\n"
+irb(main):020:0> arr[1]
+=> "i am a ruby file\n"
+irb(main):021:0> arr[2]
+=> "and 2020 was worst\n"
+irb(main):022:1* arr.each do |line|
+irb(main):023:1*   puts line
+irb(main):024:0> end
+ABCDEFGHw file her
+i am a ruby file
+and 2020 was worst
+=> ["ABCDEFGHw file her\n", "i am a ruby file\n", "and 2020 was worst\n"]
+irb(main):025:0> IO.foreach("sample") {|block| puts block}
+ABCDEFGHw file her
+i am a ruby file
+and 2020 was worst
+=> nil
+irb(main):026:0> File.open('filesam.txt') if File::exist
+File::exist?
+File::exists?
+irb(main):026:0> File.open('filesam.txt') if File::exists? ("filesam.txt")
+=> nil
+irb(main):027:0> file = file.new("filesam.txt","r")
+Traceback (most recent call last):
+        4: from /usr/bin/irb:23:in `<main>'
+        3: from /usr/bin/irb:23:in `load'
+        2: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+        1: from (irb):27
+NoMethodError (undefined method `new' for nil:NilClass)
+irb(main):028:0> file = File.new("filesam.txt","r")
+Traceback (most recent call last):
+        7: from /usr/bin/irb:23:in `<main>'
+        6: from /usr/bin/irb:23:in `load'
+        5: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+        4: from (irb):27
+        3: from (irb):28:in `rescue in irb_binding'
+        2: from (irb):28:in `new'
+        1: from (irb):28:in `initialize'
+Errno::ENOENT (No such file or directory @ rb_sysopen - filesam.txt)
+irb(main):029:0> file = File.new("filesam.txt","r+")
+Traceback (most recent call last):
+        7: from /usr/bin/irb:23:in `<main>'
+        6: from /usr/bin/irb:23:in `load'
+        5: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+        4: from (irb):28
+        3: from (irb):29:in `rescue in irb_binding'
+        2: from (irb):29:in `new'
+        1: from (irb):29:in `initialize'
+Errno::ENOENT (No such file or directory @ rb_sysopen - filesam.txt)
+irb(main):030:0> file = File.new("filesam.txt","w+")
+=> #<File:filesam.txt>
+irb(main):031:0> File.open("filesam.txt") if File::exists? ("filesam.txt")
+=> #<File:filesam.txt>
+irb(main):032:0> file = File.open("filesam.txt") if File::exists? ("filesam.txt")
+=> #<File:filesam.txt>
+irb(main):033:0> file
+=> #<File:filesam.txt>
+irb(main):034:0> file.class
+=> File
+irb(main):035:0> file.readline
+file.readline
+file.readlines
+irb(main):035:0> arr= file.readlines
+=> []
+irb(main):036:0> File.file?("read.txt")
+=> false
+irb(main):037:0> File.file?("filesam.txt")
+=> true
+irb(main):038:0> File::directory?("filesam.txt")
+=> false
+irb(main):039:0> File::directory?("./sam")
+=> true
+irb(main):040:0> File::directory?("./sample")
+=> false
+irb(main):041:0> file
+=> #<File:filesam.txt>
+irb(main):042:0> file.chmod(000)
+=> 0
+irb(main):043:0> File.readable
+File.readable?
+File.readable_real?
+irb(main):043:0> File.readable?("filesam.txt")
+=> false
+irb(main):044:0> File.writeable?("filesam.txt")
+Traceback (most recent call last):
+        4: from /usr/bin/irb:23:in `<main>'
+        3: from /usr/bin/irb:23:in `load'
+        2: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+        1: from (irb):44
+NoMethodError (undefined method `writeable?' for File:Class)
+Did you mean?  writable?
+irb(main):045:0> File.writable?("filesam.txt")
+=> false
+irb(main):046:0> File.executable?("filesam.txt")
+=> false
+irb(main):047:0> file.chmod(400)
+=> 0
+irb(main):048:0> File.readable?("filesam.txt")
+=> true
+irb(main):049:0> File.writable?("filesam.txt")
+=> true
+irb(main):050:0> File.executable?("filesam.txt")
+=> false
+irb(main):051:0> file.chmod(100)
+=> 0
+irb(main):052:0> File.readable?("filesam.txt")
+=> false
+irb(main):053:0> File.writable?("filesam.txt")
+=> false
+irb(main):054:0> File.executable?("filesam.txt")
+=> true
+irb(main):055:0> file.chmod(200)
+=> 0
+irb(main):056:0> File.readable?("filesam.txt")
+=> false
+irb(main):057:0> File.writable?("filesam.txt")
+=> true
+irb(main):058:0> File.executable?("filesam.txt")
+=> true
+irb(main):059:0> File.zero?("filesam.txt")
+=> true
+irb(main):060:0> File.zero?("array")
+=> false
+irb(main):061:0> File.zero?("arraylkf")
+=> false
+irb(main):062:0> File.ftype("array")
+=> "file"
+irb(main):063:0> File.ftype("file1.rb")
+=> "file"
+irb(main):064:0> File.ftype("./sam")
+=> "directory"
+irb(main):065:0> File.ctime("array")
+=> 2021-02-12 17:32:14.011485661 +0530
+irb(main):066:0> File.mtime("array")
+=> 2021-02-12 17:32:13.959485662 +0530
+irb(main):067:0> File.atime("array")
+=> 2021-02-12 17:32:17.695485595 +0530
+irb(main):068:0* Dir.
+Dir.__id__
+Dir.__send__
+Dir.alias_method
+Dir.allocate
+Dir.ancestors
+Dir.attr
+Dir.attr_accessor
+Dir.attr_reader
+Dir.attr_writer
+Dir.autoload
+Dir.autoload?
+Dir.chdir
+Dir.children
+Dir.chroot
+Dir.class
+Dir.class_eval
+Dir.class_exec
+Dir.class_variable_defined?
+Dir.class_variable_get
+Dir.class_variable_set
+Dir.class_variables
+Dir.clone
+Dir.const_defined?
+Dir.const_get
+Dir.const_missing
+Dir.const_set
+Dir.const_source_location
+Dir.constants
+Dir.define_method
+Dir.define_singleton_method
+Dir.delete
+Dir.deprecate_constant
+Dir.display
+Dir.dup
+Dir.each_child
+Dir.empty?
+Dir.entries
+Dir.enum_for
+Dir.eql?
+Dir.equal?
+Dir.exist?
+Dir.exists?
+Dir.extend
+Dir.foreach
+Dir.freeze
+Dir.frozen?
+Dir.getwd
+Dir.glob
+Dir.hash
+Dir.home
+Dir.include
+Dir.include?
+Dir.included_modules
+Dir.inspect
+Dir.instance_eval
+Dir.instance_exec
+Dir.instance_method
+Dir.instance_methods
+Dir.instance_of?
+Dir.instance_variable_defined?
+Dir.instance_variable_get
+Dir.instance_variable_set
+Dir.instance_variables
+Dir.is_a?
+Dir.itself
+Dir.kind_of?
+Dir.method
+Dir.method_defined?
+Dir.methods
+Dir.mkdir
+Dir.mktmpdir
+Dir.module_eval
+Dir.module_exec
+Dir.name
+Dir.new
+Dir.nil?
+Dir.object_id
+Dir.open
+Dir.prepend
+Dir.private_class_method
+Dir.private_constant
+Dir.private_instance_methods
+Dir.private_method_defined?
+Dir.private_methods
+Dir.protected_instance_methods
+Dir.protected_method_defined?
+Dir.protected_methods
+Dir.public_class_method
+Dir.public_constant
+Dir.public_instance_method
+Dir.public_instance_methods
+Dir.public_method
+Dir.public_method_defined?
+Dir.public_methods
+Dir.public_send
+Dir.pwd
+Dir.remove_class_variable
+Dir.remove_instance_variable
+Dir.remove_method
+Dir.respond_to?
+Dir.rmdir
+Dir.send
+Dir.singleton_class
+Dir.singleton_class?
+Dir.singleton_method
+Dir.singleton_methods
+Dir.superclass
+Dir.taint
+Dir.tainted?
+Dir.tap
+Dir.then
+Dir.tmpdir
+Dir.to_enum
+Dir.to_s
+Dir.trust
+Dir.undef_method
+Dir.unlink
+Dir.untaint
+Dir.untrust
+Dir.untrusted?
+Dir.yield_self
+irb(main):068:0> Dir.chdir("./sam")
+=> 0
+irb(main):069:0> Dir.chdir("./sam")
+Traceback (most recent call last):
+        5: from /usr/bin/irb:23:in `<main>'
+        4: from /usr/bin/irb:23:in `load'
+        3: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+        2: from (irb):69
+        1: from (irb):69:in `chdir'
+Errno::ENOENT (No such file or directory @ dir_s_chdir - ./sam)
+irb(main):070:0> Dir.pwd
+=> "/home/gr00t/Desktop/Training/ruby/sam"
+irb(main):071:0> Dir.chdir("../")
+=> 0
+irb(main):072:0> Dir.pwd
+=> "/home/gr00t/Desktop/Training/ruby"
+irb(main):073:0> puts Dir.entries("./").join(" ")
+fnPower.rb range.rb getuserinput.rb grtnum.rb array sample .. filesam.txt . pattern2.rb class_sample.rb sam math_.rb file2.rb fibonacci.rb classDecade.rb datetime string file1.rb classAddition.rb factorial.rb rubyCommands funvarArg.rb firstprogram.rb pattern1.rb pattern3.rb hash Sample week_.rb
+=> nil
+irb(main):074:0> puts Dir.entries("./")
+fnPower.rb
+range.rb
+getuserinput.rb
+grtnum.rb
+array
+sample
+filesam.txt
+.
+pattern2.rb
+class_sample.rb
+sam
+math_.rb
+file2.rb
+fibonacci.rb
+classDecade.rb
+datetime
+string
+file1.rb
+classAddition.rb
+factorial.rb
+rubyCommands
+funvarArg.rb
+firstprogram.rb
+pattern1.rb
+pattern3.rb
+hash
+Sample
+week_.rb
+=> nil
+irb(main):075:0> puts Dir.entries("./").join("-")
+fnPower.rb-range.rb-getuserinput.rb-grtnum.rb-array-sample-..-filesam.txt-.-pattern2.rb-class_sample.rb-sam-math_.rb-file2.rb-fibonacci.rb-classDecade.rb-datetime-string-file1.rb-classAddition.rb-factorial.rb-rubyCommands-funvarArg.rb-firstprogram.rb-pattern1.rb-pattern3.rb-hash-Sample-week_.rb
+=> nil
+irb(main):076:1* Dir.foreach do |entry|
+irb(main):077:1*   puts entry
+irb(main):078:0> end
+Traceback (most recent call last):
+        6: from /usr/bin/irb:23:in `<main>'
+        4: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+        3: from (irb):76
+        2: from (irb):76:in `foreach'
+        1: from (irb):76:in `open'
+ArgumentError (wrong number of arguments (given 0, expected 1))
+irb(main):079:1* Dir.foreach("./") do |entry|
+irb(main):080:1*   puts entry
+irb(main):081:0> end
+fnPower.rb
+range.rb
+getuserinput.rb
+grtnum.rb
+array
+sample
+..
+filesam.txt
+.
+pattern2.rb
+class_sample.rb
+sam
+math_.rb
+file2.rb
+fibonacci.rb
+classDecade.rb
+datetime
+string
+file1.rb
+classAddition.rb
+factorial.rb
+rubyCommands
+funvarArg.rb
+firstprogram.rb
+pattern1.rb
+pattern3.rb
+Sample
+=> nil
+irb(main):082:1* arr = Dir.foreach("./") do |entry|
+irb(main):083:1*   puts entry
+irb(main):084:0> end
+fnPower.rb
+getuserinput.rb
+array
+sample
+..
+filesam.txt
+.
+pattern2.rb
+class_sample.rb
+sam
+math_.rb
+fibonacci.rb
+datetime
+string
+file1.rb
+factorial.rb
+rubyCommands
+funvarArg.rb
+firstprogram.rb
+pattern1.rb
+pattern3.rb
+hash
+Sample
+week_.rb
+=> nil
+irb(main):085:0> arr
+=> nil
+irb(main):086:0> arr = []
+=> []
+irb(main):087:1* arr = Dir.foreach("./") do |entry|
+irb(main):088:1*    arr.push(entry)
+irb(main):089:0> end
+=> nil
+irb(main):090:0> arr
+=> nil
+irb(main):091:0> arr = []
+=> []
+irb(main):092:1* Dir.foreach("./") do |entry|
+irb(main):093:1*    arr.push(entry)
+irb(main):094:0>  end
+=> nil
+irb(main):095:0> arr
+=> ["fnPower.rb", "range.rb", "getuserinput.rb", "grtnum.rb", "array", "sample", "..", "filesam.txt", ".", "pattern2.rb", "class_sample.rb", "sam", "math_.rb", "file2.rb", "fibonacci.rb", "classDecade.rb", "datetime", "string", "file1.rb", "classAddition.rb", "factorial.rb", "rubyCommands", "funvarArg.rb", "firstprogram.rb", "pattern1.rb", "pattern3.rb", "hash", "Sample", "week_.rb"]                                                                                                                
+irb(main):096:0> Dir.mkdir("newruby")
+=> 0
+irb(main):097:0> arr = []
+=> []
+irb(main):098:0> File::directory?("newruby")
+=> true
+irb(main):099:0> File::directory?("newruby1")
+=> false
+irb(main):100:1* Dir.foreach("./") do |entry|
+irb(main):101:1*    arr.push(entry)
+irb(main):102:0> end
+=> nil
+irb(main):103:0> arr
+=> ["fnPower.rb", "range.rb", "getuserinput.rb", "grtnum.rb", "array", "sample", "..", "filesam.txt", ".", "pattern2.rb", "class_sample.rb", "sam", "math_.rb", "file2.rb", "fibonacci.rb", "classDecade.rb", "datetime", "string", "file1.rb", "classAddition.rb", "factorial.rb", "rubyCommands", "funvarArg.rb", "firstprogram.rb", "pattern1.rb", "newruby", "pattern3.rb", "hash", "Sample", "week_.rb"]                                                                                                     
+irb(main):104:0> Dir["./*"]
+=> ["./fnPower.rb", "./range.rb", "./getuserinput.rb", "./grtnum.rb", "./array", "./sample", "./filesam.txt", "./pattern2.rb", "./class_sample.rb", "./sam", "./math_.rb", "./file2.rb", "./fibonacci.rb", "./classDecade.rb", "./datetime", "./string", "./file1.rb", "./classAddition.rb", "./factorial.rb", "./rubyCommands", "./funvarArg.rb", "./firstprogram.rb", "./pattern1.rb", "./newruby", "./pattern3.rb", "./hash", "./Sample", "./week_.rb"]                                                        
+irb(main):105:0> Dir.delete("sam")
+=> 0
+irb(main):106:0> tmpfile = File.join(Dir.tmpdir, "tingtong")
+=> "/tmp/tingtong"
+irb(main):107:0> tmpfile = File.new(tmpfile,"w")
+=> #<File:/tmp/tingtong>
+irb(main):108:0> tmpfile.puts "Hello welcome to file world \n In ruby!!!"
+=> nil
+irb(main):109:0> tmpfile.close
+=> nil
+irb(main):110:0> File.delete(tmpfile)
+=> 1
+irb(main):111:0> 
+irb(main):112:0> 
+irb(main):113:0> 
+irb(main):114:0> 
+irb(main):115:0> 
+irb(main):116:0> 
+irb(main):117:0> 
+irb(main):118:0> 
+irb(main):119:0> 
+irb(main):120:0> 
+irb(main):121:0> 
+irb(main):122:0> 
+irb(main):123:0> 
+irb(main):124:0> 
+irb(main):125:0> 
+irb(main):126:0> f = Tempfile.new("tingtong")
+=> #<Tempfile:/tmp/tingtong20210215-24956-aavd65>
+irb(main):127:0> f.puts "Hello ruby world!!!"
+=> nil
+irb(main):128:0> puts f.path
+/tmp/tingtong20210215-24956-aavd65
+=> nil
+irb(main):129:0> f.close
+=> nil
+irb(main):130:0> File.delete(f)
+=> 1
+irb(main):131:0> 
+
