@@ -1,0 +1,149 @@
+							Hash
+1. Creating Hashes
+
+irb(main):008:0> h = {foo:2,bar:3}
+=> {:foo=>2, :bar=>3}
+irb(main):009:0> h={"foo":"2","bar":"3"}
+=> {:foo=>"2", :bar=>"3"}
+irb(main):010:0> h
+=> {:foo=>"2", :bar=>"3"}
+irb(main):011:0> h["foo"]
+=> nil
+irb(main):012:0> h[":foo"]
+=> nil
+irb(main):013:0> h[:foo]
+=> "2"
+irb(main):014:0> h[:foo].class
+
+irb(main):003:0> h ={:foo =>'bar'}
+=> {:foo=>"bar"}
+irb(main):004:0> h.class
+=> Hash
+
+irb(main):045:0> h = Hash.new
+=> {}
+irb(main):046:0> h.class
+=> Hash
+irb(main):047:0> h = Hash.[]
+=> {}
+irb(main):048:0> h.class
+=> Hash
+irb(main):049:0> h = Hash[]
+=> {}
+irb(main):050:0> h.class
+=> Hash
+irb(main):051:0> h = {foo:'bar',bar:'battz'}
+=> {:foo=>"bar", :bar=>"battz"}
+
+2. deleting an entry
+irb(main):052:0> h
+=> {:foo=>"bar", :bar=>"battz"}
+irb(main):053:0> h.delete(:bar)
+=> "battz"
+irb(main):054:0> h
+=> {:foo=>"bar"}
+
+3. Using Hashes in classes
+rb(main):245:1* class Book
+irb(main):246:1*   attr_reader :author, :title
+irb(main):247:1*   
+irb(main):248:2*   def initialize(author, title)
+irb(main):249:2*     @author = author
+irb(main):250:2*     @title = title
+irb(main):251:1*   end
+irb(main):252:1*   
+irb(main):253:2*   def ==(other)
+irb(main):254:2*     self.class == other &&
+irb(main):255:2*     other.author == @author &&
+irb(main):256:2*     other.title == @title
+irb(main):257:1*   end
+irb(main):258:1*   alias eql? ==
+irb(main):259:1*   
+irb(main):260:2*   def hash 
+irb(main):261:2*     @author.hash ^ @title.hash # Xor
+irb(main):262:1*   end
+irb(main):263:0> end
+=> :hash
+irb(main):264:0> book1 = Book.new('matx',"Ruby in a nutshell")
+=> #<Book:0x0000564a39050eb8 @author="matx", @title="Ruby in a nutshell">
+irb(main):265:0> book2 = Book.new("matx","Ruby in a nutshell")
+=> #<Book:0x0000564a39401058 @author="matx", @title="Ruby in a nutshell">
+irb(main):266:0> review = {}
+=> {}
+irb(main):267:0> review[book1] = "Great reference!"
+=> "Great reference!"
+irb(main):268:0> review
+=> {#<Book:0x0000564a39050eb8 @author="matx", @title="Ruby in a nutshell">=>"Great reference!"}
+irb(main):269:0> review[book2] = "Nice and Compact"
+=> "Nice and Compact"
+irb(main):270:0> review
+=> {#<Book:0x0000564a39050eb8 @author="matx", @title="Ruby in a nutshell">=>"Great reference!", #<Book:0x0000564a39401058 @author="matx", @title="Ruby in a nutshell">=>"Nice and Compact"}
+irb(main):271:0> review.length
+=> 2
+
+4. Default values for keys
+irb(main):305:0> h = Hash.new([])
+=> {}
+irb(main):306:0> h[:hello]
+=> []
+irb(main):307:0> h
+=> {}
+irb(main):308:0> h.default
+=> []
+irb(main):309:0> h[:hello]
+=> []
+irb(main):310:0> h[:hello] << :hi
+=> [:hi]
+irb(main):311:0> h.default
+=> [:hi]
+irb(main):312:0> s
+=> "foo"
+irb(main):313:0> s = {:foo =>:bar}
+=> {:foo=>:bar}
+irb(main):314:0> s.class
+=> Hash
+irb(main):315:0> s[:foo].class
+=> Symbol
+irb(main):316:0> s.default
+=> nil
+irb(main):317:0> h.default
+=> [:hi]
+
+irb(main):323:0> h.default
+=> [:hi]
+irb(main):324:0> h
+=> {}
+irb(main):325:0> h[:hello] << 0
+=> [:hi, 0]
+irb(main):326:0> h
+=> {}
+irb(main):327:0> h.default
+=> [:hi, 0]
+irb(main):328:0> h[:bar]
+=> [:hi, 0]
+irb(main):329:0> h[:morning] << 1
+=> [:hi, 0, 1]
+irb(main):330:0> h
+=> {}
+irb(main):331:0> h[:morning]
+=> [:hi, 0, 1]
+
+5. ruby2_keywords_hash
+
+irb(main):411:0> a = {k:1}
+=> {:k=>1}
+irb(main):412:0> a = Hash.ruby2_keywords_hash(a)
+=> {:k=>1}
+irb(main):413:0> a
+=> {:k=>1}
+irb(main):414:1* def foo(k:22)
+irb(main):415:1*   k
+irb(main):416:0> end
+=> :foo
+irb(main):430:0> foo()
+=> 22
+irb(main):431:0> foo(*[a])
+=> 1
+
+
+
