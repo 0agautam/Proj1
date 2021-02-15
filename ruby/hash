@@ -145,5 +145,440 @@ irb(main):430:0> foo()
 irb(main):431:0> foo(*[a])
 => 1
 
+5. ruby2_keywords_hash
+
+irb(main):411:0> a = {k:1}
+=> {:k=>1}
+irb(main):412:0> a = Hash.ruby2_keywords_hash(a)
+=> {:k=>1}
+irb(main):413:0> a
+=> {:k=>1}
+irb(main):414:1* def foo(k:22)
+irb(main):415:1*   k
+irb(main):416:0> end
+=> :foo
+irb(main):430:0> foo()
+=> 22
+irb(main):431:0> foo(*[a])
+=> 1
+
+5. ruby2_keywords_hash
+
+irb(main):411:0> a = {k:1}
+=> {:k=>1}
+irb(main):412:0> a = Hash.ruby2_keywords_hash(a)
+=> {:k=>1}
+irb(main):413:0> a
+=> {:k=>1}
+irb(main):414:1* def foo(k:22)
+irb(main):415:1*   k
+irb(main):416:0> end
+=> :foo
+irb(main):430:0> foo()
+=> 22
+irb(main):431:0> foo(*[a])
+=> 1
+
+5. ruby2_keywords_hash
+
+irb(main):411:0> a = {k:1}
+=> {:k=>1}
+irb(main):412:0> a = Hash.ruby2_keywords_hash(a)
+=> {:k=>1}
+irb(main):413:0> a
+=> {:k=>1}
+irb(main):414:1* def foo(k:22)
+irb(main):415:1*   k
+irb(main):416:0> end
+=> :foo
+irb(main):430:0> foo()
+=> 22
+irb(main):431:0> foo(*[a])
+=> 1
+
+5. ruby2_keywords_hash
+
+irb(main):411:0> a = {k:1}
+=> {:k=>1}
+irb(main):412:0> a = Hash.ruby2_keywords_hash(a)
+=> {:k=>1}
+irb(main):413:0> a
+=> {:k=>1}
+irb(main):414:1* def foo(k:22)
+irb(main):415:1*   k
+irb(main):416:0> end
+=> :foo
+irb(main):430:0> foo()
+=> 22
+irb(main):431:0> foo(*[a])
+=> 1
+
+5. ruby2_keywords_hash
+
+irb(main):411:0> a = {k:1}
+=> {:k=>1}
+irb(main):412:0> a = Hash.ruby2_keywords_hash(a)
+=> {:k=>1}
+irb(main):413:0> a
+=> {:k=>1}
+irb(main):414:1* def foo(k:22)
+irb(main):415:1*   k
+irb(main):416:0> end
+=> :foo
+irb(main):430:0> foo()
+=> 22
+irb(main):431:0> foo(*[a])
+=> 1
+
+5. ruby2_keywords_hash
+
+irb(main):411:0> a = {k:1}
+=> {:k=>1}
+irb(main):412:0> a = Hash.ruby2_keywords_hash(a)
+=> {:k=>1}
+irb(main):413:0> a
+=> {:k=>1}
+irb(main):414:1* def foo(k:22)
+irb(main):415:1*   k
+irb(main):416:0> end
+=> :foo
+irb(main):430:0> foo()
+=> 22
+irb(main):431:0> foo(*[a])
+=> 1
+
+6. Hash1 < Hash2 if h1 is a proper subset of h2
+
+irb(main):497:0> h1
+=> {:foo=>1, :bar=>2}
+irb(main):498:0> h2
+=> {:bat=>3, :batx=>0, :foo=>5, :bar=>3}
+irb(main):499:0> h1<h2
+=> false
+irb(main):500:0> h2[:bar]=2
+=> 2
+irb(main):501:0> h1<h2
+=> false
+irb(main):502:0> h2[:foo]=1
+=> 1
+irb(main):503:0> h1<h2
+=> true
+ 
+7. any And Assoc functions
+
+irb(main):509:0> h1
+=> {}
+irb(main):510:0> h1.any?
+=> false
+irb(main):511:0> h2.any?
+=> true
+irb(main):512:0> h2
+=> {:bat=>3, :batx=>0, :foo=>1, :bar=>2}
+irb(main):513:0> h2.any?{|key, value| value<3}
+=> true
+irb(main):515:0> h2.assoc(:bar)
+=> [:bar, 2]
+irb(main):516:0> h2.assoc(:bat)
+=> [:bat, 3]
+irb(main):517:0> h2.assoc(:at)
+=> nil
+
+8. clear to delete all the elements of object
+
+irb(main):523:0> h1.clear
+=> {}
+irb(main):524:0> a =[83393,393,393]
+=> [83393, 393, 393]
+irb(main):525:0> a.clear
+=> []
+
+9. compare by identity prevents the overwritting of keys
+
+irb(main):527:0> h = Hash.new
+=> {}
+irb(main):528:0> s0 = "x"
+=> "x"
+irb(main):529:0> s1 = "x"
+=> "x"
+irb(main):530:0> h[s0] = 0
+=> 0
+irb(main):531:0> h
+=> {"x"=>0}
+irb(main):532:0> h[s1] = 1
+=> 1
+irb(main):533:0> h
+=> {"x"=>1}
+irb(main):534:0> h = Hash[]
+=> {}
+irb(main):535:0> h
+=> {}
+irb(main):536:0> h.compare_by_identity
+=> {}
+irb(main):537:0> h.compare_by_identity?
+=> true
+irb(main):538:0> h[s0]=0
+=> 0
+irb(main):539:0> h[s1]=1
+=> 1
+irb(main):540:0> h
+=> {"x"=>0, "x"=>1}
+
+10. default values for keys
+
+irb(main):546:0> h = Hash.new {|hash, key| hash[key]="No key for #{key}"}
+=> {}
+irb(main):547:0> h[:foo]="hello"
+=> "hello"
+irb(main):548:0> h
+=> {:foo=>"hello"}
+irb(main):549:0> h.default(:foo)
+=> "No key for foo"
+
+11. delete_if enumerator 
+irb(main):589:0> h
+=> {:foo=>1}
+irb(main):590:0> h
+=> {:foo=>1}
+irb(main):591:0> h[:bar]=2
+=> 2
+irb(main):592:0> h[:bat] =3
+=> 3
+irb(main):593:0> e= h.delete_if
+=> #<Enumerator: {:foo=>1, :bar=>2, :bat=>3}:delete_if>
+irb(main):594:0> e.each {|key,value| value >1}
+=> {:foo=>1}
+irb(main):595:0> e
+=> #<Enumerator: {:foo=>1}:delete_if>
+irb(main):596:0> 
+
+12. dig method for nested hashes with arrays 
+irb(main):601:0> h = {foo: {bar: [:a, :b, :c]}}
+=> {:foo=>{:bar=>[:a, :b, :c]}}
+irb(main):602:0> h.dig(:foo)
+=> {:bar=>[:a, :b, :c]}
+irb(main):603:0> h.dig(:foo,:bar)
+=> [:a, :b, :c]
+irb(main):604:0> h.dig(:foo,:bar,0)
+=> :a
+irb(main):605:0> h.dig(:foo,:bar,2)
+=> :c
+irb(main):606:0> 
+
+13. each_pair and each , also each_key and each, each_value and each
+
+irb(main):606:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):607:0> h.each_pair {|key,value| puts "#{key} : #{value}"}
+foo : 0
+bar : 1
+baz : 2
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):608:0> h.each {|key,value| puts "#{key} : #{value}"}
+foo : 0
+bar : 1
+baz : 2
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):609:0> h.each_pair
+=> #<Enumerator: {:foo=>0, :bar=>1, :baz=>2}:each_pair>
+irb(main):610:0> h.each
+=> #<Enumerator: {:foo=>0, :bar=>1, :baz=>2}:each>
+irb(main):611:0> e = h.each_pair
+=> #<Enumerator: {:foo=>0, :bar=>1, :baz=>2}:each_pair>
+irb(main):612:0> e.each {|key,value| puts "#{key} : #{value}"}
+foo : 0
+bar : 1
+baz : 2
+=> {:foo=>0, :bar=>1, :baz=>2}
+
+14. select return a new hash object for truthy values (filter is an alias)
+irb(main):613:0> h
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):614:0> h.select{|key,value| value>0}
+=> {:bar=>1, :baz=>2}
+
+15. flatten to return an array of nested objects
+
+irb(main):615:0> h = {foo: 0, bar: [:bat, 3], baz: 2}
+=> {:foo=>0, :bar=>[:bat, 3], :baz=>2}
+irb(main):616:0> h.flatten
+=> [:foo, 0, :bar, [:bat, 3], :baz, 2]
+irb(main):617:0> h.flatten(1)
+=> [:foo, 0, :bar, [:bat, 3], :baz, 2]
+irb(main):618:0> h.flatten(2)
+=> [:foo, 0, :bar, :bat, 3, :baz, 2]
+
+16 Methods has_key?, key?, and member? are aliases for #include?.
+
+17. Inspect returns a new string alias (to_s)
+
+irb(main):619:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):620:0> h.inspect
+=> "{:foo=>0, :bar=>1, :baz=>2}
+
+18. invert gives inverted key-value pairs and overwrite the repeated keys
+
+irb(main):622:0> h = {foo:2,bar:2}
+=> {:foo=>2, :bar=>2}
+irb(main):623:0> h.invert
+=> {2=>:bar}
+irb(main):624:0> h = {foo:2,bar:3}
+=> {:foo=>2, :bar=>3}
+irb(main):625:0> h.invert
+=> {2=>:foo, 3=>:bar}
+
+19. Merge 
+
+irb(main):630:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):631:0> h1 = {bat: 3, bar: 4}
+=> {:bat=>3, :bar=>4}
+irb(main):632:0> h2 = {bam: 5, bat:6}
+=> {:bam=>5, :bat=>6}
+irb(main):633:0> h.merge(h1,h2)
+=> {:foo=>0, :bar=>4, :baz=>2, :bat=>6, :bam=>5}
+irb(main):634:0> h
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):635:0> h.merge(h1,h2) {|key, old_val, new_val| old_val+new_val}
+=> {:foo=>0, :bar=>5, :baz=>2, :bat=>9, :bam=>5}
+irb(main):636:0> 
+
+20. shift removes the first entry
+
+irb(main):636:0> h
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):637:0> h.shift
+=> [:foo, 0]
+irb(main):638:0> h
+=> {:bar=>1, :baz=>2} 
+
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+
+21. Transform keys, values
+
+irb(main):640:0> h = {foo: 0, bar: 1, baz: 2}
+=> {:foo=>0, :bar=>1, :baz=>2}
+irb(main):641:0> h1 = h.transform_keys {|key| key.to_s}
+=> {"foo"=>0, "bar"=>1, "baz"=>2}
+ 
 
 
