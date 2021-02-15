@@ -1,0 +1,65 @@
+								Date and Time
+
+  require 'date'
+
+  Date.new(2001,2,3)
+   #=> #<Date: 2001-02-03 ...>
+  Date.jd(2451944)
+   #=> #<Date: 2001-02-03 ...>
+  Date.ordinal(2001,34)
+   #=> #<Date: 2001-02-03 ...>
+  Date.commercial(2001,5,6)
+   #=> #<Date: 2001-02-03 ...>
+  Date.parse('2001-02-03')
+   #=> #<Date: 2001-02-03 ...>
+  Date.strptime('03-02-2001', '%d-%m-%Y')
+   #=> #<Date: 2001-02-03 ...>
+  Time.new(2001,2,3).to_date
+   #=> #<Date: 2001-02-03 ...>
+
+1 DateTime.new
+
+irb(main):690:0> DateTime.new(2020,2,2,30,40,50)
+Traceback (most recent call last):
+        6: from /usr/bin/irb:23:in `<main>'
+        5: from /usr/bin/irb:23:in `load'
+        4: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+        3: from (irb):689
+        2: from (irb):690:in `rescue in irb_binding'
+        1: from (irb):690:in `new'
+Date::Error (invalid date)
+irb(main):691:0> DateTime.new(2020,2,2,12,40,50)
+=> #<DateTime: 2020-02-02T12:40:50+00:00 ((2458882j,45650s,0n),+0s,2299161j)>
+irb(main):692:0> DateTime.new(2020,2,2,22,40,50)
+
+2. commercial for year,week and week day, ordinal for year, day of year ,jd for numeric range
+
+irb(main):672:0> Date.new(2020,1,2)
+=> #<Date: 2020-01-02 ((2458851j,0s,0n),+0s,2299161j)>
+irb(main):673:0> Date.ordinal(2020,34)
+=> #<Date: 2020-02-03 ((2458883j,0s,0n),+0s,2299161j)>
+irb(main):674:0> Date.commercial(2020,3,4)
+=> #<Date: 2020-01-16 ((2458865j,0s,0n),+0s,2299161j)>
+
+irb(main):668:0> Date.jd(25000)
+=> #<Date: -4644-06-12 ((25000j,0s,0n),+0s,2299161j)>
+irb(main):669:0> Date.jd(2500000)
+=> #<Date: 2132-08-31 ((2500000j,0s,0n),+0s,2299161j)>
+
+3. today
+
+irb(main):652:0> Date.today
+=> #<Date: 2021-02-15 ((2459261j,0s,0n),+0s,2299161j)>
+
+4. Time
+
+irb(main):695:0> Time.new
+=> 2021-02-15 13:24:32.82817697 +0530
+
+irb(main):685:0> Time.new(2020,4,2).to_date
+=> #<Date: 2020-04-02 ((2458942j,0s,0n),+0s,2299161j)>
+
+irb(main):696:0> Time.new.to_date
+=> #<Date: 2021-02-15 ((2459261j,0s,0n),+0s,2299161j)>
+irb(main):697:0> 
+
