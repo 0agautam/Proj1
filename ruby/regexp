@@ -1,0 +1,185 @@
+					Regular Expressions
+1. =~ and match method can be used for matching strings
+
+irb(main):011:0> 'haystack' =~ /k/
+=> 7
+irb(main):012:0> 'haystack' =~ /ck/
+=> 6
+irb(main):013:0> /y/ =~'haystack'
+=> 2
+irb(main):014:0> /s/ =~'haystack'
+=> 3
+irb(main):015:0> /kc/ =~'haystack'
+=> nil
+irb(main):016:0> /hay/ =~'haystack'
+=> 0
+irb(main):017:0> /aay/ =~'haystack'
+=> nil
+irb(main):018:0> $~
+=> nil
+irb(main):019:0> /hay/ =~'haystack'
+=> 0
+irb(main):020:0> $~
+=> #<MatchData "hay">
+
+2. Metacharacters
+(, ), [, ], {, }, ., ?, +, *
+
+irb(main):026:0> /1 \+ 2 = 3\?/.match('Does 1 + 2 = 3?')
+=> #<MatchData "1 + 2 = 3?">
+irb(main):027:0> /1 \+ 2 = 3\?/.match('Does 1 + 2 =3?')
+=> nil
+irb(main):028:0> /a\/b\?/.match('a/b?')
+=> #<MatchData "a/b?">
+irb(main):029:0> /\s\u{6771 4eac 90fd}/.match("Go to 東京都")
+=> #<MatchData " 東京都">
+
+3.matching with variable
+
+irb(main):047:0> /#{place}/.match("Go to 東京都")
+=> #<MatchData "東京都">
+
+4. matching with metcharacter and characterclass
+
+irb(main):062:0> /./.match('\n')
+=> #<MatchData "\\">
+irb(main):063:0> /./.match("\n")
+=> nil
+irb(main):064:0> /./m.match("\n")
+=> #<MatchData "\n">
+irb(main):065:0> /\w/.match("@")
+=> nil
+irb(main):066:0> /\w/.match("a")
+=> #<MatchData "a">
+ 
+irb(main):052:0> /[a-f0-9]/.match('9')
+=> #<MatchData "9">
+irb(main):053:0> /[a-f0-9]/.match('ab9')
+=> #<MatchData "a">
+irb(main):054:0> /[a-w&&[^c-g]]/
+=> /[a-w&&[^c-g]]/
+
+5. Posix bracket expression
+
+irb(main):097:0> /[[:alnum]]/.match("99")
+=> nil
+irb(main):098:0> /[[:alnum:]]/.match("99")
+=> #<MatchData "9">
+irb(main):099:0> /[[:alnum:]]/.match("a")
+=> #<MatchData "a">
+irb(main):100:0> /[[:alpha:]]/.match("a")
+=> #<MatchData "a">
+irb(main):101:0> /[[:alpha:]]/.match("3")
+=> nil
+
+6. Matching the word "Hello"
+irb(main):116:0> "Hello".match(/[[:upper:]]+/)
+=> #<MatchData "H">
+irb(main):117:0> "Hello".match(/[[:upper:]]+[[:lower:]]/)
+=> #<MatchData "He">
+irb(main):118:0> "Hello".match(/[[:upper:]]+[[:lower:]]+/)
+=> #<MatchData "Hello">
+
+irb(main):124:0> "Hello".match(/[[:upper:]]+[[:lower:]]+l{2}/)
+=> #<MatchData "Hell">
+irb(main):125:0> "Hello".match(/[[:upper:]]+[[:lower:]]+l{2}o/)
+=> #<MatchData "Hello">
+
+7. Greedy and Lazy Quantifiers
+
+irb(main):128:0> /<.>/.match("<a><b>")
+=> #<MatchData "<a>">
+irb(main):129:0> /<>/.match("<a><b>")
+=> nil
+irb(main):130:0> /<.><>/.match("<a><b>")
+=> nil
+irb(main):131:0> /<.><.>/.match("<a><b>")
+=> #<MatchData "<a><b>">
+irb(main):132:0> /<.b>/.match("<a><b>")
+=> nil
+irb(main):133:0> /<.+>/.match("<a><b>")
+=> #<MatchData "<a><b>">
+irb(main):134:0> /<.?>/.match("<a><b>")
+=> #<MatchData "<a>">
+irb(main):135:0> /<.+?>/.match("<a><b>")
+=> #<MatchData "<a>">
+irb(main):136:0> /<.+>/.match("<a><b>")
+=> #<MatchData "<a><b>">
+irb(main):137:0> /<.+>/.match("<a><b>lkjaljdf")
+=> #<MatchData "<a><b>">
+irb(main):138:0> /<.++>/.match("<a><b>lkjaljdf")
+=> nil
+irb(main):139:0> /<.+>+/.match("<a><b>lkjaljdf")
+=> #<MatchData "<a><b>">
+
+8. Parenthesis contain the data can be backreferenced with \n n is the number of times you used ()
+
+irb(main):149:0> /[csh]/.match("The cat sat in the hat")
+=> #<MatchData "h">
+irb(main):150:0> /[csh](..)/.match("The cat sat in the hat")
+=> #<MatchData "he " 1:"e ">
+irb(main):151:0> /[csh](..) /.match("The cat sat in the hat")
+=> #<MatchData "cat " 1:"at">
+irb(main):152:0> /[csh](..) [csh]/.match("The cat sat in the hat")
+=> #<MatchData "cat s" 1:"at">
+irb(main):153:0> /[csh](..) [csh]\1/.match("The cat sat in the hat")
+=> #<MatchData "cat sat" 1:"at">
+irb(main):154:0> /[csh](..) [csh]\1 in/.match("The cat sat in the hat")
+=> #<MatchData "cat sat in" 1:"at">
+irb(main):155:0> /[csh](..) [csh]\1 in/.match("The cat sat in the hat")[1]
+=> "at"
+
+irb(main):163:0> /[csh](..) [csh]\1 in/.match("The cat sat in the hat")[2]
+=> nil
+irb(main):164:0> /[csh](..) [csh]\1 in/.match("The cat sat in the hat")
+=> #<MatchData "cat sat in" 1:"at">
+irb(main):165:0> /[csh](..) [csh]\1 (..)/.match("The cat sat in the hat")
+=> #<MatchData "cat sat in" 1:"at" 2:"in">
+irb(main):166:0> /[csh](..) [csh]\1 (..)/.match("The cat sat in the hat")[2]
+=> "in"
+
+9. Quantifiers
+
+
+    * - Zero or more times
+
+    + - One or more times
+
+    ? - Zero or one times (optional)
+
+    {n} - Exactly n times
+
+    {n,} - n or more times
+
+    {,m} - m or less times
+
+    {n,m} - At least n and at most m times
+
+10. Named group (?<>)
+
+irb(main):214:0> a= /\$(?<dollars>\d*)\.(?<cents>\d*)/.match("$.")
+=> #<MatchData "$." dollars:"" cents:"">
+irb(main):215:0> a= /\$(?<dollars>\d*)\.(?<cents>\d+)/.match("$.")
+=> nil
+irb(main):216:0> a= /\$(?<dollars>\d*)\.(?<cents>\d+)/.match("$.3")
+=> #<MatchData "$.3" dollars:"" cents:"3">
+irb(main):217:0> a= /\$(?<dollars>\d+)\.(?<cents>\d+)/.match("$0.3")
+=> #<MatchData "$0.3" dollars:"0" cents:"3">
+
+irb(main):201:0> a= /\$(?<dollars>\d+)\.(?<cents>\d+)/.match("$3.74")
+=> #<MatchData "$3.74" dollars:"3" cents:"74">
+irb(main):202:0> a= /\$(?<dollars>\d)\.(?<cents>\d)/.match("$3.74")
+=> #<MatchData "$3.7" dollars:"3" cents:"7">
+irb(main):203:0> a= /\$(?<dollars>\d)\.(?<cents>\d)/.match("$393.74")
+=> nil
+irb(main):204:0> a= /\$(?<dollars>\d)\.(?<cents>\d)/.match("$39.74")
+=> nil
+irb(main):205:0> a= /\$(?<dollars>\d+)\.(?<cents>\d)/.match("$39.74")
+=> #<MatchData "$39.7" dollars:"39" cents:"7">
+
+11. back referencing named groups
+
+irb(main):225:0> a = /(?<vowel>[aeiou]).\k<vowel>.\k<vowel>/.match('ototomy')
+=> #<MatchData "ototo" vowel:"o">
+
+
