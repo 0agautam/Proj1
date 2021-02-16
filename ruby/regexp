@@ -216,4 +216,284 @@ irb(main):244:0> dollars
 irb(main):245:0> cents
 => nil
 
-14. 
+14. Grouping and Atomic grouping 
+
+irb(main):246:0> /[aeiou]\w{2}/.match("Caenorhabditis elegans")
+=> #<MatchData "aen">
+irb(main):247:0> /([aeiou]\w){2}/.match("Caenorhabditis elegans")
+=> #<MatchData "enor" 1:"or">
+irb(main):248:0> /([aeiou]\w){2}/.match("Caenhaborditis elegans")
+=> #<MatchData "abor" 1:"or">
+irb(main):249:0> 
+irb(main):250:0> 
+irb(main):251:0> /I(n)ves(ti)ga\2ons/.match("Investigations")
+=> #<MatchData "Investigations" 1:"n" 2:"ti">
+irb(main):252:0> /I(?:n)ves(ti)ga\2ons/.match("Investigations")
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):252: invalid backref number/name: /I(?:n)ves(ti)ga\2ons/)
+irb(main):253:0> /I(?:n)ves(ti)ga\1ons/.match("Investigations")
+=> #<MatchData "Investigations" 1:"ti">
+irb(main):254:0> /".*"/.match('"Quote"')
+=> #<MatchData "\"Quote\"">
+irb(main):255:0> /"(?>.*)"/.match('"Quote"')
+=> nil
+irb(main):256:0> /./.match('"Quote"')
+=> #<MatchData "\"">
+irb(main):257:0> /?/.match('"Quote"')
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):257: target of repeat operator is not specified: /?/)
+irb(main):258:0> /.*/.match('"Quote"')
+=> #<MatchData "\"Quote\"">
+
+15.  Grouping and Atomic grouping 
+
+irb(main):246:0> /[aeiou]\w{2}/.match("Caenorhabditis elegans")
+=> #<MatchData "aen">
+irb(main):247:0> /([aeiou]\w){2}/.match("Caenorhabditis elegans")
+=> #<MatchData "enor" 1:"or">
+irb(main):248:0> /([aeiou]\w){2}/.match("Caenhaborditis elegans")
+=> #<MatchData "abor" 1:"or">
+irb(main):249:0> 
+irb(main):250:0> 
+irb(main):251:0> /I(n)ves(ti)ga\2ons/.match("Investigations")
+=> #<MatchData "Investigations" 1:"n" 2:"ti">
+irb(main):252:0> /I(?:n)ves(ti)ga\2ons/.match("Investigations")
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):252: invalid backref number/name: /I(?:n)ves(ti)ga\2ons/)
+irb(main):253:0> /I(?:n)ves(ti)ga\1ons/.match("Investigations")
+=> #<MatchData "Investigations" 1:"ti">
+irb(main):254:0> /".*"/.match('"Quote"')
+=> #<MatchData "\"Quote\"">
+irb(main):255:0> /"(?>.*)"/.match('"Quote"')
+=> nil
+irb(main):256:0> /./.match('"Quote"')
+=> #<MatchData "\"">
+irb(main):257:0> /?/.match('"Quote"')
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):257: target of repeat operator is not specified: /?/)
+irb(main):258:0> /.*/.match('"Quote"')
+=> #<MatchData "\"Quote\"">
+
+15.  Grouping and Atomic grouping 
+
+irb(main):246:0> /[aeiou]\w{2}/.match("Caenorhabditis elegans")
+=> #<MatchData "aen">
+irb(main):247:0> /([aeiou]\w){2}/.match("Caenorhabditis elegans")
+=> #<MatchData "enor" 1:"or">
+irb(main):248:0> /([aeiou]\w){2}/.match("Caenhaborditis elegans")
+=> #<MatchData "abor" 1:"or">
+irb(main):249:0> 
+irb(main):250:0> 
+irb(main):251:0> /I(n)ves(ti)ga\2ons/.match("Investigations")
+=> #<MatchData "Investigations" 1:"n" 2:"ti">
+irb(main):252:0> /I(?:n)ves(ti)ga\2ons/.match("Investigations")
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):252: invalid backref number/name: /I(?:n)ves(ti)ga\2ons/)
+irb(main):253:0> /I(?:n)ves(ti)ga\1ons/.match("Investigations")
+=> #<MatchData "Investigations" 1:"ti">
+irb(main):254:0> /".*"/.match('"Quote"')
+=> #<MatchData "\"Quote\"">
+irb(main):255:0> /"(?>.*)"/.match('"Quote"')
+=> nil
+irb(main):256:0> /./.match('"Quote"')
+=> #<MatchData "\"">
+irb(main):257:0> /?/.match('"Quote"')
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):257: target of repeat operator is not specified: /?/)
+irb(main):258:0> /.*/.match('"Quote"')
+=> #<MatchData "\"Quote\"">
+
+15.  Grouping and Atomic grouping 
+
+irb(main):246:0> /[aeiou]\w{2}/.match("Caenorhabditis elegans")
+=> #<MatchData "aen">
+irb(main):247:0> /([aeiou]\w){2}/.match("Caenorhabditis elegans")
+=> #<MatchData "enor" 1:"or">
+irb(main):248:0> /([aeiou]\w){2}/.match("Caenhaborditis elegans")
+=> #<MatchData "abor" 1:"or">
+irb(main):249:0> 
+irb(main):250:0> 
+irb(main):251:0> /I(n)ves(ti)ga\2ons/.match("Investigations")
+=> #<MatchData "Investigations" 1:"n" 2:"ti">
+irb(main):252:0> /I(?:n)ves(ti)ga\2ons/.match("Investigations")
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):252: invalid backref number/name: /I(?:n)ves(ti)ga\2ons/)
+irb(main):253:0> /I(?:n)ves(ti)ga\1ons/.match("Investigations")
+=> #<MatchData "Investigations" 1:"ti">
+irb(main):254:0> /".*"/.match('"Quote"')
+=> #<MatchData "\"Quote\"">
+irb(main):255:0> /"(?>.*)"/.match('"Quote"')
+=> nil
+irb(main):256:0> /./.match('"Quote"')
+=> #<MatchData "\"">
+irb(main):257:0> /?/.match('"Quote"')
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):257: target of repeat operator is not specified: /?/)
+irb(main):258:0> /.*/.match('"Quote"')
+=> #<MatchData "\"Quote\"">
+
+15.  Grouping and Atomic grouping 
+
+irb(main):246:0> /[aeiou]\w{2}/.match("Caenorhabditis elegans")
+=> #<MatchData "aen">
+irb(main):247:0> /([aeiou]\w){2}/.match("Caenorhabditis elegans")
+=> #<MatchData "enor" 1:"or">
+irb(main):248:0> /([aeiou]\w){2}/.match("Caenhaborditis elegans")
+=> #<MatchData "abor" 1:"or">
+irb(main):249:0> 
+irb(main):250:0> 
+irb(main):251:0> /I(n)ves(ti)ga\2ons/.match("Investigations")
+=> #<MatchData "Investigations" 1:"n" 2:"ti">
+irb(main):252:0> /I(?:n)ves(ti)ga\2ons/.match("Investigations")
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):252: invalid backref number/name: /I(?:n)ves(ti)ga\2ons/)
+irb(main):253:0> /I(?:n)ves(ti)ga\1ons/.match("Investigations")
+=> #<MatchData "Investigations" 1:"ti">
+irb(main):254:0> /".*"/.match('"Quote"')
+=> #<MatchData "\"Quote\"">
+irb(main):255:0> /"(?>.*)"/.match('"Quote"')
+=> nil
+irb(main):256:0> /./.match('"Quote"')
+=> #<MatchData "\"">
+irb(main):257:0> /?/.match('"Quote"')
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):257: target of repeat operator is not specified: /?/)
+irb(main):258:0> /.*/.match('"Quote"')
+=> #<MatchData "\"Quote\"">
+
+15.  Grouping and Atomic grouping 
+
+irb(main):246:0> /[aeiou]\w{2}/.match("Caenorhabditis elegans")
+=> #<MatchData "aen">
+irb(main):247:0> /([aeiou]\w){2}/.match("Caenorhabditis elegans")
+=> #<MatchData "enor" 1:"or">
+irb(main):248:0> /([aeiou]\w){2}/.match("Caenhaborditis elegans")
+=> #<MatchData "abor" 1:"or">
+irb(main):249:0> 
+irb(main):250:0> 
+irb(main):251:0> /I(n)ves(ti)ga\2ons/.match("Investigations")
+=> #<MatchData "Investigations" 1:"n" 2:"ti">
+irb(main):252:0> /I(?:n)ves(ti)ga\2ons/.match("Investigations")
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):252: invalid backref number/name: /I(?:n)ves(ti)ga\2ons/)
+irb(main):253:0> /I(?:n)ves(ti)ga\1ons/.match("Investigations")
+=> #<MatchData "Investigations" 1:"ti">
+irb(main):254:0> /".*"/.match('"Quote"')
+=> #<MatchData "\"Quote\"">
+irb(main):255:0> /"(?>.*)"/.match('"Quote"')
+=> nil
+irb(main):256:0> /./.match('"Quote"')
+=> #<MatchData "\"">
+irb(main):257:0> /?/.match('"Quote"')
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):257: target of repeat operator is not specified: /?/)
+irb(main):258:0> /.*/.match('"Quote"')
+=> #<MatchData "\"Quote\"">
+
+15.  Grouping and Atomic grouping 
+
+irb(main):246:0> /[aeiou]\w{2}/.match("Caenorhabditis elegans")
+=> #<MatchData "aen">
+irb(main):247:0> /([aeiou]\w){2}/.match("Caenorhabditis elegans")
+=> #<MatchData "enor" 1:"or">
+irb(main):248:0> /([aeiou]\w){2}/.match("Caenhaborditis elegans")
+=> #<MatchData "abor" 1:"or">
+irb(main):249:0> 
+irb(main):250:0> 
+irb(main):251:0> /I(n)ves(ti)ga\2ons/.match("Investigations")
+=> #<MatchData "Investigations" 1:"n" 2:"ti">
+irb(main):252:0> /I(?:n)ves(ti)ga\2ons/.match("Investigations")
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):252: invalid backref number/name: /I(?:n)ves(ti)ga\2ons/)
+irb(main):253:0> /I(?:n)ves(ti)ga\1ons/.match("Investigations")
+=> #<MatchData "Investigations" 1:"ti">
+irb(main):254:0> /".*"/.match('"Quote"')
+=> #<MatchData "\"Quote\"">
+irb(main):255:0> /"(?>.*)"/.match('"Quote"')
+=> nil
+irb(main):256:0> /./.match('"Quote"')
+=> #<MatchData "\"">
+irb(main):257:0> /?/.match('"Quote"')
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):257: target of repeat operator is not specified: /?/)
+irb(main):258:0> /.*/.match('"Quote"')
+=> #<MatchData "\"Quote\"">
+
+15.  Grouping and Atomic grouping 
+
+irb(main):246:0> /[aeiou]\w{2}/.match("Caenorhabditis elegans")
+=> #<MatchData "aen">
+irb(main):247:0> /([aeiou]\w){2}/.match("Caenorhabditis elegans")
+=> #<MatchData "enor" 1:"or">
+irb(main):248:0> /([aeiou]\w){2}/.match("Caenhaborditis elegans")
+=> #<MatchData "abor" 1:"or">
+irb(main):249:0> 
+irb(main):250:0> 
+irb(main):251:0> /I(n)ves(ti)ga\2ons/.match("Investigations")
+=> #<MatchData "Investigations" 1:"n" 2:"ti">
+irb(main):252:0> /I(?:n)ves(ti)ga\2ons/.match("Investigations")
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):252: invalid backref number/name: /I(?:n)ves(ti)ga\2ons/)
+irb(main):253:0> /I(?:n)ves(ti)ga\1ons/.match("Investigations")
+=> #<MatchData "Investigations" 1:"ti">
+irb(main):254:0> /".*"/.match('"Quote"')
+=> #<MatchData "\"Quote\"">
+irb(main):255:0> /"(?>.*)"/.match('"Quote"')
+=> nil
+irb(main):256:0> /./.match('"Quote"')
+=> #<MatchData "\"">
+irb(main):257:0> /?/.match('"Quote"')
+Traceback (most recent call last):
+        3: from /usr/bin/irb:23:in `<main>'
+        2: from /usr/bin/irb:23:in `load'
+        1: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.6/exe/irb:11:in `<top (required)>'
+SyntaxError ((irb):257: target of repeat operator is not specified: /?/)
+irb(main):258:0> /.*/.match('"Quote"')
+=> #<MatchData "\"Quote\"">
+
+15.  
