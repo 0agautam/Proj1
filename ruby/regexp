@@ -182,4 +182,38 @@ irb(main):205:0> a= /\$(?<dollars>\d+)\.(?<cents>\d)/.match("$39.74")
 irb(main):225:0> a = /(?<vowel>[aeiou]).\k<vowel>.\k<vowel>/.match('ototomy')
 => #<MatchData "ototo" vowel:"o">
 
+12. captures and named_captures
 
+irb(main):229:0> a = /(\w)(\w)/.match("ab").captures
+=> ["a", "b"]
+irb(main):230:0> a = /(\w)(\w)/.match("ab").named_captures
+=> {}
+irb(main):231:0> a = /(?<c>\w)(\w)/.match("ab").captures
+=> ["a"]
+irb(main):232:0> a = /(?<c>\w)(\w)/.match("ab").named_captures
+=> {"c"=>"a"}
+irb(main):233:0> a
+=> {"c"=>"a"}
+
+13. named captures as local variables using =~ operator
+
+irb(main):237:0> /\$(?<dollars>\d+)\.(?<cents>\d+)/ =~ "$393.93"
+=> 0
+irb(main):238:0> dollars
+=> "393"
+irb(main):239:0> cents
+=> "93"
+irb(main):240:0> /\$(?<dollars>\d+)\.(?<cents>\d)/ =~ "$393.93"
+=> 0
+irb(main):241:0> dollars
+=> "393"
+irb(main):242:0> cents
+=> "9"
+irb(main):243:0> /\$(?<dollars>\d+)\.(?<cents>\d)/ =~ "$393."
+=> nil
+irb(main):244:0> dollars
+=> nil
+irb(main):245:0> cents
+=> nil
+
+14. 
