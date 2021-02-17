@@ -75,4 +75,21 @@ Completed 200 OK in 86ms (Views: 29.3ms | ActiveRecord: 0.0ms | Allocations: 356
 
 !!!Remember : Open your browser and in the URI TYPE "localhost:3000" . This should open the rails server page
 
-7. 
+7. "Hello World!"
+
+create a route first it will send request to controller then the controller fetch the data from the model and pass the data to the view for presentation
+
+To create a route edit the config/routes.rb file 
+at the top of the Rails.application.routes.draw block:
+
+Add this line 
+
+get "/articles", to: "articles#index"
+
+and now on the command line use this command to make a controller 
+
+as We already defined the route, so use the param --skip-routes : 
+
+$ bin/rails generate controller Articles index --skip-routes  
+
+
