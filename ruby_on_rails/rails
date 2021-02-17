@@ -11,8 +11,68 @@ a database system (psql)
 $ sudo gem install rails
 
 3. checking version
-rails --version
+$ rails --version
 
 4.Generators helps in making your development life easier by automating tasks and creating everything to start a new project.
 
- 
+stating a basic project (but keep in mind that don't use this command in a already .git repository because this command creates a git repository.)
+$ rails new blog
+
+5 . $ cd blog
+
+6. Starting the rails server 
+
+gr00t@Gr00t:~/Desktop/ruby_rails/blog$ bin/rails server
+
+Error:
+Webpacker configuration file not found /home/gr00t/Desktop/ruby_rails/blog/config/webpacker.yml. Please run rails webpacker:install Error: No such file or directory @ rb_sysopen - /home/gr00t/Desktop/ruby_rails/blog/config/webpacker.yml (RuntimeError)
+
+Tried running rails webpacker:install but didn't worked as it says install yarn, but i already had yarn 0.32+git version which wasn't the suited one had to upgrade itbetween yarn v1 or yarn v2.
+
+so i tried the command :
+$ which yarn
+/usr/bin/yarn
+
+it may be different in your case "Check it for yourself"
+
+then i removed the directory from the system using 
+
+$ sudo rm -rf /usr/bin/yarn (Carefully: as it can mess up your debian if command went wrong)
+
+then install npm using 
+
+$ sudo apt install npm
+
+and then install yarn using npm
+
+$ npm install -g yarn
+
+and then run the command 
+
+$ rails webpacker:install
+
+and Chillzzz you can run your rails server using the command
+
+gr00t@Gr00t:~/Desktop/ruby_rails/blog$ bin/rails server
+=> Booting Puma
+=> Rails 6.1.2.1 application starting in development 
+=> Run `bin/rails server --help` for more startup options
+Puma starting in single mode...
+* Puma version: 5.2.1 (ruby 2.7.2-p137) ("Fettisdagsbulle")
+*  Min threads: 5
+*  Max threads: 5
+*  Environment: development
+*          PID: 46795
+* Listening on http://127.0.0.1:3000
+* Listening on http://[::1]:3000
+Use Ctrl-C to stop
+Started GET "/" for ::1 at 2021-02-17 17:07:17 +0530
+   (1.6ms)  SELECT sqlite_version(*)
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /var/lib/gems/2.7.0/gems/railties-6.1.2.1/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /var/lib/gems/2.7.0/gems/railties-6.1.2.1/lib/rails/templates/rails/welcome/index.html.erb (Duration: 22.3ms | Allocations: 437)
+Completed 200 OK in 86ms (Views: 29.3ms | ActiveRecord: 0.0ms | Allocations: 3565)
+
+!!!Remember : Open your browser and in the URI TYPE "localhost:3000" . This should open the rails server page
+
+7. 
