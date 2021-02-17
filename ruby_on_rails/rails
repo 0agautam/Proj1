@@ -13,4 +13,6 @@ $ sudo gem install rails
 3. checking version
 rails --version
 
-4. 
+4.Generators helps in making your development life easier by automating tasks and creating everything to start a new project.
+
+ 
