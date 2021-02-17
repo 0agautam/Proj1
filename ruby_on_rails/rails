@@ -1,0 +1,16 @@
+						Ruby_on_Rails
+
+1. Requirements :
+
+ruby
+the rails framework
+a web server (node)
+a database system (psql)
+
+2. Installing rails 
+$ sudo gem install rails
+
+3. checking version
+rails --version
+
+4. 
