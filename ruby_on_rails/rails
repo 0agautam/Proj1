@@ -447,4 +447,37 @@ gr00t@Gr00t:~/Desktop/ruby_rails/company_xyz$ rails db:migrate
    -> 0.1968s
 == 20210219045953 CreateDepartment: migrated (0.1970s) ========================
 
+28. Adding Foreign key to Table 
+gr00t@Gr00t:~/Desktop/ruby_rails/company_xyz$ rails generate migration AddEmployeeRefToDepartments employee:references
+Running via Spring preloader in process 70006
+      invoke  active_record
+      create    db/migrate/20210219062238_add_employee_ref_to_departments.rb
+gr00t@Gr00t:~/Desktop/ruby_rails/company_xyz$ rails db:migrate
+== 20210219062238 AddEmployeeRefToDepartments: migrating ======================
+-- add_reference(:departments, :employee, {:null=>false, :foreign_key=>true})
+   -> 0.1553s
+== 20210219062238 AddEmployeeRefToDepartments: migrated (0.1554s) =============
+
+29. Create new table joining two tables
+
+gr00t@Gr00t:~/Desktop/ruby_rails/company_xyz$ rails generate migration CreateJoinTableEmployeeDepartment employee department
+Running via Spring preloader in process 70129
+      invoke  active_record
+      create    db/migrate/20210219062950_create_join_table_employee_department.rb
+gr00t@Gr00t:~/Desktop/ruby_rails/company_xyz$ rails generate migration AddDetailsToDepartments 'floor:integer' 'head:string'
+Running via Spring preloader in process 70308
+      invoke  active_record
+      create    db/migrate/20210219063859_add_details_to_departments.rb
+gr00t@Gr00t:~/Desktop/ruby_rails/company_xyz$ rails db:migrate
+== 20210219062950 CreateJoinTableEmployeeDepartment: migrating ================
+-- create_join_table(:employees, :departments)
+   -> 0.0031s
+== 20210219062950 CreateJoinTableEmployeeDepartment: migrated (0.0031s) =======
+
+== 20210219063859 AddDetailsToDepartments: migrating ==========================
+-- add_column(:departments, :floor, :integer)
+   -> 0.0030s
+-- add_column(:departments, :head, :string)
+   -> 0.0014s
+== 20210219063859 AddDetailsToDepartments: migrated (0.0045s) =================
 
