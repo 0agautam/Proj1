@@ -365,3 +365,86 @@ irb(main):014:0> doctor = Doctor.new(name: "test", gender: "male").save
   TRANSACTION (82.6ms)  COMMIT
 => true
 
+22. Active Record migration(while generating a new migration) should have a name in CamelCase and for example if :
+	If the migration name is of the form "AddColumnToTable" or "RemoveColumnFromTable" and is followed by a list of column names and types then a migration containing the appropriate add_column and remove_column statements will be created.
+
+
+23. Migration Convention over Configuration 
+
+			---Bad Practice ---
+gr00t@Gr00t:~/Desktop/ruby_rails/company_xyz$ rails generate migration ChangeGenderTypeToStringAgain
+Running via Spring preloader in process 67637
+      invoke  active_record
+      create    db/migrate/20210219043519_change_gender_type_to_string_again.rb
+gr00t@Gr00t:~/Desktop/ruby_rails/company_xyz$ rails db:migrate
+== 20210219043519 ChangeGenderTypeToStringAgain: migrating ====================
+-- change_table(:employees)
+   -> 0.0023s
+== 20210219043519 ChangeGenderTypeToStringAgain: migrated (0.0024s) ===========
+			---Bad Practice ---
+
+	---Convention you should use---
+24. Adding Column To Table
+gr00t@Gr00t:~/Desktop/ruby_rails/company_xyz$ rails generate migration AddDepartmentToEmployees 
+Running via Spring preloader in process 67861
+      invoke  active_record
+      create    db/migrate/20210219044350_add_department_to_employees.rb
+gr00t@Gr00t:~/Desktop/ruby_rails/company_xyz$ rails db:migrate
+== 20210219044350 AddDepartmentToEmployees: migrating =========================
+-- add_column(:employees, :department, :string)
+   -> 0.0179s
+-- add_index(:employees, :department)
+   -> 0.0490s
+== 20210219044350 AddDepartmentToEmployees: migrated (0.0671s) ================
+
+25. Removing Column from Table
+gr00t@Gr00t:~/Desktop/ruby_rails/company_xyz$ rails generate migration RemoveDepartmentFromEmployees department:string
+Running via Spring preloader in process 68036
+      invoke  active_record
+      create    db/migrate/20210219044923_remove_department_from_employees.rb
+gr00t@Gr00t:~/Desktop/ruby_rails/company_xyz$ rails db:migrate
+== 20210219044923 RemoveDepartmentFromEmployees: migrating ====================
+-- remove_column(:employees, :department, :string)
+   -> 0.0029s
+== 20210219044923 RemoveDepartmentFromEmployees: migrated (0.0030s) ===========
+
+26. Adding Details to Table(multiple columns together in a single migration)
+gr00t@Gr00t:~/Desktop/ruby_rails/company_xyz$ rails generate migration AddDetailsToEmployees department:string doj:date
+Running via Spring preloader in process 68116
+      invoke  active_record
+      create    db/migrate/20210219045247_add_details_to_employees.rb
+gr00t@Gr00t:~/Desktop/ruby_rails/company_xyz$ rails db:migrate
+== 20210219045247 AddDetailsToEmployees: migrating ============================
+-- add_column(:employees, :department, :string)
+   -> 0.0025s
+-- add_column(:employees, :doj, :date)
+   -> 0.0012s
+== 20210219045247 AddDetailsToEmployees: migrated (0.0038s) ===================
+
+27. Creating a new Table
+"Don't specify constraints here on the command-line"
+gr00t@Gr00t:~/Desktop/ruby_rails/company_xyz$ rails generate migration CreateDepartment name:string,not_null technology:string,not_null
+Running via Spring preloader in process 68246
+      invoke  active_record
+      create    db/migrate/20210219045953_create_department.rb
+gr00t@Gr00t:~/Desktop/ruby_rails/company_xyz$ rails db:migrate
+rails aborted!
+SyntaxError: /home/gr00t/Desktop/ruby_rails/company_xyz/db/migrate/20210219045953_create_department.rb:4: syntax error, unexpected symbol literal, expecting `do' or '{' or '('
+      t.string,not_null :name
+                        ^
+/home/gr00t/Desktop/ruby_rails/company_xyz/db/migrate/20210219045953_create_department.rb:5: syntax error, unexpected symbol literal, expecting `do' or '{' or '('
+      t.string,not_null :technology
+                        ^
+/home/gr00t/Desktop/ruby_rails/company_xyz/bin/rails:5:in `<top (required)>'
+/home/gr00t/Desktop/ruby_rails/company_xyz/bin/spring:10:in `block in <top (required)>'
+/home/gr00t/Desktop/ruby_rails/company_xyz/bin/spring:7:in `tap'
+/home/gr00t/Desktop/ruby_rails/company_xyz/bin/spring:7:in `<top (required)>'
+Tasks: TOP => db:migrate
+(See full trace by running task with --trace)
+gr00t@Gr00t:~/Desktop/ruby_rails/company_xyz$ rails db:migrate
+== 20210219045953 CreateDepartment: migrating =================================
+-- create_table(:departments)
+   -> 0.1968s
+== 20210219045953 CreateDepartment: migrated (0.1970s) ========================
+
+
