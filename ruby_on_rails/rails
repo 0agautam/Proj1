@@ -481,3 +481,14 @@ gr00t@Gr00t:~/Desktop/ruby_rails/company_xyz$ rails db:migrate
    -> 0.0014s
 == 20210219063859 AddDetailsToDepartments: migrated (0.0045s) =================
 
+30. Created new controller in doctor management app and added two view files
+	FORM USING HTML
+	FORM USING RAILS
+31. Created new actions in Home controller for Creating new record
+	employee#new
+	employee#create
+
+32. Use of Strong parameters to capture the form data and selecting only the required fields necessary to add to our database.
+
+33. 
+
