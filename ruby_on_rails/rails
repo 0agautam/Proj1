@@ -490,5 +490,60 @@ gr00t@Gr00t:~/Desktop/ruby_rails/company_xyz$ rails db:migrate
 
 32. Use of Strong parameters to capture the form data and selecting only the required fields necessary to add to our database.
 
-33. 
+33. Routing : Resources routing just providing the resource name and it gives us a combination of all crud opertation related actions to that resource with the controller name. Single call to resouces defines all the routes probably CRUD operations for that resource.
 
+34. Path and url helpers expose number of helpers to controllers
+	for ex. employees_path() return route /employees
+		new_employee_path() return route /employees/new
+		edit_employee_path(:id) return route /employees/edit
+
+35. Routing with rails
+
+Singular Resources
+
+Controller Namespace and Routing
+
+Nested Resources : try to keep the nesting just to 1 level
+
+Shallow nesting : a better option preventing the redundancy of routes
+
+Routing Concerns : Common routes under resources
+
+Creating path and url objects
+
+Member routes and collection routes
+
+Routes:
+link_to "",magazine_ad_path(@magazine, @ad)
+
+Non-Resourceful routing
+
+Bound Parameters
+
+Dynamic and static segments
+
+Defining Defaults
+You can't override defaults except dynamic segment
+
+Match method to get multiple http verbs 
+
+Constraints 
+Request based constraints
+Advanced constraints using blocks and lambda
+
+Route Globing matching particular part of the route
+
+Redirect to some other page
+
+Breaking up a large route file into multiple ones by using DRAW MACRO
+
+FORM_HELPER
+
+Csrf token
+
+fields_for
+
+form_with(model: @article)
+while using sinle table inhertance you can't rely on base class objects you have to define :url and :scope for the object of derived class to access in the form 
+
+Name_spaces 
