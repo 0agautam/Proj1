@@ -546,4 +546,37 @@ fields_for
 form_with(model: @article)
 while using sinle table inhertance you can't rely on base class objects you have to define :url and :scope for the object of derived class to access in the form 
 
-Name_spaces 
+Name_spaces
+
+36. Action Controller 
+Controller name last part should consist of plural word, this allows you to use default route genrator (resources) method
+Models name should be singular always.
+controller is a ruby class inherits from application controller
+
+37. Parameters 
+Query string parameters (everything after a ? in the url)
+Post data
+data will be sent as a part of the request body
+
+Hash and Array parameters
+The actual URL in this example will be encoded as "/clients?ids%5b%5d=1&ids%5b%5d=2&ids%5b%5d=3" as the "[" and "]" characters are not allowed in URLs. Most of the time you don't have to worry about this because the browser will encode it for you, and Rails will decode it automatically, but if you ever find yourself having to send those requests to the server manually you should keep this in mind.
+
+The value of params[:ids] will now be ["1", "2", "3"]. Note that parameter values are always strings; Rails makes no attempt to guess or cast the type.
+
+JSON params
+to get rid of root element: if you've turned on config.wrap_parameters in your initializer or called wrap_parameters in your controller, 
+
+support for XML parameters 
+Support for parsing XML parameters has been extracted into a gem named actionpack-xml_parser.
+
+Routing parameters
+get '/clients/:status', to: 'clients#index', foo: 'bar'
+
+Strong parameters
+ parameters can be marked as required and will flow through a predefined raise/rescue flow that will result in a 400 Bad Request being returned if not all required parameters are passed in.
+
+Permitted scalar values
+
+permit! : extreme care should be taken as it permit hash and subhash, anything is accepted
+
+
